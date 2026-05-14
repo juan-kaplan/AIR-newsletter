@@ -2,6 +2,8 @@ export interface NewsletterArticle {
   title: string;
   url: string;
   summary: string;
+  source?: string;
+  publishedAt?: string;
 }
 
 export interface NewsletterIssue {

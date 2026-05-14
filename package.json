@@ -10,6 +10,7 @@
     "typecheck": "tsc -b",
     "test": "vitest run",
     "newsletter:collect": "corepack pnpm --filter @newsletter/newsletter collect",
+    "newsletter:verify-sources": "corepack pnpm --filter @newsletter/newsletter verify-sources",
     "newsletter:draft": "corepack pnpm --filter @newsletter/newsletter draft",
     "newsletter:preview": "corepack pnpm --filter @newsletter/newsletter preview",
     "newsletter:send-test": "corepack pnpm --filter @newsletter/newsletter send-test",

@@ -9,7 +9,7 @@ export function Footer({ unsubscribeUrl }: FooterProps) {
   return (
     <Section style={section}>
       <Text style={text}>
-        You are receiving this because you subscribed to Automatic Newsletter.
+        Generated for manual review by the AIR Robotics newsletter workflow.
       </Text>
       <Text style={text}>
         <Link href={unsubscribeUrl} style={link}>

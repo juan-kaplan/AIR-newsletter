@@ -1,4 +1,4 @@
-import { Body, Container, Head, Html, Preview, Section, Text } from "@react-email/components";
+import { Body, Container, Head, Hr, Html, Preview, Section, Text } from "@react-email/components";
 import React from "react";
 import type { ReactNode } from "react";
 
@@ -14,9 +14,11 @@ export function Layout({ children, preheader }: LayoutProps) {
       <Preview>{preheader}</Preview>
       <Body style={body}>
         <Container style={container}>
-          <Section>
-            <Text style={eyebrow}>Automatic Newsletter</Text>
+          <Section style={masthead}>
+            <Text style={eyebrow}>AIR Robotics Club</Text>
+            <Text style={brand}>Robotics Monthly</Text>
           </Section>
+          <Hr style={rule} />
           {children}
         </Container>
       </Body>
@@ -25,23 +27,46 @@ export function Layout({ children, preheader }: LayoutProps) {
 }
 
 const body = {
-  backgroundColor: "#f8fafc",
+  backgroundColor: "#eef2f7",
   color: "#111827",
-  fontFamily: "Arial, sans-serif",
+  fontFamily: "Inter, Arial, sans-serif",
   margin: 0
 };
 
 const container = {
   backgroundColor: "#ffffff",
-  border: "1px solid #e5e7eb",
+  border: "1px solid #dbe3ef",
+  borderRadius: "10px",
   margin: "32px auto",
-  maxWidth: "600px",
-  padding: "32px"
+  maxWidth: "640px",
+  overflow: "hidden",
+  padding: "0 32px 32px"
+};
+
+const masthead = {
+  backgroundColor: "#0f172a",
+  margin: "0 -32px",
+  padding: "28px 32px 24px"
 };
 
 const eyebrow = {
-  color: "#4b5563",
-  fontSize: "13px",
+  color: "#7dd3fc",
+  fontSize: "12px",
+  fontWeight: "700",
   letterSpacing: "0",
-  margin: "0 0 16px"
+  margin: "0 0 8px",
+  textTransform: "uppercase" as const
+};
+
+const brand = {
+  color: "#ffffff",
+  fontSize: "30px",
+  fontWeight: "700",
+  lineHeight: "36px",
+  margin: 0
+};
+
+const rule = {
+  borderColor: "#e5e7eb",
+  margin: "0 -32px 28px"
 };

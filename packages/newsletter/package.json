@@ -9,6 +9,7 @@
   "scripts": {
     "collect": "tsx src/cli.ts collect",
     "draft": "tsx src/cli.ts draft",
+    "verify-sources": "tsx src/cli.ts verify-sources",
     "preview": "tsx src/cli.ts preview",
     "send-test": "tsx src/cli.ts send-test",
     "send": "tsx src/cli.ts send",
@@ -17,6 +18,7 @@
   },
   "dependencies": {
     "@newsletter/email-templates": "workspace:*",
+    "fast-xml-parser": "^5.8.0",
     "@react-email/render": "^2.0.8",
     "nodemailer": "^7.0.11",
     "tsx": "^4.21.0",

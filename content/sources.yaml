@@ -1,4 +1,16 @@
 sources:
-  - key: manual
-    type: markdown
-    path: content/manual
+  - key: ieee-spectrum-robotics
+    name: IEEE Spectrum Robotics
+    type: rss
+    url: https://spectrum.ieee.org/feeds/topic/robotics.rss
+    maxItems: 4
+  - key: sciencedaily-robotics
+    name: ScienceDaily Robotics
+    type: rss
+    url: https://www.sciencedaily.com/rss/computers_math/robotics.xml
+    maxItems: 4
+  - key: sciencedaily-robotics-research
+    name: ScienceDaily Robotics Research
+    type: rss
+    url: https://www.sciencedaily.com/rss/matter_energy/robotics.xml
+    maxItems: 4

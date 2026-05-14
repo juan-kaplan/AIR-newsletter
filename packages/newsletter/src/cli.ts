@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import { buildIssue } from "./compose/buildIssue";
+import { verifyCollectionSources } from "./collect";
 import { renderEmail } from "./render/renderEmail";
 import { sendIssue } from "./send/sendIssue";
 
@@ -9,6 +10,15 @@ async function main(): Promise<void> {
   if (command === "collect" || command === "draft") {
     const issue = await buildIssue();
     console.log(JSON.stringify(issue, null, 2));
+    return;
+  }
+
+  if (command === "verify-sources") {
+    const results = await verifyCollectionSources();
+    console.table(results);
+    if (results.some((result) => !result.ok)) {
+      process.exitCode = 1;
+    }
     return;
   }
 

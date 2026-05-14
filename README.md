@@ -6,6 +6,7 @@ Automatic Newsletter is a repo-first internal UdeSA newsletter system. The curre
 
 - GitHub repo stores source, content, tests, and workflows.
 - GitHub Actions runs CI and the scheduled self-send.
+- RSS collection pulls robotics links from `content/sources.yaml`.
 - Cloudflare Worker exposes subscribe, unsubscribe, health, and admin endpoints.
 - Cloudflare D1 stores subscribers, issues, delivery records, and audit events.
 - Gmail SMTP sends the issue from `jfigueiredopaschmann@udesa.edu.ar` to `jfigueiredopaschmann@udesa.edu.ar`.
@@ -159,7 +160,13 @@ Do not commit the app password.
 
 ## Newsletter Commands
 
-Preview the current deterministic issue:
+Verify live RSS sources:
+
+```bash
+pnpm newsletter:verify-sources
+```
+
+Preview the current generated issue:
 
 ```bash
 pnpm newsletter:preview
@@ -208,6 +215,7 @@ The Worker generates a random unsubscribe token, stores only its SHA-256 hash in
 pnpm lint
 pnpm typecheck
 pnpm test
+pnpm newsletter:verify-sources
 pnpm newsletter:preview
 pnpm newsletter:send-test --to jfigueiredopaschmann@udesa.edu.ar --dry-run
 ```

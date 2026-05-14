@@ -20,12 +20,20 @@ async function parseMarkdownArticle(path: string): Promise<NewsletterArticle | n
   const title = matchField(content, "title");
   const url = matchField(content, "url");
   const summary = matchField(content, "summary");
+  const source = matchField(content, "source");
+  const publishedAt = matchField(content, "publishedAt");
 
   if (!title || !url || !summary) {
     return null;
   }
 
-  return { title, url, summary };
+  return {
+    title,
+    url,
+    summary,
+    ...(source ? { source } : {}),
+    ...(publishedAt ? { publishedAt } : {})
+  };
 }
 
 function matchField(content: string, field: string): string | null {
