@@ -135,8 +135,8 @@ function createEnv(db = new MemoryD1()) {
 
 describe("worker utilities", () => {
   it("normalizes emails and rejects invalid addresses", () => {
-    expect(normalizeEmail("  Person@Example.COM ")).toBe("person@example.com");
-    expect(isValidEmail("person@example.com")).toBe(true);
+    expect(normalizeEmail("  Person@UDESA.EDU.AR ")).toBe("person@udesa.edu.ar");
+    expect(isValidEmail("person@udesa.edu.ar")).toBe(true);
     expect(isValidEmail("not-an-email")).toBe(false);
   });
 
@@ -155,7 +155,7 @@ describe("worker routes", () => {
       new Request("https://worker.test/subscribe", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ email: " Person@Example.COM " })
+        body: JSON.stringify({ email: " Person@UDESA.EDU.AR " })
       });
 
     const first = await worker.fetch(createRequest(), env);
@@ -164,10 +164,10 @@ describe("worker routes", () => {
     expect(first.status).toBe(200);
     expect(second.status).toBe(200);
     expect(db.subscribers).toHaveLength(1);
-    expect(db.subscribers[0]?.email).toBe("person@example.com");
+    expect(db.subscribers[0]?.email).toBe("person@udesa.edu.ar");
   });
 
-  it("rejects invalid subscribe email", async () => {
+  it("rejects invalid and external subscribe emails", async () => {
     const response = await worker.fetch(
       new Request("https://worker.test/subscribe", {
         method: "POST",
@@ -178,6 +178,17 @@ describe("worker routes", () => {
     );
 
     expect(response.status).toBe(400);
+
+    const externalResponse = await worker.fetch(
+      new Request("https://worker.test/subscribe", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ email: "person@example.com" })
+      }),
+      createEnv()
+    );
+
+    expect(externalResponse.status).toBe(400);
   });
 
   it("returns 401 for admin routes without a valid bearer token", async () => {
@@ -192,7 +203,7 @@ describe("worker routes", () => {
       new Request("https://worker.test/subscribe", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ email: "person@example.com" })
+        body: JSON.stringify({ email: "person@udesa.edu.ar" })
       }),
       env
     );
@@ -236,7 +247,7 @@ describe("worker routes", () => {
         body: JSON.stringify({
           issueSlug: "weekly",
           subscriberId: "sub_1",
-          subscriberEmail: "person@example.com",
+          subscriberEmail: "person@udesa.edu.ar",
           status: "sent",
           providerMessageId: "msg_1"
         })

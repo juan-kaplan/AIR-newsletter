@@ -43,7 +43,7 @@ jobs:
       - name: Send newsletter
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.dry_run }}" = "false" ]; then
-            pnpm newsletter:send --confirm
+            pnpm newsletter:send-test --to jfigueiredopaschmann@udesa.edu.ar --confirm
           else
-            pnpm newsletter:send --dry-run
+            pnpm newsletter:send-test --to jfigueiredopaschmann@udesa.edu.ar --dry-run
           fi

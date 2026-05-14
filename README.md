@@ -1,27 +1,27 @@
 # Automatic Newsletter
 
-Automatic Newsletter is a repo-first internal UdeSA newsletter system designed to stay on free-tier infrastructure for a small list: up to 30 subscribers and 35 attempted sends per run.
+Automatic Newsletter is a repo-first internal UdeSA newsletter system. The current workflow creates a weekly issue and sends it only to `jfigueiredopaschmann@udesa.edu.ar`.
 
 ## Architecture
 
 - GitHub repo stores source, content, tests, and workflows.
-- GitHub Actions runs CI and the scheduled sender.
+- GitHub Actions runs CI and the scheduled self-send.
 - Cloudflare Worker exposes subscribe, unsubscribe, health, and admin endpoints.
 - Cloudflare D1 stores subscribers, issues, delivery records, and audit events.
-- Gmail SMTP sends one email per subscriber from `jfigueiredopaschmann@udesa.edu.ar` so each message has a unique unsubscribe URL.
+- Gmail SMTP sends the issue from `jfigueiredopaschmann@udesa.edu.ar` to `jfigueiredopaschmann@udesa.edu.ar`.
 - React Email renders the HTML email and a plain text companion.
 
 No custom domain, Resend, Supabase, Postgres, Prisma, Vercel, Next.js, Stripe, SES, Listmonk, paid hosting, or full admin dashboard is included.
 
 ## Free-Tier Assumptions
 
-This project is sized for roughly 120-150 emails per month. Keep the hard limits at:
+This project currently sends one email per run, to yourself. The old list limits remain as safeguards if the subscriber workflow is used later:
 
 - `MAX_RECIPIENTS=30`
 - `MAX_EMAILS_PER_RUN=35`
 - `ALLOWED_RECIPIENT_DOMAIN=udesa.edu.ar`
 
-The Worker rejects non-`@udesa.edu.ar` subscribers. The sender refuses to run if any recipient is outside `@udesa.edu.ar`, or if active subscribers or planned sends exceed the limits.
+The Worker rejects non-`@udesa.edu.ar` subscribers. The sender refuses to run if any recipient is outside `@udesa.edu.ar`.
 
 ## Setup Requirements
 
@@ -165,22 +165,22 @@ Preview the current deterministic issue:
 pnpm newsletter:preview
 ```
 
-Send a test email:
+Send the newsletter to yourself:
 
 ```bash
-pnpm newsletter:send-test --to jkaplan@udesa.edu.ar
+pnpm newsletter:send-test --to jfigueiredopaschmann@udesa.edu.ar
 ```
 
-Dry run:
+Dry run to yourself:
 
 ```bash
-pnpm newsletter:send --dry-run
+pnpm newsletter:send-test --to jfigueiredopaschmann@udesa.edu.ar --dry-run
 ```
 
-Production send:
+Production send to yourself:
 
 ```bash
-pnpm newsletter:send --confirm
+pnpm newsletter:send-test --to jfigueiredopaschmann@udesa.edu.ar --confirm
 ```
 
 Sending defaults to dry-run unless `--confirm` is passed.
@@ -196,7 +196,7 @@ pnpm typecheck
 pnpm test
 ```
 
-The weekly send workflow runs on Monday at `10:17 America/Argentina/Buenos_Aires` and can also be triggered manually. Use the manual `dry_run` input for safe checks.
+The weekly send workflow runs on Monday at `10:17 America/Argentina/Buenos_Aires` and can also be triggered manually. It targets only `jfigueiredopaschmann@udesa.edu.ar`. Use the manual `dry_run` input for safe checks.
 
 ## Unsubscribe
 
@@ -209,5 +209,5 @@ pnpm lint
 pnpm typecheck
 pnpm test
 pnpm newsletter:preview
-pnpm newsletter:send --dry-run
+pnpm newsletter:send-test --to jfigueiredopaschmann@udesa.edu.ar --dry-run
 ```
