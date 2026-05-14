@@ -28,7 +28,7 @@ export function scoreArticle(article: NewsletterArticle): ScoredArticle {
   const reasons: string[] = [];
   let score = 0;
 
-  score += addScore(text, ["competition", "challenge", "tournament", "championship", "robocup", "vex", "robotx", "rover"], 24, "competition signal", reasons);
+  score += addScore(text, ["competition", "robotics challenge", "robot challenge", "tournament", "championship", "robocup", "vex", "robotx", "rover challenge"], 24, "competition signal", reasons);
   score += addScore(text, ["deadline", "registration", "application", "applications close", "proposal", "call for", "opens", "qualification"], 20, "actionable deadline", reasons);
   score += addScore(text, ["university", "universities", "college", "student", "undergraduate", "team"], 18, "student-team fit", reasons);
   score += addScore(text, ["argentina", "argentinian", "latin america", "latam", "south america", "brazil", "chile", "uruguay"], 18, "regional relevance", reasons);

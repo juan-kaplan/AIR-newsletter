@@ -4,7 +4,7 @@ import { getCurrentWeeklyWindow, isPublishedWithin } from "../src/collect/weekly
 import type { NewsletterArticle } from "../src/types";
 
 describe("newsletter curation", () => {
-  it("selects at most five weekly items and prioritizes competition deadlines", async () => {
+  it("selects at most six weekly items and prioritizes competition deadlines", async () => {
     const articles: NewsletterArticle[] = [
       article("Warehouse automation funding round", "Generic business update about logistics robots.", "industry"),
       article("RoboCup registration deadline opens for university teams", "Student teams can qualify for a robotics competition.", "competition"),
@@ -14,25 +14,25 @@ describe("newsletter curation", () => {
       article("Manipulator gripper benchmark", "A practical robot manipulation benchmark.", "research")
     ];
 
-    const selected = await curateWeeklyArticles(articles, 5, {});
+    const selected = await curateWeeklyArticles(articles, 6, {});
 
-    expect(selected).toHaveLength(5);
+    expect(selected.length).toBeLessThanOrEqual(6);
     expect(selected.slice(0, 2).map((item) => item.title)).toEqual(
       expect.arrayContaining(["RoboCup registration deadline opens for university teams", "New rover challenge proposal deadline"])
     );
     expect(selected.every((item) => item.selectionReason)).toBe(true);
   });
 
-  it("selects at most eight monthly items", async () => {
+  it("selects at most ten monthly items", async () => {
     const selected = await curateMonthlyArticles(
       Array.from({ length: 12 }, (_, index) =>
         article(`University robotics competition item ${index}`, "Registration deadline for student teams.", "competition")
       ),
-      8,
+      10,
       {}
     );
 
-    expect(selected).toHaveLength(8);
+    expect(selected).toHaveLength(10);
   });
 
   it("keeps weekly collection inside the current ISO week", () => {

@@ -11,7 +11,7 @@ export async function buildIssue(): Promise<NewsletterIssue> {
     slug: `robotics-newsletter-${issueMonth.getUTCFullYear()}-${String(issueMonth.getUTCMonth() + 1).padStart(2, "0")}`,
     subject: `AIR Robotics Monthly - ${monthName}`,
     preheader: "A curated robotics digest for building competitions across Argentinian universities.",
-    articles: articles.slice(0, 8),
+    articles: articles.slice(0, 10),
     generatedFromWeeks: weeklyDigests.map((digest) => digest.week)
   };
 }

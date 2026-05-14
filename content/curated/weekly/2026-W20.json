@@ -1,28 +1,68 @@
 {
   "week": "2026-W20",
-  "collectedAt": "2026-05-14T19:55:07.698Z",
+  "collectedAt": "2026-05-14T20:09:47.654Z",
   "windowStart": "2026-05-11T00:00:00.000Z",
   "windowEnd": "2026-05-18T00:00:00.000Z",
   "articles": [
     {
       "title": "Home - RoboCup 2026",
       "url": "https://2026.robocup.org/",
-      "summary": "Leagues RoboCupSoccer RoboCupRescue RoboCup@Home RoboCupIndustrial RoboCupJunior Symposium Symposium WEROB Participants Registration Award Accomodation Incheon travel guide Stamp tour Travel News Contact Languages English Korean ✕ Welcome to RoboCup 2026! June 30 to July 6, 2026 Incheon, Republic of Korea Welcome to In",
+      "summary": "2026 About RoboCup Leagues RoboCupSoccer RoboCupRescue RoboCup@Home RoboCupIndustrial RoboCupJunior Symposium Symposium WEROB Participants Registration Award Accomodation Incheon travel guide Stamp tour Travel News Contact Languages English Korean ✕ Welcome to RoboCup 2026! June 30 to July 6, 2026 Incheon, Republic of ",
       "source": "RoboCup 2026",
       "category": "competition",
-      "publishedAt": "2026-05-14T19:55:07.730Z",
-      "score": 95,
-      "selectionReason": "Major global competition with various leagues (Soccer, Rescue, @Home) perfect for inspiration and participation for our club members."
+      "publishedAt": "2026-05-14T20:09:47.689Z",
+      "score": 70,
+      "selectionReason": "competition signal, actionable deadline, competition source"
     },
     {
-      "title": "RobotX Challenge 2026",
-      "url": "https://robotx.org/2026",
-      "summary": "Program RobotX Challenge 2026 It's time to take maritime robotics and autonomy to the next level. Let us introduce you to the Maritime RobotX Challenge. In real-world port, harbor, and coastal operations, no single vehicle operates in isolation. Modern maritime autonomy depends on cross-domain coordination with vessels",
-      "source": "RobotX Challenge 2026",
+      "title": "WCRC",
+      "url": "https://wcrc.pro/",
+      "summary": "WCRC 2026 – Wall-Climbing Robot Challenge | IEEE RAS UJ Skip to main content WCRC Journey Challenge Specs The Wall Prizes Process Sponsors FAQ Venue Ambassador ع | EN Register Now menu Journey Challenge Specs The Wall Prizes Process Sponsors FAQ Venue Campus Ambassador ع | EN Register Now Registration Open WCRC Wall-Cl",
+      "source": "Wall-Climbing Robot Challenge 2026",
       "category": "competition",
-      "publishedAt": "2026-05-14T19:55:07.730Z",
-      "score": 90,
-      "selectionReason": "A challenging maritime robotics competition focusing on autonomy and multi-vehicle coordination, great for advanced student teams."
+      "publishedAt": "2026-05-14T20:09:47.689Z",
+      "score": 70,
+      "selectionReason": "competition signal, actionable deadline, competition source"
+    },
+    {
+      "title": "Closing the gap between animal movement and robotic control",
+      "url": "https://techxplore.com/news/2026-05-gap-animal-movement-robotic.html",
+      "summary": "Animals move with a level of precision and adaptability that robots struggle to match. In Carnegie Mellon University&#039;s Department of Mechanical Engineering, researchers are developing a new AI-driven approach to uncover how brains and bodies work together",
+      "source": "Tech Xplore Robotics",
+      "category": "research",
+      "publishedAt": "2026-05-12T15:40:06.000Z",
+      "score": 26,
+      "selectionReason": "student-team fit"
+    },
+    {
+      "title": "2026 UNSW STEM, Robotics & Coding Challenge",
+      "url": "https://roboticscodingchallenge.org/current/",
+      "summary": "Individual Support Getting Started Register Sign In 2026 UNSW STEM, Robotics & Coding Challenge 2026 Challenge UNSW STEM, Robotics & Coding Challenge The Highway Collapse — A massive geotechnical failure has severed a critical transport route. Design coding, robotics, and AI solutions for rescue, logistics, safety, and",
+      "source": "UNSW Robotics & Coding Challenge 2026",
+      "category": "competition",
+      "publishedAt": "2026-05-14T20:09:47.689Z",
+      "score": 22,
+      "selectionReason": "competition source"
+    },
+    {
+      "title": "Canadian Drone Regulations and Testing Explained: Introduction to Canadian Drone Testing",
+      "url": "https://roboticsandautomationnews.com/2026/05/14/canadian-drone-regulations-and-testing-explained-introduction-to-canadian-drone-testing/101556/",
+      "summary": "Canada has become one of the leading countries in drone technology and innovation. From snowy mountain regions to crowded urban areas, the country provides a perfect environment for testing advanced drone systems. A Canadian drone test is more than just flying",
+      "source": "Robotics & Automation News",
+      "category": "industry",
+      "publishedAt": "2026-05-14T15:55:39.000Z",
+      "score": 22,
+      "selectionReason": "buildable technical idea"
+    },
+    {
+      "title": "PAL Robotics unveils new robotic arm platform for advanced AI-driven manipulation",
+      "url": "https://roboticsandautomationnews.com/2026/05/14/pal-robotics-unveils-new-robotic-arm-platform-for-advanced-ai-driven-manipulation/101537/",
+      "summary": "PAL Robotics has announced a new robotic arm platform aimed at researchers, developers, and robotics engineers working on advanced manipulation applications. The Barcelona-based robotics company, known for platforms including TIAGo Pro and Kangaroo, said the n",
+      "source": "Robotics & Automation News",
+      "category": "industry",
+      "publishedAt": "2026-05-14T13:51:02.000Z",
+      "score": 22,
+      "selectionReason": "buildable technical idea"
     }
   ]
 }

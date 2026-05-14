@@ -32,4 +32,24 @@ describe("competition page collection", () => {
       })
     ]);
   });
+
+  it("rejects expired registration deadlines", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(
+        async () =>
+          new Response(
+            `<html><body><h1>RobotX Challenge 2026</h1><p>Start Registration & Grant Application. Deadline Extended to May 1.</p></body></html>`,
+            { status: 200, headers: { "content-type": "text/html" } }
+          )
+      )
+    );
+
+    const articles = await collectCompetitionPages(
+      [{ key: "robotx", name: "RobotX", type: "competition_page", url: "https://example.com/robotx" }],
+      new Date("2026-05-14T12:00:00.000Z")
+    );
+
+    expect(articles).toEqual([]);
+  });
 });

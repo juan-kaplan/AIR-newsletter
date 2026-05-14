@@ -10,7 +10,7 @@ import type { NewsletterArticle } from "../types";
 export async function collectArticles(now = new Date()): Promise<NewsletterArticle[]> {
   const weeklyDigests = await loadRecentWeeklyDigests(now);
   if (weeklyDigests.length > 0) {
-    return curateMonthlyArticles(weeklyDigests.flatMap((digest) => digest.articles), 8);
+    return curateMonthlyArticles(weeklyDigests.flatMap((digest) => digest.articles), 10);
   }
 
   return collectLiveMonthlyArticles();
@@ -38,7 +38,7 @@ async function collectSourceArticles(): Promise<NewsletterArticle[]> {
 export async function collectAndStoreWeeklyDigest(now = new Date()) {
   const { week, windowStart, windowEnd } = getCurrentWeeklyWindow(now);
   const articles = (await collectSourceArticles()).filter((article) => isPublishedWithin(article, windowStart, windowEnd));
-  const curatedArticles = await curateWeeklyArticles(dedupeArticles(articles), 5);
+  const curatedArticles = await curateWeeklyArticles(dedupeArticles(articles), 6);
   const path = await saveWeeklyDigest({
     week,
     collectedAt: now.toISOString(),

@@ -102,13 +102,14 @@ function parseGeminiSelection(text: string): GeminiSelection {
 function buildPrompt(articles: ScoredArticle[], limit: number): string {
   return `You curate a monthly robotics newsletter for an undergraduate robotics club in Argentina that wants to organize competitions for Argentinian universities.
 
-Choose up to ${limit} items. Prefer:
-- robotics competitions, registrations, deadlines, calls, rulebooks, and qualification news
+Choose up to ${limit} items. For weekly curation, aim for 4-6 strong items when available. For monthly curation, aim for 6-10 strong items when available. Prefer a balanced mix:
+- 1-3 still-open robotics opportunities: registrations, deadlines, calls, rulebooks, and qualification news
+- 2-4 robotics news/research/tooling items that are useful for an undergrad club
 - ideas that undergrad teams can copy, learn from, or turn into local competitions
 - Latin America or globally accessible student opportunities
 - practical robotics research: autonomy, perception, manipulation, drones, rovers, ROS, simulation
 
-Avoid generic business news, sponsored content, funding-only news, and medical/warehouse-only stories unless there is a clear club activity angle.
+Do not include opportunities whose registration, submission, or application deadline has already passed. Avoid generic business news, sponsored content, funding-only news, and medical/warehouse-only stories unless there is a clear club activity angle.
 
 Return JSON only in this shape:
 {"selected":[{"url":"https://...","score":95,"reason":"short reason for club members"}]}

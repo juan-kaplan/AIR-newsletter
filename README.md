@@ -7,7 +7,7 @@ Automatic Newsletter is a repo-first internal UdeSA newsletter system. The curre
 - GitHub repo stores source, content, tests, and workflows.
 - GitHub Actions runs CI, weekly collection, and the scheduled monthly self-send.
 - RSS and competition-page collection pull robotics links from `content/sources.yaml`.
-- Weekly curated digests are stored in `content/curated/weekly/`; the monthly issue selects up to 8 items from those weekly files.
+- Weekly curated digests are stored in `content/curated/weekly/`; the monthly issue selects up to 10 items from those weekly files.
 - Cloudflare Worker exposes subscribe, unsubscribe, health, and admin endpoints.
 - Cloudflare D1 stores subscribers, issues, delivery records, and audit events.
 - Gmail SMTP sends the issue from `jfigueiredopaschmann@udesa.edu.ar` to `jfigueiredopaschmann@udesa.edu.ar`.
@@ -213,7 +213,7 @@ pnpm typecheck
 pnpm test
 ```
 
-The weekly collection workflow runs on Monday at `09:30 America/Argentina/Buenos_Aires`, writes up to 5 selected items to `content/curated/weekly/`, and commits that weekly digest.
+The weekly collection workflow runs on Monday at `09:30 America/Argentina/Buenos_Aires`, writes up to 6 selected items to `content/curated/weekly/`, and commits that weekly digest.
 
 The monthly send workflow runs on the first day of each month at `10:17 America/Argentina/Buenos_Aires` and can also be triggered manually. It targets only `jfigueiredopaschmann@udesa.edu.ar`. Use the manual `dry_run` input for safe checks.
 

@@ -23,6 +23,18 @@ sources:
     url: https://robohub.org/feed/
     category: research
     maxItems: 5
+  - key: techxplore-robotics
+    name: Tech Xplore Robotics
+    type: rss
+    url: https://techxplore.com/rss-feed/robotics-news/
+    category: research
+    maxItems: 5
+  - key: new-atlas-robotics
+    name: New Atlas Robotics
+    type: rss
+    url: https://newatlas.com/robotics/index.rss
+    category: industry
+    maxItems: 5
   - key: robotics-automation-news
     name: Robotics & Automation News
     type: rss
@@ -43,3 +55,11 @@ sources:
     name: RoboCup 2026
     type: competition_page
     url: https://2026.robocup.org/
+  - key: wcrc-2026-page
+    name: Wall-Climbing Robot Challenge 2026
+    type: competition_page
+    url: https://wcrc.pro/
+  - key: unsw-robotics-coding-challenge-2026
+    name: UNSW Robotics & Coding Challenge 2026
+    type: competition_page
+    url: https://roboticscodingchallenge.org/current/
