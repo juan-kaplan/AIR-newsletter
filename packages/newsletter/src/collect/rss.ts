@@ -134,7 +134,7 @@ function toNewsletterArticle(
     extractText(entry.description) ??
     extractText(entry.summary) ??
     extractText(entry["content:encoded"]);
-  const summary = cleanText(stripHtml(rawSummary ?? "")).slice(0, 260);
+  const summary = truncateSummary(cleanText(stripHtml(rawSummary ?? "")), 260);
   const publishedAt =
     extractText(entry.pubDate) ??
     extractText(entry.published) ??
@@ -369,8 +369,34 @@ function cleanText(value: string | null): string {
     .replace(/&amp;/g, "&")
     .replace(/&quot;/g, '"')
     .replace(/&#39;/g, "'")
+    .replace(/&#(\d+);/g, (_, code: string) =>
+      String.fromCodePoint(Number.parseInt(code, 10)),
+    )
+    .replace(/&#x([0-9a-f]+);/gi, (_, code: string) =>
+      String.fromCodePoint(Number.parseInt(code, 16)),
+    )
     .replace(/\s+/g, " ")
     .trim();
+}
+
+function truncateSummary(value: string, maxLength: number): string {
+  if (value.length <= maxLength) {
+    return value;
+  }
+
+  const sentenceEnd = Math.max(
+    value.lastIndexOf(". ", maxLength),
+    value.lastIndexOf("? ", maxLength),
+    value.lastIndexOf("! ", maxLength),
+  );
+  if (sentenceEnd >= 120) {
+    return value.slice(0, sentenceEnd + 1).trim();
+  }
+
+  return `${value
+    .slice(0, maxLength)
+    .replace(/\s+\S*$/, "")
+    .trim()}...`;
 }
 
 function escapeRegExp(value: string): string {

@@ -8,7 +8,7 @@ const feed = `<?xml version="1.0" encoding="UTF-8"?>
     <item>
       <title>Robots learn safer navigation</title>
       <link>https://example.com/robots-navigation</link>
-      <description><![CDATA[<p>A lab showed a robot navigation system that handles crowded hallways.</p>]]></description>
+      <description><![CDATA[<p>A lab showed a robot navigation system that handles crowded hallways and doesn&#039;t cut words in weird places.</p>]]></description>
       <media:thumbnail url="https://example.com/robots-navigation.jpg" />
       <pubDate>Mon, 04 May 2026 12:00:00 GMT</pubDate>
     </item>
@@ -54,7 +54,7 @@ describe("RSS collection", () => {
         source: "Robotics Feed",
         imageUrl: "https://example.com/robots-navigation.jpg",
         summary:
-          "A lab showed a robot navigation system that handles crowded hallways.",
+          "A lab showed a robot navigation system that handles crowded hallways and doesn't cut words in weird places.",
       }),
     ]);
   });
