@@ -16,6 +16,8 @@ interface GeminiSelection {
   }>;
 }
 
+const GEMINI_MODELS = ["gemini-2.0-flash-lite", "gemini-2.0-flash", "gemini-2.5-flash", "gemini-flash-lite-latest"];
+
 export async function refineRankingWithGemini(articles: ScoredArticle[], limit: number, env: NodeJS.ProcessEnv = process.env): Promise<ScoredArticle[]> {
   const apiKey = env.GEMINI_API_KEY;
   if (!apiKey || articles.length === 0) {
@@ -24,24 +26,11 @@ export async function refineRankingWithGemini(articles: ScoredArticle[], limit: 
   }
 
   try {
-    const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent?key=${apiKey}`,
-      {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: buildPrompt(articles, limit) }] }],
-          generationConfig: { responseMimeType: "application/json", temperature: 0.2 }
-        })
-      }
-    );
-
-    if (!response.ok) {
-      console.warn(`Gemini curation fallback: HTTP ${response.status}.`);
+    const payload = await callGeminiWithFallback(apiKey, buildPrompt(articles, limit));
+    if (!payload) {
       return articles.slice(0, limit);
     }
 
-    const payload = (await response.json()) as GeminiResponse;
     const text = payload.candidates?.[0]?.content?.parts?.[0]?.text;
     if (!text) {
       console.warn("Gemini curation fallback: empty model response.");
@@ -76,6 +65,32 @@ export async function refineRankingWithGemini(articles: ScoredArticle[], limit: 
     console.warn(`Gemini curation fallback: ${error instanceof Error ? error.message : "unknown error"}.`);
     return articles.slice(0, limit);
   }
+}
+
+async function callGeminiWithFallback(apiKey: string, prompt: string): Promise<GeminiResponse | null> {
+  for (const model of GEMINI_MODELS) {
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: prompt }] }],
+        generationConfig: { responseMimeType: "application/json", temperature: 0.2 }
+      })
+    });
+
+    if (response.ok) {
+      console.warn(`Gemini curation using ${model}.`);
+      return (await response.json()) as GeminiResponse;
+    }
+
+    console.warn(`Gemini model ${model} failed with HTTP ${response.status}.`);
+    if (response.status !== 429 && response.status !== 404) {
+      return null;
+    }
+  }
+
+  console.warn("Gemini curation fallback: all configured Gemini models failed.");
+  return null;
 }
 
 function parseGeminiSelection(text: string): GeminiSelection {
