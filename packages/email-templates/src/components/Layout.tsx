@@ -1,4 +1,4 @@
-import { Body, Container, Head, Hr, Html, Preview, Section, Text } from "@react-email/components";
+import { Body, Container, Head, Html, Preview, Section, Text } from "@react-email/components";
 import React from "react";
 import type { ReactNode } from "react";
 
@@ -16,9 +16,9 @@ export function Layout({ children, preheader }: LayoutProps) {
         <Container style={container}>
           <Section style={masthead}>
             <Text style={eyebrow}>AIR Robotics Club</Text>
-            <Text style={brand}>Robotics Monthly</Text>
+            <Text style={brand}>Kinetic Robotics Brief</Text>
+            <Text style={tagline}>Competitions, opportunities, and buildable robotics ideas.</Text>
           </Section>
-          <Hr style={rule} />
           {children}
         </Container>
       </Body>
@@ -27,30 +27,31 @@ export function Layout({ children, preheader }: LayoutProps) {
 }
 
 const body = {
-  backgroundColor: "#eef2f7",
-  color: "#111827",
+  backgroundColor: "#08111f",
+  color: "#dbeafe",
   fontFamily: "Inter, Arial, sans-serif",
   margin: 0
 };
 
 const container = {
-  backgroundColor: "#ffffff",
-  border: "1px solid #dbe3ef",
-  borderRadius: "10px",
+  backgroundColor: "#0b1220",
+  border: "1px solid #1e3a5f",
+  borderRadius: "14px",
   margin: "32px auto",
   maxWidth: "640px",
   overflow: "hidden",
-  padding: "0 32px 32px"
+  padding: "0 28px 30px"
 };
 
 const masthead = {
-  backgroundColor: "#0f172a",
-  margin: "0 -32px",
-  padding: "28px 32px 24px"
+  backgroundColor: "#101827",
+  borderBottom: "1px solid #1f9bd1",
+  margin: "0 -28px 28px",
+  padding: "26px 28px 24px"
 };
 
 const eyebrow = {
-  color: "#7dd3fc",
+  color: "#8ffcff",
   fontSize: "12px",
   fontWeight: "700",
   letterSpacing: "0",
@@ -61,12 +62,14 @@ const eyebrow = {
 const brand = {
   color: "#ffffff",
   fontSize: "30px",
-  fontWeight: "700",
+  fontWeight: "800",
   lineHeight: "36px",
-  margin: 0
+  margin: "0 0 8px"
 };
 
-const rule = {
-  borderColor: "#e5e7eb",
-  margin: "0 -32px 28px"
+const tagline = {
+  color: "#a7f3d0",
+  fontSize: "14px",
+  lineHeight: "21px",
+  margin: 0
 };

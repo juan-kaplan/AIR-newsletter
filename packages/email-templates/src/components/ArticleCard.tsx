@@ -8,11 +8,13 @@ interface ArticleCardProps {
 }
 
 export function ArticleCard({ article, index }: ArticleCardProps) {
+  const badge = getBadge(article);
+
   return (
     <Section style={section}>
+      <Text style={accent}>{badge}</Text>
       <Text style={meta}>
         {String(index + 1).padStart(2, "0")}
-        {article.category ? ` / ${article.category}` : ""}
         {article.source ? ` / ${article.source}` : ""}
         {article.publishedAt ? ` / ${formatDate(article.publishedAt)}` : ""}
       </Text>
@@ -23,8 +25,29 @@ export function ArticleCard({ article, index }: ArticleCardProps) {
       </Heading>
       <Text style={summary}>{article.summary}</Text>
       {article.selectionReason ? <Text style={reason}>Why it matters: {article.selectionReason}</Text> : null}
+      <Text style={action}>
+        <Link href={article.url} style={actionLink}>
+          Open signal
+        </Link>
+      </Text>
     </Section>
   );
+}
+
+function getBadge(article: NewsletterArticle): string {
+  if (article.category === "competition" || article.category === "event") {
+    return "Opportunity";
+  }
+
+  if (article.category === "research") {
+    return "Research";
+  }
+
+  if (article.category === "tooling") {
+    return "Tooling";
+  }
+
+  return "Robotics News";
 }
 
 function formatDate(value: string): string {
@@ -37,15 +60,28 @@ function formatDate(value: string): string {
 }
 
 const section = {
-  border: "1px solid #dbe3ef",
-  borderRadius: "8px",
-  boxShadow: "0 1px 0 rgba(15, 23, 42, 0.04)",
-  margin: "0 0 14px",
+  backgroundColor: "#101827",
+  border: "1px solid #24466d",
+  borderRadius: "10px",
+  margin: "0 0 16px",
   padding: "18px 18px 16px"
 };
 
+const accent = {
+  color: "#08111f",
+  backgroundColor: "#a7f3d0",
+  borderRadius: "999px",
+  display: "inline-block",
+  fontSize: "11px",
+  fontWeight: "800",
+  lineHeight: "14px",
+  margin: "0 0 10px",
+  padding: "5px 9px",
+  textTransform: "uppercase" as const
+};
+
 const meta = {
-  color: "#64748b",
+  color: "#7dd3fc",
   fontSize: "12px",
   fontWeight: "700",
   lineHeight: "16px",
@@ -54,29 +90,40 @@ const meta = {
 };
 
 const heading = {
-  fontSize: "19px",
-  lineHeight: "25px",
+  fontSize: "20px",
+  lineHeight: "26px",
   margin: "0 0 8px"
 };
 
 const link = {
-  color: "#0f172a",
+  color: "#f8fafc",
   textDecoration: "none"
 };
 
 const summary = {
-  color: "#334155",
+  color: "#cbd5e1",
   fontSize: "15px",
   lineHeight: "23px",
   margin: "0 0 12px"
 };
 
 const reason = {
-  backgroundColor: "#f0f9ff",
-  borderLeft: "3px solid #0284c7",
-  color: "#0f172a",
+  backgroundColor: "#0f2238",
+  borderLeft: "3px solid #22d3ee",
+  color: "#dbeafe",
   fontSize: "13px",
   lineHeight: "20px",
-  margin: 0,
+  margin: "0 0 14px",
   padding: "10px 12px"
+};
+
+const action = {
+  margin: 0
+};
+
+const actionLink = {
+  color: "#8ffcff",
+  fontSize: "13px",
+  fontWeight: "800",
+  textDecoration: "none"
 };
