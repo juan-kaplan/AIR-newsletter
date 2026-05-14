@@ -1,18 +1,16 @@
-import { Heading, Link, Section, Text } from "@react-email/components";
+import { Button, Heading, Link, Section, Text } from "@react-email/components";
 import React from "react";
 import type { NewsletterArticle } from "../../../newsletter/src/types";
 
 interface ArticleCardProps {
   article: NewsletterArticle;
-  index: number;
 }
 
-export function ArticleCard({ article, index }: ArticleCardProps) {
+export function ArticleCard({ article }: ArticleCardProps) {
   return (
     <Section style={section}>
       <Text style={meta}>
-        {String(index + 1).padStart(2, "0")}
-        {` / ${labelForCategory(article.category)}`}
+        {labelForCategory(article.category)}
         {article.source ? ` / ${article.source}` : ""}
         {article.publishedAt ? ` / ${formatDate(article.publishedAt)}` : ""}
       </Text>
@@ -25,9 +23,9 @@ export function ArticleCard({ article, index }: ArticleCardProps) {
       {article.selectionReason ? (
         <Text style={reason}>Por qué importa: {article.selectionReason}</Text>
       ) : null}
-      <Link href={article.url} style={readLink}>
-        ABRIR ENLACE
-      </Link>
+      <Button href={article.url} style={readLink}>
+        Abrir enlace
+      </Button>
     </Section>
   );
 }
@@ -71,17 +69,15 @@ const section = {
 
 const meta = {
   color: "#adc7ff",
-  fontFamily: "'JetBrains Mono', monospace",
-  fontSize: "12px",
-  fontWeight: "700",
-  lineHeight: "16px",
+  fontSize: "13px",
+  fontWeight: "600",
+  lineHeight: "18px",
   letterSpacing: "0",
   margin: "0 0 8px",
-  textTransform: "uppercase" as const,
 };
 
 const heading = {
-  fontFamily: "Geist, Helvetica, Arial, sans-serif",
+  fontFamily: "Aptos, 'Segoe UI', Helvetica, Arial, sans-serif",
   fontSize: "24px",
   lineHeight: "30px",
   margin: "0 0 10px",
@@ -110,10 +106,13 @@ const reason = {
 };
 
 const readLink = {
-  color: "#adc7ff",
-  fontFamily: "'JetBrains Mono', monospace",
-  fontSize: "12px",
-  fontWeight: "500",
+  backgroundColor: "#adc7ff",
+  borderRadius: "4px",
+  color: "#102033",
+  display: "inline-block",
+  fontSize: "14px",
+  fontWeight: "700",
   letterSpacing: "0",
+  padding: "10px 14px",
   textDecoration: "none",
 };

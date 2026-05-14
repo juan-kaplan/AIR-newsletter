@@ -51,7 +51,7 @@ export function scoreArticle(article: NewsletterArticle): ScoredArticle {
       "rover challenge",
     ],
     24,
-    "señal de competencia",
+    "noticia de competencia",
     reasons,
   );
   score += addScore(

@@ -11,7 +11,7 @@ export function Footer({ unsubscribeUrl }: FooterProps) {
       <Text style={brand}>AIR Robótica · Universidad de San Andrés</Text>
       <Text style={text}>
         Generado para revisión manual por el flujo del boletín de AIR. Cada
-        envío resume señales útiles para aprender, competir y organizar mejores
+        envío resume noticias útiles para aprender, competir y organizar mejores
         actividades de robótica universitaria.
       </Text>
       <Text style={text}>
@@ -33,7 +33,7 @@ const section = {
 
 const brand = {
   color: "#e1e3e4",
-  fontFamily: "Geist, Helvetica, Arial, sans-serif",
+  fontFamily: "Aptos, 'Segoe UI', Helvetica, Arial, sans-serif",
   fontSize: "20px",
   fontWeight: "700",
   lineHeight: "26px",

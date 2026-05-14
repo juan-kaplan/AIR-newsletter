@@ -1,4 +1,4 @@
-import { Heading, Link, Section, Text } from "@react-email/components";
+import { Button, Heading, Link, Section, Text } from "@react-email/components";
 import React from "react";
 import { ArticleCard } from "./components/ArticleCard";
 import { Footer } from "./components/Footer";
@@ -15,17 +15,11 @@ export function WeeklyNewsletter({
   unsubscribeUrl,
 }: WeeklyNewsletterProps) {
   const [featured, ...secondaryArticles] = issue.articles;
-  const generatedWeeks =
-    issue.generatedFromWeeks && issue.generatedFromWeeks.length > 0
-      ? issue.generatedFromWeeks.join(", ")
-      : "edición actual";
 
   return (
     <Layout preheader={issue.preheader}>
       <Section style={hero}>
-        <Text style={heroMeta}>
-          VOL. AIR / {generatedWeeks} / {issue.articles.length} señales
-        </Text>
+        <Text style={heroMeta}>Boletín mensual de robótica</Text>
         <Heading as="h1" style={heading}>
           {issue.subject}
         </Heading>
@@ -34,7 +28,7 @@ export function WeeklyNewsletter({
 
       {featured ? (
         <Section style={featuredCard}>
-          <Text style={featuredLabel}>SEÑAL PRINCIPAL</Text>
+          <Text style={featuredLabel}>Noticia principal</Text>
           <Text style={featuredMeta}>{formatArticleMeta(featured)}</Text>
           <Heading as="h2" style={featuredHeading}>
             <Link href={featured.url} style={featuredLink}>
@@ -47,9 +41,9 @@ export function WeeklyNewsletter({
               Por qué importa: {featured.selectionReason}
             </Text>
           ) : null}
-          <Link href={featured.url} style={cta}>
-            LEER LA NOTA COMPLETA
-          </Link>
+          <Button href={featured.url} style={cta}>
+            Leer noticia
+          </Button>
         </Section>
       ) : null}
 
@@ -57,7 +51,7 @@ export function WeeklyNewsletter({
 
       <Section style={digestHeader}>
         <Text style={sectionMarker}> </Text>
-        <Text style={digestLabel}>SEÑALES SELECCIONADAS</Text>
+        <Text style={digestLabel}>Noticias seleccionadas</Text>
         <Text style={digestCount}>
           Una curaduría breve para detectar competencias, oportunidades e ideas
           técnicas que el club pueda convertir en proyectos o actividades
@@ -65,8 +59,8 @@ export function WeeklyNewsletter({
         </Text>
       </Section>
 
-      {secondaryArticles.map((article, index) => (
-        <ArticleCard article={article} index={index + 1} key={article.url} />
+      {secondaryArticles.map((article) => (
+        <ArticleCard article={article} key={article.url} />
       ))}
       <Footer unsubscribeUrl={unsubscribeUrl} />
     </Layout>
@@ -122,17 +116,16 @@ const hero = {
 
 const heroMeta = {
   color: "#c1c6d7",
-  fontFamily: "'JetBrains Mono', monospace",
-  fontSize: "12px",
+  fontSize: "14px",
+  fontWeight: "600",
   letterSpacing: "0",
-  lineHeight: "18px",
+  lineHeight: "20px",
   margin: "0 0 14px",
-  textTransform: "uppercase" as const,
 };
 
 const heading = {
   color: "#e1e3e4",
-  fontFamily: "Geist, Helvetica, Arial, sans-serif",
+  fontFamily: "Aptos, 'Segoe UI', Helvetica, Arial, sans-serif",
   fontSize: "44px",
   fontWeight: "700",
   lineHeight: "50px",
@@ -156,27 +149,24 @@ const featuredCard = {
 
 const featuredLabel = {
   color: "#adc7ff",
-  fontFamily: "'JetBrains Mono', monospace",
-  fontSize: "12px",
+  fontSize: "14px",
+  fontWeight: "700",
   letterSpacing: "0",
-  lineHeight: "16px",
+  lineHeight: "20px",
   margin: "0 0 8px",
-  textTransform: "uppercase" as const,
 };
 
 const featuredMeta = {
   color: "#c1c6d7",
-  fontFamily: "'JetBrains Mono', monospace",
-  fontSize: "12px",
+  fontSize: "13px",
   letterSpacing: "0",
-  lineHeight: "18px",
+  lineHeight: "19px",
   margin: "0 0 18px",
-  textTransform: "uppercase" as const,
 };
 
 const featuredHeading = {
   color: "#e1e3e4",
-  fontFamily: "Geist, Helvetica, Arial, sans-serif",
+  fontFamily: "Aptos, 'Segoe UI', Helvetica, Arial, sans-serif",
   fontSize: "30px",
   lineHeight: "36px",
   margin: "0 0 14px",
@@ -204,15 +194,14 @@ const featuredReason = {
 };
 
 const cta = {
-  border: "1px solid #414754",
+  backgroundColor: "#adc7ff",
   borderRadius: "4px",
-  color: "#e1e3e4",
+  color: "#102033",
   display: "inline-block",
-  fontFamily: "'JetBrains Mono', monospace",
-  fontSize: "12px",
-  fontWeight: "500",
+  fontSize: "14px",
+  fontWeight: "700",
   letterSpacing: "0",
-  padding: "12px 16px",
+  padding: "11px 16px",
   textDecoration: "none",
 };
 
@@ -243,7 +232,7 @@ const sectionMarker = {
 const digestLabel = {
   color: "#e1e3e4",
   display: "inline-block",
-  fontFamily: "Geist, Helvetica, Arial, sans-serif",
+  fontFamily: "Aptos, 'Segoe UI', Helvetica, Arial, sans-serif",
   fontSize: "24px",
   fontWeight: "600",
   lineHeight: "30px",

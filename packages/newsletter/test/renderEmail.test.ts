@@ -5,7 +5,7 @@ import type { NewsletterIssue } from "../src/types";
 const issue: NewsletterIssue = {
   slug: "weekly",
   subject: "Boletín AIR Robótica - mayo de 2026",
-  preheader: "Noticias, oportunidades y señales técnicas para AIR.",
+  preheader: "Noticias, oportunidades y recursos técnicos para AIR.",
   articles: [
     {
       title: "Useful link",
@@ -32,6 +32,6 @@ describe("renderEmail", () => {
     );
     expect(rendered.html).toContain("Robotics Feed");
     expect(rendered.html).toContain("AIR ROBÓTICA");
-    expect(rendered.html).toContain("SEÑALES SELECCIONADAS");
+    expect(rendered.html).toContain("Noticias seleccionadas");
   });
 });

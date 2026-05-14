@@ -4,7 +4,7 @@ export const sampleIssue: NewsletterIssue = {
   slug: "robotics-newsletter-sample",
   subject: "Boletín AIR Robótica - edición de prueba",
   preheader:
-    "Noticias, oportunidades y señales técnicas para el club de robótica de la Universidad de San Andrés.",
+    "Noticias, oportunidades y recursos técnicos para el club de robótica de la Universidad de San Andrés.",
   articles: [
     {
       title: "El flujo del boletín ya está conectado",

@@ -17,7 +17,7 @@ export async function buildIssue(): Promise<NewsletterIssue> {
     slug: `robotics-newsletter-${issueMonth.getUTCFullYear()}-${String(issueMonth.getUTCMonth() + 1).padStart(2, "0")}`,
     subject: `Boletín AIR Robótica - ${monthName}`,
     preheader:
-      "Noticias, oportunidades y señales técnicas para el club de robótica de la Universidad de San Andrés.",
+      "Noticias, oportunidades y recursos técnicos para el club de robótica de la Universidad de San Andrés.",
     articles: articles.slice(0, 10),
     generatedFromWeeks: weeklyDigests.map((digest) => digest.week),
   };

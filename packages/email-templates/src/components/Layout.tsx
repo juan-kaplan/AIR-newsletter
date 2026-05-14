@@ -44,10 +44,8 @@ export function Layout({ children, preheader }: LayoutProps) {
 
 const body = {
   backgroundColor: "#111415",
-  backgroundImage: "radial-gradient(#2a2a2a 1px, transparent 1px)",
-  backgroundSize: "32px 32px",
   color: "#e1e3e4",
-  fontFamily: "Inter, Arial, sans-serif",
+  fontFamily: "Aptos, 'Segoe UI', Helvetica, Arial, sans-serif",
   margin: 0,
   padding: "0 0 80px",
 };
@@ -79,7 +77,7 @@ const eyebrow = {
 
 const brand = {
   color: "#adc7ff",
-  fontFamily: "Geist, Helvetica, Arial, sans-serif",
+  fontFamily: "Aptos, 'Segoe UI', Helvetica, Arial, sans-serif",
   fontSize: "24px",
   fontWeight: "700",
   lineHeight: "30px",
@@ -96,7 +94,6 @@ const edition = {
   borderRadius: "4px",
   color: "#e1e3e4",
   display: "inline-block",
-  fontFamily: "'JetBrains Mono', monospace",
   fontSize: "12px",
   letterSpacing: "0",
   margin: "0",
