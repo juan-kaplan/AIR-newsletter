@@ -1,0 +1,38 @@
+{
+  "week": "2026-W20",
+  "collectedAt": "2026-05-14T19:46:50.240Z",
+  "windowStart": "2026-05-11T00:00:00.000Z",
+  "windowEnd": "2026-05-18T00:00:00.000Z",
+  "articles": [
+    {
+      "title": "RobotX Challenge 2026",
+      "url": "https://robotx.org/2026",
+      "summary": "Program RobotX Challenge 2026 It's time to take maritime robotics and autonomy to the next level. Let us introduce you to the Maritime RobotX Challenge. In real-world port, harbor, and coastal operations, no single vehicle operates in isolation. Modern maritime autonomy depends on cross-domain coordination with vessels",
+      "source": "RobotX Challenge 2026",
+      "category": "competition",
+      "publishedAt": "2026-05-14T19:46:50.273Z",
+      "score": 50,
+      "selectionReason": "competition signal, competition source"
+    },
+    {
+      "title": "Canadian Drone Regulations and Testing Explained: Introduction to Canadian Drone Testing",
+      "url": "https://roboticsandautomationnews.com/2026/05/14/canadian-drone-regulations-and-testing-explained-introduction-to-canadian-drone-testing/101556/",
+      "summary": "Canada has become one of the leading countries in drone technology and innovation. From snowy mountain regions to crowded urban areas, the country provides a perfect environment for testing advanced drone systems. A Canadian drone test is more than just flying",
+      "source": "Robotics & Automation News",
+      "category": "industry",
+      "publishedAt": "2026-05-14T15:55:39.000Z",
+      "score": 22,
+      "selectionReason": "buildable technical idea"
+    },
+    {
+      "title": "PAL Robotics unveils new robotic arm platform for advanced AI-driven manipulation",
+      "url": "https://roboticsandautomationnews.com/2026/05/14/pal-robotics-unveils-new-robotic-arm-platform-for-advanced-ai-driven-manipulation/101537/",
+      "summary": "PAL Robotics has announced a new robotic arm platform aimed at researchers, developers, and robotics engineers working on advanced manipulation applications. The Barcelona-based robotics company, known for platforms including TIAGo Pro and Kangaroo, said the n",
+      "source": "Robotics & Automation News",
+      "category": "industry",
+      "publishedAt": "2026-05-14T13:51:02.000Z",
+      "score": 22,
+      "selectionReason": "buildable technical idea"
+    }
+  ]
+}

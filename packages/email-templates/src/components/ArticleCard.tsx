@@ -12,6 +12,7 @@ export function ArticleCard({ article, index }: ArticleCardProps) {
     <Section style={section}>
       <Text style={meta}>
         {String(index + 1).padStart(2, "0")}
+        {article.category ? ` / ${article.category}` : ""}
         {article.source ? ` / ${article.source}` : ""}
         {article.publishedAt ? ` / ${formatDate(article.publishedAt)}` : ""}
       </Text>
@@ -21,6 +22,7 @@ export function ArticleCard({ article, index }: ArticleCardProps) {
         </Link>
       </Heading>
       <Text style={summary}>{article.summary}</Text>
+      {article.selectionReason ? <Text style={reason}>Why it matters: {article.selectionReason}</Text> : null}
     </Section>
   );
 }
@@ -35,8 +37,9 @@ function formatDate(value: string): string {
 }
 
 const section = {
-  border: "1px solid #e5e7eb",
+  border: "1px solid #dbe3ef",
   borderRadius: "8px",
+  boxShadow: "0 1px 0 rgba(15, 23, 42, 0.04)",
   margin: "0 0 14px",
   padding: "18px 18px 16px"
 };
@@ -65,5 +68,15 @@ const summary = {
   color: "#334155",
   fontSize: "15px",
   lineHeight: "23px",
-  margin: 0
+  margin: "0 0 12px"
+};
+
+const reason = {
+  backgroundColor: "#f0f9ff",
+  borderLeft: "3px solid #0284c7",
+  color: "#0f172a",
+  fontSize: "13px",
+  lineHeight: "20px",
+  margin: 0,
+  padding: "10px 12px"
 };

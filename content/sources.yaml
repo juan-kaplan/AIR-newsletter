@@ -3,14 +3,43 @@ sources:
     name: IEEE Spectrum Robotics
     type: rss
     url: https://spectrum.ieee.org/feeds/topic/robotics.rss
-    maxItems: 4
+    category: research
+    maxItems: 8
   - key: sciencedaily-robotics
     name: ScienceDaily Robotics
     type: rss
     url: https://www.sciencedaily.com/rss/computers_math/robotics.xml
+    category: research
     maxItems: 4
   - key: sciencedaily-robotics-research
     name: ScienceDaily Robotics Research
     type: rss
     url: https://www.sciencedaily.com/rss/matter_energy/robotics.xml
+    category: research
     maxItems: 4
+  - key: robohub
+    name: Robohub
+    type: rss
+    url: https://robohub.org/feed/
+    category: research
+    maxItems: 5
+  - key: robotics-automation-news
+    name: Robotics & Automation News
+    type: rss
+    url: https://roboticsandautomationnews.com/feed/
+    category: industry
+    maxItems: 5
+  - key: robotx-news
+    name: RobotX News
+    type: rss
+    url: https://robotx.org/feed
+    category: competition
+    maxItems: 5
+  - key: robotx-2026-page
+    name: RobotX Challenge 2026
+    type: competition_page
+    url: https://robotx.org/2026
+  - key: robocup-2026-page
+    name: RoboCup 2026
+    type: competition_page
+    url: https://2026.robocup.org/

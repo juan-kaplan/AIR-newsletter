@@ -15,9 +15,19 @@ export interface RssSource {
   type: "rss";
   url: string;
   maxItems?: number;
+  category?: "competition" | "research" | "industry" | "tooling" | "event";
+  priority?: number;
 }
 
-export type NewsletterSource = MarkdownSource | RssSource;
+export interface CompetitionPageSource {
+  key: string;
+  name: string;
+  type: "competition_page";
+  url: string;
+  maxItems?: number;
+}
+
+export type NewsletterSource = MarkdownSource | RssSource | CompetitionPageSource;
 
 interface SourcesFile {
   sources?: NewsletterSource[];

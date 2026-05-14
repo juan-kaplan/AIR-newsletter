@@ -97,6 +97,7 @@ function toNewsletterArticle(entry: FeedEntry, source: RssSource): NewsletterArt
     url,
     summary,
     source: source.name,
+    ...(source.category ? { category: source.category } : {}),
     ...(publishedAt ? { publishedAt: normalizeDate(publishedAt) } : {})
   };
 }

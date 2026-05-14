@@ -1,13 +1,19 @@
 #!/usr/bin/env node
 import { buildIssue } from "./compose/buildIssue";
-import { verifyCollectionSources } from "./collect";
+import { collectAndStoreWeeklyDigest, verifyCollectionSources } from "./collect";
 import { renderEmail } from "./render/renderEmail";
 import { sendIssue } from "./send/sendIssue";
 
 const [, , command, ...args] = process.argv;
 
 async function main(): Promise<void> {
-  if (command === "collect" || command === "draft") {
+  if (command === "collect") {
+    const result = await collectAndStoreWeeklyDigest();
+    console.log(JSON.stringify(result, null, 2));
+    return;
+  }
+
+  if (command === "draft") {
     const issue = await buildIssue();
     console.log(JSON.stringify(issue, null, 2));
     return;

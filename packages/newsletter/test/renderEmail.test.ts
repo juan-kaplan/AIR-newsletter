@@ -24,6 +24,6 @@ describe("renderEmail", () => {
     expect(rendered.html).toContain("https://worker.test/unsubscribe?token=abc");
     expect(rendered.text).toContain("https://worker.test/unsubscribe?token=abc");
     expect(rendered.html).toContain("Robotics Feed");
-    expect(rendered.html).toContain("This month in robotics");
+    expect(rendered.html).toContain("Competition-minded robotics brief");
   });
 });

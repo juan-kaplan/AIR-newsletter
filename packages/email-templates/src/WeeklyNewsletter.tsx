@@ -18,8 +18,11 @@ export function WeeklyNewsletter({ issue, unsubscribeUrl }: WeeklyNewsletterProp
       </Heading>
       <Text style={intro}>{issue.preheader}</Text>
       <Section style={digestHeader}>
-        <Text style={digestLabel}>This month in robotics</Text>
-        <Text style={digestCount}>{issue.articles.length} source-backed links</Text>
+        <Text style={digestLabel}>Competition-minded robotics brief</Text>
+        <Text style={digestCount}>
+          {issue.articles.length} selected links
+          {issue.generatedFromWeeks && issue.generatedFromWeeks.length > 0 ? ` from ${issue.generatedFromWeeks.join(", ")}` : ""}
+        </Text>
       </Section>
       {issue.articles.map((article, index) => (
         <ArticleCard article={article} index={index} key={article.url} />

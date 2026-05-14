@@ -4,6 +4,9 @@ export interface NewsletterArticle {
   summary: string;
   source?: string;
   publishedAt?: string;
+  category?: "competition" | "research" | "industry" | "tooling" | "event";
+  score?: number;
+  selectionReason?: string;
 }
 
 export interface NewsletterIssue {
@@ -11,6 +14,7 @@ export interface NewsletterIssue {
   subject: string;
   preheader: string;
   articles: NewsletterArticle[];
+  generatedFromWeeks?: string[];
 }
 
 export interface Subscriber {
