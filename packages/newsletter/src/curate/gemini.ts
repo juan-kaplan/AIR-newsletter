@@ -19,6 +19,7 @@ interface GeminiSelection {
 export async function refineRankingWithGemini(articles: ScoredArticle[], limit: number, env: NodeJS.ProcessEnv = process.env): Promise<ScoredArticle[]> {
   const apiKey = env.GEMINI_API_KEY;
   if (!apiKey || articles.length === 0) {
+    console.warn(apiKey ? "Gemini curation skipped: no candidate articles." : "Gemini curation skipped: GEMINI_API_KEY is not set.");
     return articles.slice(0, limit);
   }
 
@@ -36,12 +37,18 @@ export async function refineRankingWithGemini(articles: ScoredArticle[], limit: 
     );
 
     if (!response.ok) {
+      console.warn(`Gemini curation fallback: HTTP ${response.status}.`);
       return articles.slice(0, limit);
     }
 
     const payload = (await response.json()) as GeminiResponse;
     const text = payload.candidates?.[0]?.content?.parts?.[0]?.text;
-    const parsed = text ? (JSON.parse(text) as GeminiSelection) : {};
+    if (!text) {
+      console.warn("Gemini curation fallback: empty model response.");
+      return articles.slice(0, limit);
+    }
+
+    const parsed = parseGeminiSelection(text);
     const byUrl = new Map(articles.map((article) => [article.url, article]));
     const selected = (parsed.selected ?? [])
       .flatMap((item) => {
@@ -58,10 +65,23 @@ export async function refineRankingWithGemini(articles: ScoredArticle[], limit: 
       })
       .slice(0, limit);
 
-    return selected.length > 0 ? selected : articles.slice(0, limit);
-  } catch {
+    if (selected.length === 0) {
+      console.warn("Gemini curation fallback: model returned no matching URLs.");
+      return articles.slice(0, limit);
+    }
+
+    console.warn(`Gemini curation selected ${selected.length} article(s).`);
+    return selected;
+  } catch (error) {
+    console.warn(`Gemini curation fallback: ${error instanceof Error ? error.message : "unknown error"}.`);
     return articles.slice(0, limit);
   }
+}
+
+function parseGeminiSelection(text: string): GeminiSelection {
+  const trimmed = text.trim();
+  const withoutFence = trimmed.replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/i, "");
+  return JSON.parse(withoutFence) as GeminiSelection;
 }
 
 function buildPrompt(articles: ScoredArticle[], limit: number): string {
