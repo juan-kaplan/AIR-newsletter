@@ -1,6 +1,6 @@
 {
   "week": "2026-W20",
-  "collectedAt": "2026-05-14T20:09:47.654Z",
+  "collectedAt": "2026-05-14T20:11:03.508Z",
   "windowStart": "2026-05-11T00:00:00.000Z",
   "windowEnd": "2026-05-18T00:00:00.000Z",
   "articles": [
@@ -10,9 +10,9 @@
       "summary": "2026 About RoboCup Leagues RoboCupSoccer RoboCupRescue RoboCup@Home RoboCupIndustrial RoboCupJunior Symposium Symposium WEROB Participants Registration Award Accomodation Incheon travel guide Stamp tour Travel News Contact Languages English Korean ✕ Welcome to RoboCup 2026! June 30 to July 6, 2026 Incheon, Republic of ",
       "source": "RoboCup 2026",
       "category": "competition",
-      "publishedAt": "2026-05-14T20:09:47.689Z",
-      "score": 70,
-      "selectionReason": "competition signal, actionable deadline, competition source"
+      "publishedAt": "2026-05-14T20:11:03.551Z",
+      "score": 95,
+      "selectionReason": "Major global competition for university teams, great for inspiration and participation."
     },
     {
       "title": "WCRC",
@@ -20,9 +20,19 @@
       "summary": "WCRC 2026 – Wall-Climbing Robot Challenge | IEEE RAS UJ Skip to main content WCRC Journey Challenge Specs The Wall Prizes Process Sponsors FAQ Venue Ambassador ع | EN Register Now menu Journey Challenge Specs The Wall Prizes Process Sponsors FAQ Venue Campus Ambassador ع | EN Register Now Registration Open WCRC Wall-Cl",
       "source": "Wall-Climbing Robot Challenge 2026",
       "category": "competition",
-      "publishedAt": "2026-05-14T20:09:47.689Z",
-      "score": 70,
-      "selectionReason": "competition signal, actionable deadline, competition source"
+      "publishedAt": "2026-05-14T20:11:03.551Z",
+      "score": 90,
+      "selectionReason": "A unique wall-climbing robot challenge, perfect for inspiring a new club project or local competition."
+    },
+    {
+      "title": "2026 UNSW STEM, Robotics & Coding Challenge",
+      "url": "https://roboticscodingchallenge.org/current/",
+      "summary": "Individual Support Getting Started Register Sign In 2026 UNSW STEM, Robotics & Coding Challenge 2026 Challenge UNSW STEM, Robotics & Coding Challenge The Highway Collapse — A massive geotechnical failure has severed a critical transport route. Design coding, robotics, and AI solutions for rescue, logistics, safety, and",
+      "source": "UNSW Robotics & Coding Challenge 2026",
+      "category": "competition",
+      "publishedAt": "2026-05-14T20:11:03.551Z",
+      "score": 85,
+      "selectionReason": "A themed challenge focused on rescue and logistics, great for project ideas and competition inspiration."
     },
     {
       "title": "Closing the gap between animal movement and robotic control",
@@ -31,28 +41,8 @@
       "source": "Tech Xplore Robotics",
       "category": "research",
       "publishedAt": "2026-05-12T15:40:06.000Z",
-      "score": 26,
-      "selectionReason": "student-team fit"
-    },
-    {
-      "title": "2026 UNSW STEM, Robotics & Coding Challenge",
-      "url": "https://roboticscodingchallenge.org/current/",
-      "summary": "Individual Support Getting Started Register Sign In 2026 UNSW STEM, Robotics & Coding Challenge 2026 Challenge UNSW STEM, Robotics & Coding Challenge The Highway Collapse — A massive geotechnical failure has severed a critical transport route. Design coding, robotics, and AI solutions for rescue, logistics, safety, and",
-      "source": "UNSW Robotics & Coding Challenge 2026",
-      "category": "competition",
-      "publishedAt": "2026-05-14T20:09:47.689Z",
-      "score": 22,
-      "selectionReason": "competition source"
-    },
-    {
-      "title": "Canadian Drone Regulations and Testing Explained: Introduction to Canadian Drone Testing",
-      "url": "https://roboticsandautomationnews.com/2026/05/14/canadian-drone-regulations-and-testing-explained-introduction-to-canadian-drone-testing/101556/",
-      "summary": "Canada has become one of the leading countries in drone technology and innovation. From snowy mountain regions to crowded urban areas, the country provides a perfect environment for testing advanced drone systems. A Canadian drone test is more than just flying",
-      "source": "Robotics & Automation News",
-      "category": "industry",
-      "publishedAt": "2026-05-14T15:55:39.000Z",
-      "score": 22,
-      "selectionReason": "buildable technical idea"
+      "score": 80,
+      "selectionReason": "Explores bio-inspired AI for robot control, offering insights into advanced autonomy research."
     },
     {
       "title": "PAL Robotics unveils new robotic arm platform for advanced AI-driven manipulation",
@@ -61,8 +51,18 @@
       "source": "Robotics & Automation News",
       "category": "industry",
       "publishedAt": "2026-05-14T13:51:02.000Z",
-      "score": 22,
-      "selectionReason": "buildable technical idea"
+      "score": 75,
+      "selectionReason": "New robotic arm platform for AI-driven manipulation, useful for research and advanced projects."
+    },
+    {
+      "title": "Honeybees teach drones how to navigate",
+      "url": "https://techxplore.com/news/2026-05-honeybees-drones.html",
+      "summary": "It sounds like science fiction, but also strangely familiar: drones buzzing around, inspecting tomatoes in greenhouses, delivering your package or inspecting an industrial site. With all the talk about drone-swarms, development in drones seems to move fast. Bu",
+      "source": "Tech Xplore Robotics",
+      "category": "research",
+      "publishedAt": "2026-05-13T15:00:24.000Z",
+      "score": 80,
+      "selectionReason": "Fascinating research on bio-inspired drone navigation, great for understanding advanced autonomy."
     }
   ]
 }
