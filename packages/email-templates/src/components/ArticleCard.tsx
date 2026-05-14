@@ -1,4 +1,11 @@
-import { Button, Heading, Link, Section, Text } from "@react-email/components";
+import {
+  Button,
+  Heading,
+  Img,
+  Link,
+  Section,
+  Text,
+} from "@react-email/components";
 import React from "react";
 import type { NewsletterArticle } from "../../../newsletter/src/types";
 
@@ -9,6 +16,9 @@ interface ArticleCardProps {
 export function ArticleCard({ article }: ArticleCardProps) {
   return (
     <Section style={section}>
+      {article.imageUrl ? (
+        <Img alt="" src={article.imageUrl} style={image} />
+      ) : null}
       <Text style={meta}>
         {labelForCategory(article.category)}
         {article.source ? ` / ${article.source}` : ""}
@@ -65,6 +75,16 @@ const section = {
   borderRadius: "8px",
   margin: "0 0 18px",
   padding: "24px",
+};
+
+const image = {
+  border: "1px solid #2a2a2a",
+  borderRadius: "6px",
+  display: "block",
+  height: "auto",
+  margin: "0 0 16px",
+  maxWidth: "100%",
+  width: "100%",
 };
 
 const meta = {

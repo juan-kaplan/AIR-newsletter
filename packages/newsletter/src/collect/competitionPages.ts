@@ -1,17 +1,29 @@
 import type { CompetitionPageSource } from "./sources";
+import { extractHtmlImageUrl } from "./rss";
 import type { NewsletterArticle } from "../types";
 
-export async function collectCompetitionPages(sources: CompetitionPageSource[], now = new Date()): Promise<NewsletterArticle[]> {
-  const settled = await Promise.allSettled(sources.map((source) => collectCompetitionPage(source, now)));
-  return settled.flatMap((result) => (result.status === "fulfilled" ? result.value : []));
+export async function collectCompetitionPages(
+  sources: CompetitionPageSource[],
+  now = new Date(),
+): Promise<NewsletterArticle[]> {
+  const settled = await Promise.allSettled(
+    sources.map((source) => collectCompetitionPage(source, now)),
+  );
+  return settled.flatMap((result) =>
+    result.status === "fulfilled" ? result.value : [],
+  );
 }
 
-async function collectCompetitionPage(source: CompetitionPageSource, now: Date): Promise<NewsletterArticle[]> {
+async function collectCompetitionPage(
+  source: CompetitionPageSource,
+  now: Date,
+): Promise<NewsletterArticle[]> {
   const response = await fetch(source.url, {
     headers: {
       accept: "text/html,application/xhtml+xml",
-      "user-agent": "AIR Robotics Newsletter/0.1 (+https://github.com/jerecoder/AIR-newsletter)"
-    }
+      "user-agent":
+        "AIR Robotics Newsletter/0.1 (+https://github.com/jerecoder/AIR-newsletter)",
+    },
   });
 
   if (!response.ok) {
@@ -22,6 +34,7 @@ async function collectCompetitionPage(source: CompetitionPageSource, now: Date):
   const text = cleanText(stripHtml(html));
   const title = extractTitle(html) ?? source.name;
   const deadlineSnippet = extractCompetitionSnippet(text, now);
+  const imageUrl = extractHtmlImageUrl(html, source.url);
 
   if (!deadlineSnippet) {
     return [];
@@ -34,19 +47,31 @@ async function collectCompetitionPage(source: CompetitionPageSource, now: Date):
       summary: deadlineSnippet,
       source: source.name,
       category: "competition",
-      publishedAt: now.toISOString()
-    }
+      ...(imageUrl ? { imageUrl } : {}),
+      publishedAt: now.toISOString(),
+    },
   ];
 }
 
 function extractTitle(html: string): string | null {
-  const heading = /<h1[^>]*>([\s\S]*?)<\/h1>/i.exec(html)?.[1] ?? /<title[^>]*>([\s\S]*?)<\/title>/i.exec(html)?.[1];
+  const heading =
+    /<h1[^>]*>([\s\S]*?)<\/h1>/i.exec(html)?.[1] ??
+    /<title[^>]*>([\s\S]*?)<\/title>/i.exec(html)?.[1];
   return heading ? cleanText(stripHtml(heading)) : null;
 }
 
 function extractCompetitionSnippet(text: string, now: Date): string | null {
   const lower = text.toLowerCase();
-  const anchors = ["registration", "deadline", "application", "apply", "team", "qualification", "challenge", "competition"];
+  const anchors = [
+    "registration",
+    "deadline",
+    "application",
+    "apply",
+    "team",
+    "qualification",
+    "challenge",
+    "competition",
+  ];
   const snippets = anchors
     .flatMap((anchor) => findAnchorPositions(lower, anchor))
     .sort((first, second) => first - second)
@@ -56,7 +81,11 @@ function extractCompetitionSnippet(text: string, now: Date): string | null {
     return null;
   }
 
-  if (/\b(registration|grant application|applications?)\b.{0,80}\b(now closed|closed)\b/i.test(text)) {
+  if (
+    /\b(registration|grant application|applications?)\b.{0,80}\b(now closed|closed)\b/i.test(
+      text,
+    )
+  ) {
     return null;
   }
 
@@ -65,20 +94,35 @@ function extractCompetitionSnippet(text: string, now: Date): string | null {
     .map((snippet) => ({ snippet, dates: extractDates(snippet, now) }))
     .filter((item) => item.dates.length > 0);
 
-  if (datedDeadlineSnippets.length > 0 && !datedDeadlineSnippets.some((item) => item.dates.some((date) => isFutureOrToday(date, now)))) {
+  if (
+    datedDeadlineSnippets.length > 0 &&
+    !datedDeadlineSnippets.some((item) =>
+      item.dates.some((date) => isFutureOrToday(date, now)),
+    )
+  ) {
     return null;
   }
 
   const opportunitySnippets = snippets.filter(isOpportunitySnippet);
-  const candidateSnippets = opportunitySnippets.length > 0 ? opportunitySnippets : snippets;
-  const datedSnippets = candidateSnippets.map((snippet) => ({ snippet, dates: extractDates(snippet, now) })).filter((item) => item.dates.length > 0);
-  const futureDatedSnippet = datedSnippets.find((item) => item.dates.some((date) => isFutureOrToday(date, now)));
+  const candidateSnippets =
+    opportunitySnippets.length > 0 ? opportunitySnippets : snippets;
+  const datedSnippets = candidateSnippets
+    .map((snippet) => ({ snippet, dates: extractDates(snippet, now) }))
+    .filter((item) => item.dates.length > 0);
+  const futureDatedSnippet = datedSnippets.find((item) =>
+    item.dates.some((date) => isFutureOrToday(date, now)),
+  );
 
   if (datedSnippets.length > 0 && !futureDatedSnippet) {
     return null;
   }
 
-  return (futureDatedSnippet?.snippet ?? candidateSnippets[0] ?? null)?.slice(0, 320) ?? null;
+  return (
+    (futureDatedSnippet?.snippet ?? candidateSnippets[0] ?? null)?.slice(
+      0,
+      320,
+    ) ?? null
+  );
 }
 
 function findAnchorPositions(text: string, anchor: string): number[] {
@@ -105,11 +149,15 @@ function getSnippet(text: string, index: number): string {
 }
 
 function isOpportunitySnippet(snippet: string): boolean {
-  return /\b(deadline|registration|applications?|apply|proposal|submission|qualification)\b/i.test(snippet);
+  return /\b(deadline|registration|applications?|apply|proposal|submission|qualification)\b/i.test(
+    snippet,
+  );
 }
 
 function hasDeadlineSignal(snippet: string): boolean {
-  return /\b(deadline|registration deadline|applications? deadline|submission deadline|qualification deadline)\b/i.test(snippet);
+  return /\b(deadline|registration deadline|applications? deadline|submission deadline|qualification deadline)\b/i.test(
+    snippet,
+  );
 }
 
 function extractDates(text: string, now: Date): Date[] {
@@ -118,7 +166,8 @@ function extractDates(text: string, now: Date): Date[] {
 
 function extractMonthFirstDates(text: string, now: Date): Date[] {
   const dates: Date[] = [];
-  const pattern = /\b(January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{1,2})(?:st|nd|rd|th)?(?:,?\s+(\d{4}))?/gi;
+  const pattern =
+    /\b(January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{1,2})(?:st|nd|rd|th)?(?:,?\s+(\d{4}))?/gi;
   for (const match of text.matchAll(pattern)) {
     const month = monthIndex(match[1] ?? "");
     const day = Number.parseInt(match[2] ?? "", 10);
@@ -133,7 +182,8 @@ function extractMonthFirstDates(text: string, now: Date): Date[] {
 
 function extractDayFirstDates(text: string): Date[] {
   const dates: Date[] = [];
-  const pattern = /\b(?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)?,?\s*(\d{1,2})(?:st|nd|rd|th)?\s+(January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{4})\b/gi;
+  const pattern =
+    /\b(?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)?,?\s*(\d{1,2})(?:st|nd|rd|th)?\s+(January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{4})\b/gi;
   for (const match of text.matchAll(pattern)) {
     const day = Number.parseInt(match[1] ?? "", 10);
     const month = monthIndex(match[2] ?? "");
@@ -147,7 +197,9 @@ function extractDayFirstDates(text: string): Date[] {
 }
 
 function isFutureOrToday(date: Date, now: Date): boolean {
-  const today = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
+  const today = new Date(
+    Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()),
+  );
   return date >= today;
 }
 
@@ -164,12 +216,15 @@ function monthIndex(value: string): number {
     "september",
     "october",
     "november",
-    "december"
+    "december",
   ].indexOf(value.toLowerCase());
 }
 
 function stripHtml(value: string): string {
-  return value.replace(/<script[\s\S]*?<\/script>/gi, " ").replace(/<style[\s\S]*?<\/style>/gi, " ").replace(/<[^>]+>/g, " ");
+  return value
+    .replace(/<script[\s\S]*?<\/script>/gi, " ")
+    .replace(/<style[\s\S]*?<\/style>/gi, " ")
+    .replace(/<[^>]+>/g, " ");
 }
 
 function cleanText(value: string): string {

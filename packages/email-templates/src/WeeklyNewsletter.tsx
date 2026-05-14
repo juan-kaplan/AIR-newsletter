@@ -1,4 +1,11 @@
-import { Button, Heading, Link, Section, Text } from "@react-email/components";
+import {
+  Button,
+  Heading,
+  Img,
+  Link,
+  Section,
+  Text,
+} from "@react-email/components";
 import React from "react";
 import { ArticleCard } from "./components/ArticleCard";
 import { Footer } from "./components/Footer";
@@ -28,6 +35,9 @@ export function WeeklyNewsletter({
 
       {featured ? (
         <Section style={featuredCard}>
+          {featured.imageUrl ? (
+            <Img alt="" src={featured.imageUrl} style={featuredImage} />
+          ) : null}
           <Text style={featuredLabel}>Noticia principal</Text>
           <Text style={featuredMeta}>{formatArticleMeta(featured)}</Text>
           <Heading as="h2" style={featuredHeading}>
@@ -154,6 +164,16 @@ const featuredLabel = {
   letterSpacing: "0",
   lineHeight: "20px",
   margin: "0 0 8px",
+};
+
+const featuredImage = {
+  border: "1px solid #2a2a2a",
+  borderRadius: "6px",
+  display: "block",
+  height: "auto",
+  margin: "0 0 22px",
+  maxWidth: "100%",
+  width: "100%",
 };
 
 const featuredMeta = {

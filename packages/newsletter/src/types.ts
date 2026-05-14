@@ -4,6 +4,7 @@ export interface NewsletterArticle {
   summary: string;
   source?: string;
   publishedAt?: string;
+  imageUrl?: string;
   category?: "competition" | "research" | "industry" | "tooling" | "event";
   score?: number;
   selectionReason?: string;

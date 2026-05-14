@@ -1,38 +1,19 @@
 {
   "week": "2026-W20",
-  "collectedAt": "2026-05-14T20:11:03.508Z",
+  "collectedAt": "2026-05-14T23:14:27.945Z",
   "windowStart": "2026-05-11T00:00:00.000Z",
   "windowEnd": "2026-05-18T00:00:00.000Z",
   "articles": [
-    {
-      "title": "Home - RoboCup 2026",
-      "url": "https://2026.robocup.org/",
-      "summary": "2026 About RoboCup Leagues RoboCupSoccer RoboCupRescue RoboCup@Home RoboCupIndustrial RoboCupJunior Symposium Symposium WEROB Participants Registration Award Accomodation Incheon travel guide Stamp tour Travel News Contact Languages English Korean ✕ Welcome to RoboCup 2026! June 30 to July 6, 2026 Incheon, Republic of ",
-      "source": "RoboCup 2026",
-      "category": "competition",
-      "publishedAt": "2026-05-14T20:11:03.551Z",
-      "score": 95,
-      "selectionReason": "Major global competition for university teams, great for inspiration and participation."
-    },
     {
       "title": "WCRC",
       "url": "https://wcrc.pro/",
       "summary": "WCRC 2026 – Wall-Climbing Robot Challenge | IEEE RAS UJ Skip to main content WCRC Journey Challenge Specs The Wall Prizes Process Sponsors FAQ Venue Ambassador ع | EN Register Now menu Journey Challenge Specs The Wall Prizes Process Sponsors FAQ Venue Campus Ambassador ع | EN Register Now Registration Open WCRC Wall-Cl",
       "source": "Wall-Climbing Robot Challenge 2026",
       "category": "competition",
-      "publishedAt": "2026-05-14T20:11:03.551Z",
-      "score": 90,
-      "selectionReason": "A unique wall-climbing robot challenge, perfect for inspiring a new club project or local competition."
-    },
-    {
-      "title": "2026 UNSW STEM, Robotics & Coding Challenge",
-      "url": "https://roboticscodingchallenge.org/current/",
-      "summary": "Individual Support Getting Started Register Sign In 2026 UNSW STEM, Robotics & Coding Challenge 2026 Challenge UNSW STEM, Robotics & Coding Challenge The Highway Collapse — A massive geotechnical failure has severed a critical transport route. Design coding, robotics, and AI solutions for rescue, logistics, safety, and",
-      "source": "UNSW Robotics & Coding Challenge 2026",
-      "category": "competition",
-      "publishedAt": "2026-05-14T20:11:03.551Z",
-      "score": 85,
-      "selectionReason": "A themed challenge focused on rescue and logistics, great for project ideas and competition inspiration."
+      "imageUrl": "https://wcrc.ieee-ras-uj.com/media/og-image.png",
+      "publishedAt": "2026-05-14T23:14:27.975Z",
+      "score": 70,
+      "selectionReason": "noticia de competencia, fecha o inscripción accionable, fuente de competencia"
     },
     {
       "title": "Closing the gap between animal movement and robotic control",
@@ -40,9 +21,32 @@
       "summary": "Animals move with a level of precision and adaptability that robots struggle to match. In Carnegie Mellon University&#039;s Department of Mechanical Engineering, researchers are developing a new AI-driven approach to uncover how brains and bodies work together",
       "source": "Tech Xplore Robotics",
       "category": "research",
+      "imageUrl": "https://scx1.b-cdn.net/csz/news/tmb/2026/neural-robotics-transl.jpg",
       "publishedAt": "2026-05-12T15:40:06.000Z",
-      "score": 80,
-      "selectionReason": "Explores bio-inspired AI for robot control, offering insights into advanced autonomy research."
+      "score": 26,
+      "selectionReason": "encaja con equipos estudiantiles"
+    },
+    {
+      "title": "2026 UNSW STEM, Robotics & Coding Challenge",
+      "url": "https://roboticscodingchallenge.org/current/",
+      "summary": "Individual Support Getting Started Register Sign In 2026 UNSW STEM, Robotics & Coding Challenge 2026 Challenge UNSW STEM, Robotics & Coding Challenge The Highway Collapse — A massive geotechnical failure has severed a critical transport route. Design coding, robotics, and AI solutions for rescue, logistics, safety, and",
+      "source": "UNSW Robotics & Coding Challenge 2026",
+      "category": "competition",
+      "imageUrl": "https://roboticscodingchallenge.org/wp-content/uploads/2026/03/logo.webp",
+      "publishedAt": "2026-05-14T23:14:27.975Z",
+      "score": 22,
+      "selectionReason": "fuente de competencia"
+    },
+    {
+      "title": "Canadian Drone Regulations and Testing Explained: Introduction to Canadian Drone Testing",
+      "url": "https://roboticsandautomationnews.com/2026/05/14/canadian-drone-regulations-and-testing-explained-introduction-to-canadian-drone-testing/101556/",
+      "summary": "Canada has become one of the leading countries in drone technology and innovation. From snowy mountain regions to crowded urban areas, the country provides a perfect environment for testing advanced drone systems. A Canadian drone test is more than just flying",
+      "source": "Robotics & Automation News",
+      "category": "industry",
+      "publishedAt": "2026-05-14T15:55:39.000Z",
+      "imageUrl": "https://roboticsandautomationnews.com/wp-content/uploads/2026/05/canada-drone-licence-1.png",
+      "score": 22,
+      "selectionReason": "idea técnica construible"
     },
     {
       "title": "PAL Robotics unveils new robotic arm platform for advanced AI-driven manipulation",
@@ -51,8 +55,9 @@
       "source": "Robotics & Automation News",
       "category": "industry",
       "publishedAt": "2026-05-14T13:51:02.000Z",
-      "score": 75,
-      "selectionReason": "New robotic arm platform for AI-driven manipulation, useful for research and advanced projects."
+      "imageUrl": "https://roboticsandautomationnews.com/wp-content/uploads/2026/05/pal-robotics-REE-C-Robot-3.jpeg",
+      "score": 22,
+      "selectionReason": "idea técnica construible"
     },
     {
       "title": "Honeybees teach drones how to navigate",
@@ -60,9 +65,10 @@
       "summary": "It sounds like science fiction, but also strangely familiar: drones buzzing around, inspecting tomatoes in greenhouses, delivering your package or inspecting an industrial site. With all the talk about drone-swarms, development in drones seems to move fast. Bu",
       "source": "Tech Xplore Robotics",
       "category": "research",
+      "imageUrl": "https://scx1.b-cdn.net/csz/news/tmb/2026/honeybees-teach-drones.jpg",
       "publishedAt": "2026-05-13T15:00:24.000Z",
-      "score": 80,
-      "selectionReason": "Fascinating research on bio-inspired drone navigation, great for understanding advanced autonomy."
+      "score": 21,
+      "selectionReason": "idea técnica construible"
     }
   ]
 }
