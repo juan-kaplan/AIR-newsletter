@@ -1,6 +1,6 @@
 # Automatic Newsletter
 
-Automatic Newsletter is a repo-first weekly newsletter system designed to stay on free-tier infrastructure for a small list: up to 30 subscribers and 35 attempted sends per run.
+Automatic Newsletter is a repo-first internal UdeSA newsletter system designed to stay on free-tier infrastructure for a small list: up to 30 subscribers and 35 attempted sends per run.
 
 ## Architecture
 
@@ -8,10 +8,10 @@ Automatic Newsletter is a repo-first weekly newsletter system designed to stay o
 - GitHub Actions runs CI and the scheduled sender.
 - Cloudflare Worker exposes subscribe, unsubscribe, health, and admin endpoints.
 - Cloudflare D1 stores subscribers, issues, delivery records, and audit events.
-- Resend sends one email per subscriber so each message has a unique unsubscribe URL.
+- Gmail SMTP sends one email per subscriber from `jfigueiredopaschmann@udesa.edu.ar` so each message has a unique unsubscribe URL.
 - React Email renders the HTML email and a plain text companion.
 
-No Supabase, Postgres, Prisma, Vercel, Next.js, Stripe, SES, Listmonk, paid hosting, or full admin dashboard is included.
+No custom domain, Resend, Supabase, Postgres, Prisma, Vercel, Next.js, Stripe, SES, Listmonk, paid hosting, or full admin dashboard is included.
 
 ## Free-Tier Assumptions
 
@@ -19,8 +19,9 @@ This project is sized for roughly 120-150 emails per month. Keep the hard limits
 
 - `MAX_RECIPIENTS=30`
 - `MAX_EMAILS_PER_RUN=35`
+- `ALLOWED_RECIPIENT_DOMAIN=udesa.edu.ar`
 
-The sender refuses to run if active subscribers or planned sends exceed those limits.
+The Worker rejects non-`@udesa.edu.ar` subscribers. The sender refuses to run if any recipient is outside `@udesa.edu.ar`, or if active subscribers or planned sends exceed the limits.
 
 ## Setup Requirements
 
@@ -28,7 +29,7 @@ Required accounts:
 
 - GitHub
 - Cloudflare
-- Resend
+- Google account with Gmail app password support for `jfigueiredopaschmann@udesa.edu.ar`
 
 Required local tools:
 
@@ -56,10 +57,20 @@ Never commit real secrets. Copy `.env.example` to a private local `.env` only if
 GitHub Actions secrets:
 
 ```txt
-RESEND_API_KEY
-NEWSLETTER_FROM
+SMTP_PASSWORD
 WORKER_BASE_URL
 WORKER_ADMIN_TOKEN
+```
+
+The workflow sets these non-secret values directly:
+
+```txt
+NEWSLETTER_FROM=jfigueiredopaschmann@udesa.edu.ar
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_SECURE=false
+SMTP_USER=jfigueiredopaschmann@udesa.edu.ar
+ALLOWED_RECIPIENT_DOMAIN=udesa.edu.ar
 ```
 
 Optional GitHub repository variables:
@@ -130,17 +141,21 @@ curl https://<your-worker-url>/health
 
 Then add the deployed URL to GitHub Actions as `WORKER_BASE_URL`.
 
-## Resend
+## Gmail SMTP
 
-Verify a sending subdomain such as `updates.<your-domain.com>` in Resend, then create a sending-only API key.
+Create an app password for `jfigueiredopaschmann@udesa.edu.ar` and store it in GitHub Actions as `SMTP_PASSWORD`.
 
-Use a sender value like:
+The sender uses:
 
 ```txt
-Your Newsletter <newsletter@updates.<your-domain.com>>
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_SECURE=false
+SMTP_USER=jfigueiredopaschmann@udesa.edu.ar
+NEWSLETTER_FROM=jfigueiredopaschmann@udesa.edu.ar
 ```
 
-Store it as `NEWSLETTER_FROM`.
+Do not commit the app password.
 
 ## Newsletter Commands
 
@@ -153,7 +168,7 @@ pnpm newsletter:preview
 Send a test email:
 
 ```bash
-pnpm newsletter:send-test --to someone@example.com
+pnpm newsletter:send-test --to jkaplan@udesa.edu.ar
 ```
 
 Dry run:

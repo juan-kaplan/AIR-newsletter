@@ -1,7 +1,7 @@
 import { loadConfig, type NewsletterConfig } from "../config";
 import { renderEmail } from "../render/renderEmail";
 import { createWorkerClient, type WorkerClient } from "../workerClient";
-import { createResendSender, type EmailSender } from "./resend";
+import { createSmtpSender, type EmailSender } from "./smtp";
 import type { NewsletterIssue, SendSummary } from "../types";
 
 export interface SendIssueOptions {
@@ -35,6 +35,13 @@ export async function sendIssue(issue: NewsletterIssue, options: SendIssueOption
   const subscribers = options.to
     ? [{ id: "test", email: options.to, emailHash: "test", unsubscribeUrl: `${config.workerBaseUrl}/unsubscribe?token=test` }]
     : await workerClient.fetchSubscribers();
+  const disallowedSubscriber = subscribers.find(
+    (subscriber) => !subscriber.email.toLowerCase().endsWith(`@${config.allowedRecipientDomain}`)
+  );
+
+  if (disallowedSubscriber) {
+    throw new Error(`Recipient ${disallowedSubscriber.email} is outside @${config.allowedRecipientDomain}.`);
+  }
 
   if (subscribers.length > config.maxRecipients) {
     throw new Error(`Active subscribers exceed MAX_RECIPIENTS=${config.maxRecipients}.`);
@@ -44,11 +51,21 @@ export async function sendIssue(issue: NewsletterIssue, options: SendIssueOption
     throw new Error(`Planned sends exceed MAX_EMAILS_PER_RUN=${config.maxEmailsPerRun}.`);
   }
 
-  if (!dryRun && (!config.resendApiKey || !config.newsletterFrom)) {
-    throw new Error("RESEND_API_KEY and NEWSLETTER_FROM are required for confirmed sending.");
+  if (!dryRun && (!config.smtpUser || !config.smtpPassword || !config.newsletterFrom)) {
+    throw new Error("SMTP_USER, SMTP_PASSWORD, and NEWSLETTER_FROM are required for confirmed sending.");
   }
 
-  const sender = options.sender ?? (config.resendApiKey ? createResendSender(config.resendApiKey) : null);
+  const sender =
+    options.sender ??
+    (config.smtpUser && config.smtpPassword
+      ? createSmtpSender({
+          host: config.smtpHost,
+          port: config.smtpPort,
+          secure: config.smtpSecure,
+          user: config.smtpUser,
+          password: config.smtpPassword
+        })
+      : null);
   let sent = 0;
   let skipped = 0;
   let failed = 0;

@@ -1,4 +1,4 @@
-import { Resend } from "resend";
+import nodemailer from "nodemailer";
 
 export interface EmailMessage {
   from: string;
@@ -13,12 +13,28 @@ export interface EmailSender {
   send(message: EmailMessage): Promise<{ id: string }>;
 }
 
-export function createResendSender(apiKey: string): EmailSender {
-  const resend = new Resend(apiKey);
+export interface SmtpConfig {
+  host: string;
+  port: number;
+  secure: boolean;
+  user: string;
+  password: string;
+}
+
+export function createSmtpSender(config: SmtpConfig): EmailSender {
+  const transporter = nodemailer.createTransport({
+    host: config.host,
+    port: config.port,
+    secure: config.secure,
+    auth: {
+      user: config.user,
+      pass: config.password
+    }
+  });
 
   return {
     async send(message) {
-      const result = await resend.emails.send({
+      const result = await transporter.sendMail({
         from: message.from,
         to: message.to,
         subject: message.subject,
@@ -30,11 +46,7 @@ export function createResendSender(apiKey: string): EmailSender {
         }
       });
 
-      if (result.error) {
-        throw new Error(result.error.message);
-      }
-
-      return { id: result.data?.id ?? "unknown" };
+      return { id: result.messageId };
     }
   };
 }

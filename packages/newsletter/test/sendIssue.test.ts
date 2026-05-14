@@ -18,7 +18,7 @@ const issue: NewsletterIssue = {
 
 const subscriber: Subscriber = {
   id: "sub_1",
-  email: "person@example.com",
+  email: "person@udesa.edu.ar",
   emailHash: "hash",
   unsubscribeUrl: "https://worker.test/unsubscribe?token=abc"
 };
@@ -46,7 +46,7 @@ describe("sendIssue", () => {
     expect(send).not.toHaveBeenCalled();
     expect(deliveries[0]).toMatchObject({
       issueSlug: "weekly",
-      subscriberEmail: "person@example.com",
+      subscriberEmail: "person@udesa.edu.ar",
       status: "skipped"
     });
   });
@@ -57,7 +57,7 @@ describe("sendIssue", () => {
         config: config({ maxRecipients: 1 }),
         workerClient: {
           async fetchSubscribers() {
-            return [subscriber, { ...subscriber, id: "sub_2", email: "two@example.com" }];
+            return [subscriber, { ...subscriber, id: "sub_2", email: "two@udesa.edu.ar" }];
           },
           async recordDelivery() {
             return undefined;
@@ -91,17 +91,38 @@ describe("sendIssue", () => {
     expect(summary.failed).toBe(1);
     expect(deliveries[0]).toMatchObject({
       issueSlug: "weekly",
-      subscriberEmail: "person@example.com",
+      subscriberEmail: "person@udesa.edu.ar",
       status: "failed",
       error: "provider down"
     });
+  });
+
+  it("refuses recipients outside the allowed domain", async () => {
+    await expect(
+      sendIssue(issue, {
+        config: config(),
+        workerClient: {
+          async fetchSubscribers() {
+            return [{ ...subscriber, email: "person@example.com" }];
+          },
+          async recordDelivery() {
+            return undefined;
+          }
+        }
+      })
+    ).rejects.toThrow("outside @udesa.edu.ar");
   });
 });
 
 function config(overrides: Partial<NewsletterConfig> = {}): NewsletterConfig {
   return {
-    resendApiKey: "resend-placeholder",
-    newsletterFrom: "Newsletter <newsletter@example.com>",
+    newsletterFrom: "jfigueiredopaschmann@udesa.edu.ar",
+    smtpHost: "smtp.gmail.com",
+    smtpPort: 587,
+    smtpSecure: false,
+    smtpUser: "jfigueiredopaschmann@udesa.edu.ar",
+    smtpPassword: "app-password-placeholder",
+    allowedRecipientDomain: "udesa.edu.ar",
     workerBaseUrl: "https://worker.test",
     workerAdminToken: "admin-token",
     maxRecipients: 30,

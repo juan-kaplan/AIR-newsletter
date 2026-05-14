@@ -15,8 +15,13 @@ jobs:
   send:
     runs-on: ubuntu-latest
     env:
-      RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
-      NEWSLETTER_FROM: ${{ secrets.NEWSLETTER_FROM }}
+      NEWSLETTER_FROM: jfigueiredopaschmann@udesa.edu.ar
+      SMTP_HOST: smtp.gmail.com
+      SMTP_PORT: "587"
+      SMTP_SECURE: "false"
+      SMTP_USER: jfigueiredopaschmann@udesa.edu.ar
+      SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+      ALLOWED_RECIPIENT_DOMAIN: udesa.edu.ar
       WORKER_BASE_URL: ${{ secrets.WORKER_BASE_URL }}
       WORKER_ADMIN_TOKEN: ${{ secrets.WORKER_ADMIN_TOKEN }}
       MAX_RECIPIENTS: ${{ vars.MAX_RECIPIENTS || '30' }}

@@ -1,6 +1,11 @@
 export interface NewsletterConfig {
-  resendApiKey?: string;
   newsletterFrom?: string;
+  smtpHost: string;
+  smtpPort: number;
+  smtpSecure: boolean;
+  smtpUser?: string;
+  smtpPassword?: string;
+  allowedRecipientDomain: string;
   workerBaseUrl?: string;
   workerAdminToken?: string;
   maxRecipients: number;
@@ -9,8 +14,13 @@ export interface NewsletterConfig {
 
 export function loadConfig(env: NodeJS.ProcessEnv = process.env): NewsletterConfig {
   return {
-    resendApiKey: env.RESEND_API_KEY,
     newsletterFrom: env.NEWSLETTER_FROM,
+    smtpHost: env.SMTP_HOST ?? "smtp.gmail.com",
+    smtpPort: parseLimit(env.SMTP_PORT, 587),
+    smtpSecure: env.SMTP_SECURE === "true",
+    smtpUser: env.SMTP_USER,
+    smtpPassword: env.SMTP_PASSWORD,
+    allowedRecipientDomain: env.ALLOWED_RECIPIENT_DOMAIN ?? "udesa.edu.ar",
     workerBaseUrl: env.WORKER_BASE_URL,
     workerAdminToken: env.WORKER_ADMIN_TOKEN,
     maxRecipients: parseLimit(env.MAX_RECIPIENTS, 30),

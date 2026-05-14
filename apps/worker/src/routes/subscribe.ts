@@ -1,7 +1,7 @@
 import { upsertActiveSubscriber, type Env } from "../db";
 import { deriveUnsubscribeToken, sha256Hex } from "../utils/crypto";
 import { htmlResponse, jsonResponse } from "../utils/response";
-import { isValidEmail, normalizeEmail, readJsonObject } from "../utils/validation";
+import { isAllowedSubscriberEmail, normalizeEmail, readJsonObject } from "../utils/validation";
 
 export function handleHome(): Response {
   return htmlResponse(`<!doctype html>
@@ -31,8 +31,8 @@ export function handleHome(): Response {
 export async function handleSubscribe(request: Request, env: Env): Promise<Response> {
   const email = await getEmailFromRequest(request);
 
-  if (!email || !isValidEmail(email)) {
-    return jsonResponse({ ok: false, error: "Enter a valid email address." }, 400);
+  if (!email || !isAllowedSubscriberEmail(email)) {
+    return jsonResponse({ ok: false, error: "Enter a valid @udesa.edu.ar email address." }, 400);
   }
 
   if (!env.WORKER_ADMIN_TOKEN) {

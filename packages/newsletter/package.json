@@ -18,8 +18,11 @@
   "dependencies": {
     "@newsletter/email-templates": "workspace:*",
     "@react-email/render": "^2.0.8",
-    "resend": "^6.12.3",
+    "nodemailer": "^7.0.11",
     "tsx": "^4.21.0",
     "yaml": "^2.8.2"
+  },
+  "devDependencies": {
+    "@types/nodemailer": "^7.0.4"
   }
 }

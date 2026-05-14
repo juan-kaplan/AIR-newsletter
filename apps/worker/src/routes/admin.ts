@@ -1,7 +1,7 @@
 import { listActiveSubscribers, recordDelivery, type DeliveryPayload, type Env } from "../db";
 import { deriveUnsubscribeToken, sha256Hex } from "../utils/crypto";
 import { jsonResponse } from "../utils/response";
-import { isValidEmail, normalizeEmail, readJsonObject } from "../utils/validation";
+import { isAllowedSubscriberEmail, normalizeEmail, readJsonObject } from "../utils/validation";
 
 export async function handleAdmin(request: Request, env: Env, url: URL): Promise<Response> {
   if (!isAuthorized(request, env)) {
@@ -80,7 +80,7 @@ function parseDeliveryPayload(body: Record<string, unknown> | null): DeliveryPay
     return null;
   }
 
-  if (typeof subscriberEmail !== "string" || !isValidEmail(normalizeEmail(subscriberEmail))) {
+  if (typeof subscriberEmail !== "string" || !isAllowedSubscriberEmail(normalizeEmail(subscriberEmail))) {
     return null;
   }
 
