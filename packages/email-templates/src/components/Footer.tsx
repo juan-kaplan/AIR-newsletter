@@ -21,18 +21,17 @@ export function Footer({ unsubscribeUrl }: FooterProps) {
 }
 
 const section = {
-  borderTop: "1px solid #24466d",
-  marginTop: "22px",
+  borderTop: "1px solid #e5e7eb",
   paddingTop: "20px"
 };
 
 const text = {
-  color: "#8da2bf",
+  color: "#6b7280",
   fontSize: "12px",
   lineHeight: "18px",
   margin: "0 0 8px"
 };
 
 const link = {
-  color: "#8ffcff"
+  color: "#0f766e"
 };

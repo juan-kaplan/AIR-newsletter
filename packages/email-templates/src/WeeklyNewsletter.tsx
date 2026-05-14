@@ -11,8 +11,6 @@ interface WeeklyNewsletterProps {
 }
 
 export function WeeklyNewsletter({ issue, unsubscribeUrl }: WeeklyNewsletterProps) {
-  const counts = getCategoryCounts(issue);
-
   return (
     <Layout preheader={issue.preheader}>
       <Heading as="h1" style={heading}>
@@ -20,13 +18,10 @@ export function WeeklyNewsletter({ issue, unsubscribeUrl }: WeeklyNewsletterProp
       </Heading>
       <Text style={intro}>{issue.preheader}</Text>
       <Section style={digestHeader}>
-        <Text style={digestLabel}>This Issue</Text>
+        <Text style={digestLabel}>Competition-minded robotics brief</Text>
         <Text style={digestCount}>
           {issue.articles.length} selected links
           {issue.generatedFromWeeks && issue.generatedFromWeeks.length > 0 ? ` from ${issue.generatedFromWeeks.join(", ")}` : ""}
-        </Text>
-        <Text style={digestStats}>
-          {counts.opportunities} opportunities / {counts.news} robotics news / {counts.research} research signals
         </Text>
       </Section>
       {issue.articles.map((article, index) => (
@@ -37,62 +32,38 @@ export function WeeklyNewsletter({ issue, unsubscribeUrl }: WeeklyNewsletterProp
   );
 }
 
-function getCategoryCounts(issue: NewsletterIssue): { opportunities: number; news: number; research: number } {
-  return issue.articles.reduce(
-    (counts, article) => {
-      if (article.category === "competition" || article.category === "event") {
-        return { ...counts, opportunities: counts.opportunities + 1 };
-      }
-
-      if (article.category === "research") {
-        return { ...counts, research: counts.research + 1 };
-      }
-
-      return { ...counts, news: counts.news + 1 };
-    },
-    { opportunities: 0, news: 0, research: 0 }
-  );
-}
-
 const heading = {
-  color: "#f8fafc",
-  fontSize: "28px",
-  lineHeight: "34px",
+  color: "#111827",
+  fontSize: "26px",
+  lineHeight: "32px",
   margin: "0 0 10px"
 };
 
 const intro = {
-  color: "#bfd7ff",
+  color: "#475569",
   fontSize: "16px",
   lineHeight: "24px",
   margin: "0 0 20px"
 };
 
 const digestHeader = {
-  backgroundColor: "#111c2f",
-  border: "1px solid #1f9bd1",
-  borderRadius: "10px",
+  backgroundColor: "#f8fafc",
+  border: "1px solid #e2e8f0",
+  borderRadius: "8px",
   margin: "0 0 18px",
-  padding: "16px 18px"
+  padding: "14px 16px"
 };
 
 const digestLabel = {
-  color: "#8ffcff",
+  color: "#0f172a",
   fontSize: "16px",
-  fontWeight: "800",
+  fontWeight: "700",
   lineHeight: "22px",
   margin: "0 0 2px"
 };
 
 const digestCount = {
-  color: "#f8fafc",
-  fontSize: "13px",
-  lineHeight: "18px",
-  margin: "0 0 6px"
-};
-
-const digestStats = {
-  color: "#a7f3d0",
+  color: "#64748b",
   fontSize: "13px",
   lineHeight: "18px",
   margin: 0
