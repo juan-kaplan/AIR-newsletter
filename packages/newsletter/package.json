@@ -1,0 +1,25 @@
+{
+  "name": "@newsletter/newsletter",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "newsletter": "./src/cli.ts"
+  },
+  "scripts": {
+    "collect": "tsx src/cli.ts collect",
+    "draft": "tsx src/cli.ts draft",
+    "preview": "tsx src/cli.ts preview",
+    "send-test": "tsx src/cli.ts send-test",
+    "send": "tsx src/cli.ts send",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@newsletter/email-templates": "workspace:*",
+    "@react-email/render": "^2.0.8",
+    "resend": "^6.12.3",
+    "tsx": "^4.21.0",
+    "yaml": "^2.8.2"
+  }
+}

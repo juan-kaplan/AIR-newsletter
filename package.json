@@ -1,0 +1,27 @@
+{
+  "name": "automatic-newsletter",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "pnpm@9.15.4",
+  "type": "module",
+  "scripts": {
+    "lint": "eslint . --max-warnings=0",
+    "format": "prettier --write .",
+    "typecheck": "tsc -b",
+    "test": "vitest run",
+    "newsletter:collect": "corepack pnpm --filter @newsletter/newsletter collect",
+    "newsletter:draft": "corepack pnpm --filter @newsletter/newsletter draft",
+    "newsletter:preview": "corepack pnpm --filter @newsletter/newsletter preview",
+    "newsletter:send-test": "corepack pnpm --filter @newsletter/newsletter send-test",
+    "newsletter:send": "corepack pnpm --filter @newsletter/newsletter send"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.1",
+    "@types/node": "^22.19.1",
+    "eslint": "^9.39.1",
+    "prettier": "^3.6.2",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.46.3",
+    "vitest": "^2.1.9"
+  }
+}

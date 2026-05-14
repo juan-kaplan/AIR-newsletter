@@ -1,0 +1,17 @@
+{
+  "name": "@newsletter/email-templates",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/WeeklyNewsletter.tsx",
+    "./sampleIssue": "./src/sampleIssue.ts"
+  },
+  "dependencies": {
+    "@react-email/components": "^1.0.12",
+    "react": "^19.2.3"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.7"
+  }
+}

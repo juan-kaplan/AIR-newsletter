@@ -1,0 +1,4 @@
+sources:
+  - key: manual
+    type: markdown
+    path: content/manual

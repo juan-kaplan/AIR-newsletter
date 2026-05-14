@@ -1,0 +1,44 @@
+name: Send Newsletter
+
+on:
+  schedule:
+    # GitHub Actions cron is UTC. This is Monday 10:17 in America/Argentina/Buenos_Aires.
+    - cron: "17 13 * * 1"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Dry run?"
+        required: true
+        default: "true"
+
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    env:
+      RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+      NEWSLETTER_FROM: ${{ secrets.NEWSLETTER_FROM }}
+      WORKER_BASE_URL: ${{ secrets.WORKER_BASE_URL }}
+      WORKER_ADMIN_TOKEN: ${{ secrets.WORKER_ADMIN_TOKEN }}
+      MAX_RECIPIENTS: ${{ vars.MAX_RECIPIENTS || '30' }}
+      MAX_EMAILS_PER_RUN: ${{ vars.MAX_EMAILS_PER_RUN || '35' }}
+      TZ: America/Argentina/Buenos_Aires
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm lint
+      - run: pnpm typecheck
+      - run: pnpm test
+      - name: Send newsletter
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.dry_run }}" = "false" ]; then
+            pnpm newsletter:send --confirm
+          else
+            pnpm newsletter:send --dry-run
+          fi

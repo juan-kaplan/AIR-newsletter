@@ -1,0 +1,9 @@
+name = "<WORKER_NAME>"
+main = "src/index.ts"
+compatibility_date = "2026-05-14"
+
+[[d1_databases]]
+binding = "<D1_BINDING_NAME>"
+database_name = "<D1_DATABASE_NAME>"
+database_id = "<D1_DATABASE_ID>"
+migrations_dir = "migrations"
