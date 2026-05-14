@@ -14,7 +14,7 @@ describe("newsletter curation", () => {
       article("Manipulator gripper benchmark", "A practical robot manipulation benchmark.", "research")
     ];
 
-    const selected = await curateWeeklyArticles(articles, 5);
+    const selected = await curateWeeklyArticles(articles, 5, {});
 
     expect(selected).toHaveLength(5);
     expect(selected.slice(0, 2).map((item) => item.title)).toEqual(
@@ -28,7 +28,8 @@ describe("newsletter curation", () => {
       Array.from({ length: 12 }, (_, index) =>
         article(`University robotics competition item ${index}`, "Registration deadline for student teams.", "competition")
       ),
-      8
+      8,
+      {}
     );
 
     expect(selected).toHaveLength(8);
