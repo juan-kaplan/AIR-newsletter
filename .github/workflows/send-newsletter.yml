@@ -40,9 +40,6 @@ jobs:
       - run: pnpm lint
       - run: pnpm typecheck
       - run: pnpm test
-      - name: Check SMTP secret shape
-        run: |
-          node -e "const v = process.env.SMTP_PASSWORD || ''; console.log(JSON.stringify({ length: v.length, hasWhitespace: /\\s/.test(v) }))"
       - name: Send newsletter
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.dry_run }}" = "false" ]; then
