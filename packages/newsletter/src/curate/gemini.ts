@@ -16,17 +16,33 @@ interface GeminiSelection {
   }>;
 }
 
-const GEMINI_MODELS = ["gemini-2.0-flash-lite", "gemini-2.0-flash", "gemini-2.5-flash", "gemini-flash-lite-latest"];
+const GEMINI_MODELS = [
+  "gemini-2.0-flash-lite",
+  "gemini-2.0-flash",
+  "gemini-2.5-flash",
+  "gemini-flash-lite-latest",
+];
 
-export async function refineRankingWithGemini(articles: ScoredArticle[], limit: number, env: NodeJS.ProcessEnv = process.env): Promise<ScoredArticle[]> {
+export async function refineRankingWithGemini(
+  articles: ScoredArticle[],
+  limit: number,
+  env: NodeJS.ProcessEnv = process.env,
+): Promise<ScoredArticle[]> {
   const apiKey = env.GEMINI_API_KEY;
   if (!apiKey || articles.length === 0) {
-    console.warn(apiKey ? "Gemini curation skipped: no candidate articles." : "Gemini curation skipped: GEMINI_API_KEY is not set.");
+    console.warn(
+      apiKey
+        ? "Gemini curation skipped: no candidate articles."
+        : "Gemini curation skipped: GEMINI_API_KEY is not set.",
+    );
     return articles.slice(0, limit);
   }
 
   try {
-    const payload = await callGeminiWithFallback(apiKey, buildPrompt(articles, limit));
+    const payload = await callGeminiWithFallback(
+      apiKey,
+      buildPrompt(articles, limit),
+    );
     if (!payload) {
       return articles.slice(0, limit);
     }
@@ -46,37 +62,51 @@ export async function refineRankingWithGemini(articles: ScoredArticle[], limit: 
           ? [
               {
                 ...article,
-                score: typeof item.score === "number" ? item.score : article.score,
-                selectionReason: item.reason ?? article.selectionReason
-              }
+                score:
+                  typeof item.score === "number" ? item.score : article.score,
+                selectionReason: item.reason ?? article.selectionReason,
+              },
             ]
           : [];
       })
       .slice(0, limit);
 
     if (selected.length === 0) {
-      console.warn("Gemini curation fallback: model returned no matching URLs.");
+      console.warn(
+        "Gemini curation fallback: model returned no matching URLs.",
+      );
       return articles.slice(0, limit);
     }
 
     console.warn(`Gemini curation selected ${selected.length} article(s).`);
     return selected;
   } catch (error) {
-    console.warn(`Gemini curation fallback: ${error instanceof Error ? error.message : "unknown error"}.`);
+    console.warn(
+      `Gemini curation fallback: ${error instanceof Error ? error.message : "unknown error"}.`,
+    );
     return articles.slice(0, limit);
   }
 }
 
-async function callGeminiWithFallback(apiKey: string, prompt: string): Promise<GeminiResponse | null> {
+async function callGeminiWithFallback(
+  apiKey: string,
+  prompt: string,
+): Promise<GeminiResponse | null> {
   for (const model of GEMINI_MODELS) {
-    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`, {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({
-        contents: [{ parts: [{ text: prompt }] }],
-        generationConfig: { responseMimeType: "application/json", temperature: 0.2 }
-      })
-    });
+    const response = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`,
+      {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: prompt }] }],
+          generationConfig: {
+            responseMimeType: "application/json",
+            temperature: 0.2,
+          },
+        }),
+      },
+    );
 
     if (response.ok) {
       console.warn(`Gemini curation using ${model}.`);
@@ -89,30 +119,34 @@ async function callGeminiWithFallback(apiKey: string, prompt: string): Promise<G
     }
   }
 
-  console.warn("Gemini curation fallback: all configured Gemini models failed.");
+  console.warn(
+    "Gemini curation fallback: all configured Gemini models failed.",
+  );
   return null;
 }
 
 function parseGeminiSelection(text: string): GeminiSelection {
   const trimmed = text.trim();
-  const withoutFence = trimmed.replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/i, "");
+  const withoutFence = trimmed
+    .replace(/^```(?:json)?\s*/i, "")
+    .replace(/\s*```$/i, "");
   return JSON.parse(withoutFence) as GeminiSelection;
 }
 
 function buildPrompt(articles: ScoredArticle[], limit: number): string {
-  return `You curate a monthly robotics newsletter for an undergraduate robotics club in Argentina that wants to organize competitions for Argentinian universities.
+  return `Sos curador de un boletín mensual de robótica para AIR, un club universitario de la Universidad de San Andrés en Argentina que quiere organizar competencias para universidades argentinas.
 
-Choose up to ${limit} items. For weekly curation, aim for 4-6 strong items when available. For monthly curation, aim for 6-10 strong items when available. Prefer a balanced mix:
-- 1-3 still-open robotics opportunities: registrations, deadlines, calls, rulebooks, and qualification news
-- 2-4 robotics news/research/tooling items that are useful for an undergrad club
-- ideas that undergrad teams can copy, learn from, or turn into local competitions
-- Latin America or globally accessible student opportunities
-- practical robotics research: autonomy, perception, manipulation, drones, rovers, ROS, simulation
+Elegí hasta ${limit} items. Para curaduría semanal, apuntá a 4-6 items fuertes cuando existan. Para curaduría mensual, apuntá a 6-10 items fuertes cuando existan. Priorizá una mezcla balanceada:
+- 1-3 oportunidades de robótica todavía vigentes: inscripciones, fechas límite, convocatorias, reglamentos y noticias de clasificación
+- 2-4 noticias de robótica, investigación o herramientas útiles para un club de grado
+- ideas que equipos universitarios puedan copiar, estudiar o convertir en competencias locales
+- oportunidades para estudiantes en Latinoamérica o accesibles globalmente
+- investigación práctica: autonomía, percepción, manipulación, drones, rovers, ROS, simulación
 
-Do not include opportunities whose registration, submission, or application deadline has already passed. Avoid generic business news, sponsored content, funding-only news, and medical/warehouse-only stories unless there is a clear club activity angle.
+No incluyas oportunidades cuya fecha de registro, envío o postulación ya haya pasado. Evitá noticias genéricas de negocios, contenido patrocinado, rondas de inversión y notas médicas/de depósito salvo que tengan un ángulo claro para una actividad del club.
 
-Return JSON only in this shape:
-{"selected":[{"url":"https://...","score":95,"reason":"short reason for club members"}]}
+Devolvé solamente JSON con esta forma. La razón debe estar en español:
+{"selected":[{"url":"https://...","score":95,"reason":"razón breve para miembros del club"}]}
 
 Candidates:
 ${articles
@@ -122,7 +156,7 @@ url: ${article.url}
 source: ${article.source ?? "unknown"}
 publishedAt: ${article.publishedAt ?? "unknown"}
 initialScore: ${article.score}
-summary: ${article.summary}`
+summary: ${article.summary}`,
   )
   .join("\n\n")}`;
 }

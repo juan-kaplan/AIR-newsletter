@@ -1,4 +1,4 @@
-import { Heading, Section, Text } from "@react-email/components";
+import { Heading, Link, Section, Text } from "@react-email/components";
 import React from "react";
 import { ArticleCard } from "./components/ArticleCard";
 import { Footer } from "./components/Footer";
@@ -10,61 +10,250 @@ interface WeeklyNewsletterProps {
   unsubscribeUrl: string;
 }
 
-export function WeeklyNewsletter({ issue, unsubscribeUrl }: WeeklyNewsletterProps) {
+export function WeeklyNewsletter({
+  issue,
+  unsubscribeUrl,
+}: WeeklyNewsletterProps) {
+  const [featured, ...secondaryArticles] = issue.articles;
+  const generatedWeeks =
+    issue.generatedFromWeeks && issue.generatedFromWeeks.length > 0
+      ? issue.generatedFromWeeks.join(", ")
+      : "edición actual";
+
   return (
     <Layout preheader={issue.preheader}>
-      <Heading as="h1" style={heading}>
-        {issue.subject}
-      </Heading>
-      <Text style={intro}>{issue.preheader}</Text>
+      <Section style={hero}>
+        <Text style={heroMeta}>
+          VOL. AIR / {generatedWeeks} / {issue.articles.length} señales
+        </Text>
+        <Heading as="h1" style={heading}>
+          {issue.subject}
+        </Heading>
+        <Text style={intro}>{issue.preheader}</Text>
+      </Section>
+
+      {featured ? (
+        <Section style={featuredCard}>
+          <Text style={featuredLabel}>SEÑAL PRINCIPAL</Text>
+          <Text style={featuredMeta}>{formatArticleMeta(featured)}</Text>
+          <Heading as="h2" style={featuredHeading}>
+            <Link href={featured.url} style={featuredLink}>
+              {featured.title}
+            </Link>
+          </Heading>
+          <Text style={featuredSummary}>{featured.summary}</Text>
+          {featured.selectionReason ? (
+            <Text style={featuredReason}>
+              Por qué importa: {featured.selectionReason}
+            </Text>
+          ) : null}
+          <Link href={featured.url} style={cta}>
+            LEER LA NOTA COMPLETA
+          </Link>
+        </Section>
+      ) : null}
+
+      <Section style={divider} />
+
       <Section style={digestHeader}>
-        <Text style={digestLabel}>Competition-minded robotics brief</Text>
+        <Text style={sectionMarker}> </Text>
+        <Text style={digestLabel}>SEÑALES SELECCIONADAS</Text>
         <Text style={digestCount}>
-          {issue.articles.length} selected links
-          {issue.generatedFromWeeks && issue.generatedFromWeeks.length > 0 ? ` from ${issue.generatedFromWeeks.join(", ")}` : ""}
+          Una curaduría breve para detectar competencias, oportunidades e ideas
+          técnicas que el club pueda convertir en proyectos o actividades
+          locales.
         </Text>
       </Section>
-      {issue.articles.map((article, index) => (
-        <ArticleCard article={article} index={index} key={article.url} />
+
+      {secondaryArticles.map((article, index) => (
+        <ArticleCard article={article} index={index + 1} key={article.url} />
       ))}
       <Footer unsubscribeUrl={unsubscribeUrl} />
     </Layout>
   );
 }
 
+function formatArticleMeta(
+  article: NewsletterIssue["articles"][number],
+): string {
+  const parts = [labelForCategory(article.category)];
+  if (article.source) {
+    parts.push(article.source);
+  }
+  if (article.publishedAt) {
+    parts.push(formatDate(article.publishedAt));
+  }
+
+  return parts.join(" / ");
+}
+
+function labelForCategory(category?: string): string {
+  if (category === "competition") {
+    return "OPORTUNIDAD";
+  }
+  if (category === "event") {
+    return "EVENTO";
+  }
+  if (category === "research") {
+    return "INVESTIGACIÓN";
+  }
+  if (category === "tooling") {
+    return "HERRAMIENTA";
+  }
+
+  return "NOTICIA";
+}
+
+function formatDate(value: string): string {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) {
+    return value;
+  }
+
+  return new Intl.DateTimeFormat("es-AR", {
+    day: "2-digit",
+    month: "short",
+  }).format(date);
+}
+
+const hero = {
+  margin: "0 0 28px",
+};
+
+const heroMeta = {
+  color: "#c1c6d7",
+  fontFamily: "'JetBrains Mono', monospace",
+  fontSize: "12px",
+  letterSpacing: "0",
+  lineHeight: "18px",
+  margin: "0 0 14px",
+  textTransform: "uppercase" as const,
+};
+
 const heading = {
-  color: "#111827",
-  fontSize: "26px",
-  lineHeight: "32px",
-  margin: "0 0 10px"
+  color: "#e1e3e4",
+  fontFamily: "Geist, Helvetica, Arial, sans-serif",
+  fontSize: "44px",
+  fontWeight: "700",
+  lineHeight: "50px",
+  margin: "0 0 18px",
 };
 
 const intro = {
-  color: "#475569",
+  color: "#c1c6d7",
+  fontSize: "18px",
+  lineHeight: "29px",
+  margin: "0",
+};
+
+const featuredCard = {
+  backgroundColor: "#1d2021",
+  border: "1px solid #2a2a2a",
+  borderRadius: "8px",
+  margin: "0 0 34px",
+  padding: "28px",
+};
+
+const featuredLabel = {
+  color: "#adc7ff",
+  fontFamily: "'JetBrains Mono', monospace",
+  fontSize: "12px",
+  letterSpacing: "0",
+  lineHeight: "16px",
+  margin: "0 0 8px",
+  textTransform: "uppercase" as const,
+};
+
+const featuredMeta = {
+  color: "#c1c6d7",
+  fontFamily: "'JetBrains Mono', monospace",
+  fontSize: "12px",
+  letterSpacing: "0",
+  lineHeight: "18px",
+  margin: "0 0 18px",
+  textTransform: "uppercase" as const,
+};
+
+const featuredHeading = {
+  color: "#e1e3e4",
+  fontFamily: "Geist, Helvetica, Arial, sans-serif",
+  fontSize: "30px",
+  lineHeight: "36px",
+  margin: "0 0 14px",
+};
+
+const featuredLink = {
+  color: "#e1e3e4",
+  textDecoration: "none",
+};
+
+const featuredSummary = {
+  color: "#c1c6d7",
   fontSize: "16px",
-  lineHeight: "24px",
-  margin: "0 0 20px"
+  lineHeight: "26px",
+  margin: "0 0 18px",
+};
+
+const featuredReason = {
+  borderLeft: "4px solid #adc7ff",
+  color: "#e1e3e4",
+  fontSize: "14px",
+  lineHeight: "22px",
+  margin: "0 0 22px",
+  padding: "4px 0 4px 14px",
+};
+
+const cta = {
+  border: "1px solid #414754",
+  borderRadius: "4px",
+  color: "#e1e3e4",
+  display: "inline-block",
+  fontFamily: "'JetBrains Mono', monospace",
+  fontSize: "12px",
+  fontWeight: "500",
+  letterSpacing: "0",
+  padding: "12px 16px",
+  textDecoration: "none",
+};
+
+const divider = {
+  borderTop: "1px solid #2a2a2a",
+  fontSize: "1px",
+  lineHeight: "1px",
+  margin: "0 0 32px",
 };
 
 const digestHeader = {
-  backgroundColor: "#f8fafc",
-  border: "1px solid #e2e8f0",
-  borderRadius: "8px",
-  margin: "0 0 18px",
-  padding: "14px 16px"
+  margin: "0 0 24px",
+  padding: "0",
+};
+
+const sectionMarker = {
+  backgroundColor: "#adc7ff",
+  borderRadius: "4px",
+  display: "inline-block",
+  fontSize: "1px",
+  height: "24px",
+  lineHeight: "24px",
+  margin: "0 12px 0 0",
+  verticalAlign: "middle",
+  width: "4px",
 };
 
 const digestLabel = {
-  color: "#0f172a",
-  fontSize: "16px",
-  fontWeight: "700",
-  lineHeight: "22px",
-  margin: "0 0 2px"
+  color: "#e1e3e4",
+  display: "inline-block",
+  fontFamily: "Geist, Helvetica, Arial, sans-serif",
+  fontSize: "24px",
+  fontWeight: "600",
+  lineHeight: "30px",
+  margin: "0",
+  verticalAlign: "middle",
 };
 
 const digestCount = {
-  color: "#64748b",
-  fontSize: "13px",
-  lineHeight: "18px",
-  margin: 0
+  color: "#c1c6d7",
+  fontSize: "15px",
+  lineHeight: "23px",
+  margin: "10px 0 0 16px",
 };

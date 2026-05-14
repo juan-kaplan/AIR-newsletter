@@ -12,7 +12,7 @@ export function ArticleCard({ article, index }: ArticleCardProps) {
     <Section style={section}>
       <Text style={meta}>
         {String(index + 1).padStart(2, "0")}
-        {article.category ? ` / ${article.category}` : ""}
+        {` / ${labelForCategory(article.category)}`}
         {article.source ? ` / ${article.source}` : ""}
         {article.publishedAt ? ` / ${formatDate(article.publishedAt)}` : ""}
       </Text>
@@ -22,9 +22,31 @@ export function ArticleCard({ article, index }: ArticleCardProps) {
         </Link>
       </Heading>
       <Text style={summary}>{article.summary}</Text>
-      {article.selectionReason ? <Text style={reason}>Why it matters: {article.selectionReason}</Text> : null}
+      {article.selectionReason ? (
+        <Text style={reason}>Por qué importa: {article.selectionReason}</Text>
+      ) : null}
+      <Link href={article.url} style={readLink}>
+        ABRIR ENLACE
+      </Link>
     </Section>
   );
+}
+
+function labelForCategory(category?: string): string {
+  if (category === "competition") {
+    return "OPORTUNIDAD";
+  }
+  if (category === "event") {
+    return "EVENTO";
+  }
+  if (category === "research") {
+    return "INVESTIGACIÓN";
+  }
+  if (category === "tooling") {
+    return "HERRAMIENTA";
+  }
+
+  return "NOTICIA";
 }
 
 function formatDate(value: string): string {
@@ -33,50 +55,65 @@ function formatDate(value: string): string {
     return value;
   }
 
-  return new Intl.DateTimeFormat("en", { month: "short", day: "numeric" }).format(date);
+  return new Intl.DateTimeFormat("es-AR", {
+    day: "2-digit",
+    month: "short",
+  }).format(date);
 }
 
 const section = {
-  border: "1px solid #dbe3ef",
+  backgroundColor: "#1d2021",
+  border: "1px solid #2a2a2a",
   borderRadius: "8px",
-  boxShadow: "0 1px 0 rgba(15, 23, 42, 0.04)",
-  margin: "0 0 14px",
-  padding: "18px 18px 16px"
+  margin: "0 0 18px",
+  padding: "24px",
 };
 
 const meta = {
-  color: "#64748b",
+  color: "#adc7ff",
+  fontFamily: "'JetBrains Mono', monospace",
   fontSize: "12px",
   fontWeight: "700",
   lineHeight: "16px",
+  letterSpacing: "0",
   margin: "0 0 8px",
-  textTransform: "uppercase" as const
+  textTransform: "uppercase" as const,
 };
 
 const heading = {
-  fontSize: "19px",
-  lineHeight: "25px",
-  margin: "0 0 8px"
+  fontFamily: "Geist, Helvetica, Arial, sans-serif",
+  fontSize: "24px",
+  lineHeight: "30px",
+  margin: "0 0 10px",
 };
 
 const link = {
-  color: "#0f172a",
-  textDecoration: "none"
+  color: "#e1e3e4",
+  textDecoration: "none",
 };
 
 const summary = {
-  color: "#334155",
-  fontSize: "15px",
-  lineHeight: "23px",
-  margin: "0 0 12px"
+  color: "#c1c6d7",
+  fontSize: "16px",
+  lineHeight: "25px",
+  margin: "0 0 14px",
 };
 
 const reason = {
-  backgroundColor: "#f0f9ff",
-  borderLeft: "3px solid #0284c7",
-  color: "#0f172a",
+  backgroundColor: "#282a2b",
+  borderLeft: "3px solid #adc7ff",
+  color: "#e1e3e4",
   fontSize: "13px",
   lineHeight: "20px",
-  margin: 0,
-  padding: "10px 12px"
+  margin: "0 0 14px",
+  padding: "10px 12px",
+};
+
+const readLink = {
+  color: "#adc7ff",
+  fontFamily: "'JetBrains Mono', monospace",
+  fontSize: "12px",
+  fontWeight: "500",
+  letterSpacing: "0",
+  textDecoration: "none",
 };

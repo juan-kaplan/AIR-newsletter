@@ -1,4 +1,14 @@
-import { Body, Container, Head, Hr, Html, Preview, Section, Text } from "@react-email/components";
+import {
+  Body,
+  Column,
+  Container,
+  Head,
+  Html,
+  Preview,
+  Row,
+  Section,
+  Text,
+} from "@react-email/components";
 import React from "react";
 import type { ReactNode } from "react";
 
@@ -15,10 +25,16 @@ export function Layout({ children, preheader }: LayoutProps) {
       <Body style={body}>
         <Container style={container}>
           <Section style={masthead}>
-            <Text style={eyebrow}>AIR Robotics Club</Text>
-            <Text style={brand}>Robotics Monthly</Text>
+            <Row>
+              <Column>
+                <Text style={brand}>AIR ROBÓTICA</Text>
+                <Text style={eyebrow}>Universidad de San Andrés</Text>
+              </Column>
+              <Column style={editionColumn}>
+                <Text style={edition}>Boletín mensual</Text>
+              </Column>
+            </Row>
           </Section>
-          <Hr style={rule} />
           {children}
         </Container>
       </Body>
@@ -27,46 +43,63 @@ export function Layout({ children, preheader }: LayoutProps) {
 }
 
 const body = {
-  backgroundColor: "#eef2f7",
-  color: "#111827",
+  backgroundColor: "#111415",
+  backgroundImage: "radial-gradient(#2a2a2a 1px, transparent 1px)",
+  backgroundSize: "32px 32px",
+  color: "#e1e3e4",
   fontFamily: "Inter, Arial, sans-serif",
-  margin: 0
+  margin: 0,
+  padding: "0 0 80px",
 };
 
 const container = {
-  backgroundColor: "#ffffff",
-  border: "1px solid #dbe3ef",
-  borderRadius: "10px",
-  margin: "32px auto",
-  maxWidth: "640px",
+  backgroundColor: "#111415",
+  border: "1px solid #2a2a2a",
+  margin: "0 auto",
+  maxWidth: "800px",
   overflow: "hidden",
-  padding: "0 32px 32px"
+  padding: "0 24px 40px",
 };
 
 const masthead = {
-  backgroundColor: "#0f172a",
-  margin: "0 -32px",
-  padding: "28px 32px 24px"
+  backgroundColor: "#111415",
+  borderBottom: "1px solid #2a2a2a",
+  margin: "0 -24px 40px",
+  padding: "18px 24px",
 };
 
 const eyebrow = {
-  color: "#7dd3fc",
+  color: "#c1c6d7",
   fontSize: "12px",
-  fontWeight: "700",
+  fontWeight: "500",
   letterSpacing: "0",
-  margin: "0 0 8px",
-  textTransform: "uppercase" as const
+  margin: "3px 0 0",
+  textTransform: "uppercase" as const,
 };
 
 const brand = {
-  color: "#ffffff",
-  fontSize: "30px",
+  color: "#adc7ff",
+  fontFamily: "Geist, Helvetica, Arial, sans-serif",
+  fontSize: "24px",
   fontWeight: "700",
-  lineHeight: "36px",
-  margin: 0
+  lineHeight: "30px",
+  margin: 0,
 };
 
-const rule = {
-  borderColor: "#e5e7eb",
-  margin: "0 -32px 28px"
+const editionColumn = {
+  textAlign: "right" as const,
+  verticalAlign: "middle",
+};
+
+const edition = {
+  border: "1px solid #414754",
+  borderRadius: "4px",
+  color: "#e1e3e4",
+  display: "inline-block",
+  fontFamily: "'JetBrains Mono', monospace",
+  fontSize: "12px",
+  letterSpacing: "0",
+  margin: "0",
+  padding: "8px 12px",
+  textTransform: "uppercase" as const,
 };

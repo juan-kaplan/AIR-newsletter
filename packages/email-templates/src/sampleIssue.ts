@@ -2,22 +2,27 @@ import type { NewsletterIssue } from "../../newsletter/src/types";
 
 export const sampleIssue: NewsletterIssue = {
   slug: "robotics-newsletter-sample",
-  subject: "AIR Robotics Monthly - Sample Issue",
-  preheader: "A source-grounded robotics digest for the UdeSA robotics circle.",
+  subject: "Boletín AIR Robótica - edición de prueba",
+  preheader:
+    "Noticias, oportunidades y señales técnicas para el club de robótica de la Universidad de San Andrés.",
   articles: [
     {
-      title: "The newsletter pipeline is alive",
+      title: "El flujo del boletín ya está conectado",
       url: "https://example.com/newsletter-pipeline",
-      summary: "This first issue proves collection, rendering, dry runs, and delivery logging are wired together.",
-      source: "Manual seed",
-      publishedAt: "2026-05-01T00:00:00.000Z"
+      summary:
+        "Esta edición de prueba confirma que la recolección, la curaduría, el render y el envío de prueba funcionan juntos.",
+      source: "Carga manual",
+      publishedAt: "2026-05-01T00:00:00.000Z",
+      selectionReason: "permite revisar el diseño antes del envío mensual",
     },
     {
-      title: "Manual content stays simple",
+      title: "Las notas manuales siguen siendo simples",
       url: "https://example.com/manual-content",
-      summary: "Start with markdown notes, then add RSS collection later without changing the sender contract.",
-      source: "Manual seed",
-      publishedAt: "2026-05-02T00:00:00.000Z"
-    }
-  ]
+      summary:
+        "El club puede sumar apuntes en Markdown y combinarlos con fuentes automáticas sin cambiar el flujo de envío.",
+      source: "Carga manual",
+      publishedAt: "2026-05-02T00:00:00.000Z",
+      selectionReason: "ayuda a sumar criterio local a la curaduría automática",
+    },
+  ],
 };
