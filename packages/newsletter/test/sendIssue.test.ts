@@ -70,25 +70,26 @@ describe("sendIssue", () => {
   it("continues sending and records failed deliveries", async () => {
     const deliveries: DeliveryLog[] = [];
 
-    const summary = await sendIssue(issue, {
-      confirm: true,
-      config: config(),
-      workerClient: {
-        async fetchSubscribers() {
-          return [subscriber];
+    await expect(
+      sendIssue(issue, {
+        confirm: true,
+        config: config(),
+        workerClient: {
+          async fetchSubscribers() {
+            return [subscriber];
+          },
+          async recordDelivery(payload) {
+            deliveries.push(payload);
+          }
         },
-        async recordDelivery(payload) {
-          deliveries.push(payload);
+        sender: {
+          async send() {
+            throw new Error("provider down");
+          }
         }
-      },
-      sender: {
-        async send() {
-          throw new Error("provider down");
-        }
-      }
-    });
+      })
+    ).rejects.toThrow("Newsletter send failed for 1 recipient");
 
-    expect(summary.failed).toBe(1);
     expect(deliveries[0]).toMatchObject({
       issueSlug: "weekly",
       subscriberEmail: "person@udesa.edu.ar",

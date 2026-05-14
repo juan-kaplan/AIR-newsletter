@@ -103,18 +103,20 @@ export async function sendIssue(issue: NewsletterIssue, options: SendIssueOption
         providerMessageId: delivery?.id
       });
     } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : "Unknown send failure";
+      console.error(`Failed to send to ${subscriber.email}: ${errorMessage}`);
       failed += 1;
       await workerClient.recordDelivery({
         issueSlug: issue.slug,
         subscriberId: subscriber.id,
         subscriberEmail: subscriber.email,
         status: "failed",
-        error: error instanceof Error ? error.message : "Unknown send failure"
+        error: errorMessage
       });
     }
   }
 
-  return printAndReturn({
+  const summary = printAndReturn({
     issue: issue.slug,
     activeSubscribers: subscribers.length,
     sent,
@@ -122,6 +124,12 @@ export async function sendIssue(issue: NewsletterIssue, options: SendIssueOption
     failed,
     dryRun
   });
+
+  if (!dryRun && failed > 0) {
+    throw new Error(`Newsletter send failed for ${failed} recipient(s).`);
+  }
+
+  return summary;
 }
 
 function printAndReturn(summary: SendSummary): SendSummary {
