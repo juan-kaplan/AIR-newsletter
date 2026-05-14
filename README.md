@@ -67,8 +67,8 @@ The workflow sets these non-secret values directly:
 ```txt
 NEWSLETTER_FROM=jfigueiredopaschmann@udesa.edu.ar
 SMTP_HOST=smtp.gmail.com
-SMTP_PORT=587
-SMTP_SECURE=false
+SMTP_PORT=465
+SMTP_SECURE=true
 SMTP_USER=jfigueiredopaschmann@udesa.edu.ar
 ALLOWED_RECIPIENT_DOMAIN=udesa.edu.ar
 ```
@@ -149,8 +149,8 @@ The sender uses:
 
 ```txt
 SMTP_HOST=smtp.gmail.com
-SMTP_PORT=587
-SMTP_SECURE=false
+SMTP_PORT=465
+SMTP_SECURE=true
 SMTP_USER=jfigueiredopaschmann@udesa.edu.ar
 NEWSLETTER_FROM=jfigueiredopaschmann@udesa.edu.ar
 ```
