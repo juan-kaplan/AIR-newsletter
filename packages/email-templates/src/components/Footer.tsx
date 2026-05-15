@@ -8,13 +8,6 @@ interface FooterProps {
 export function Footer({ unsubscribeUrl }: FooterProps) {
   return (
     <Section style={section}>
-      <Section style={brandRow}>
-        <Text style={brandText}>
-          <span style={brandMark}>AIR</span>
-          <span style={brandSeparator}>/</span>
-          <span style={brandLabel}>LABORATORY</span>
-        </Text>
-      </Section>
       <Section style={rule} />
       <Text style={copyright}>
         © 2026 AIR Robótica · Universidad de San Andrés
@@ -39,8 +32,6 @@ export function Footer({ unsubscribeUrl }: FooterProps) {
   );
 }
 
-const headlineStack =
-  "'Space Grotesk', 'Helvetica Neue', Helvetica, Arial, sans-serif";
 const bodyStack =
   "Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif";
 const monoStack =
@@ -50,43 +41,8 @@ const section = {
   backgroundColor: "#f1f3f5",
   borderTop: "1px solid #cbd5e1",
   margin: "32px 0 0",
-  padding: "48px 24px 56px",
+  padding: "40px 24px 56px",
   textAlign: "center" as const,
-};
-
-const brandRow = {
-  margin: "0 0 16px",
-  padding: "0",
-  textAlign: "center" as const,
-};
-
-const brandText = {
-  margin: "0",
-  textAlign: "center" as const,
-};
-
-const brandMark = {
-  color: "#041627",
-  fontFamily: headlineStack,
-  fontSize: "24px",
-  fontWeight: 700 as const,
-  letterSpacing: "-0.02em",
-};
-
-const brandSeparator = {
-  color: "#64748b",
-  fontFamily: monoStack,
-  fontSize: "16px",
-  margin: "0 6px",
-};
-
-const brandLabel = {
-  color: "#475569",
-  fontFamily: monoStack,
-  fontSize: "11px",
-  fontWeight: 500 as const,
-  letterSpacing: "0.12em",
-  textTransform: "uppercase" as const,
 };
 
 const rule = {
