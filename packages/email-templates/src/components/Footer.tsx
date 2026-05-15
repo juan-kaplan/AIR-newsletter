@@ -23,29 +23,30 @@ export function Footer({ unsubscribeUrl }: FooterProps) {
 }
 
 const section = {
-  backgroundColor: "#f8fafc",
-  borderTop: "1px solid #d9e0ea",
-  margin: "38px -32px -40px",
-  padding: "28px 32px 24px",
+  backgroundColor: "#f6f8fa",
+  borderTop: "1px solid #d7dde5",
+  margin: "0",
+  padding: "30px 40px 34px",
   textAlign: "center" as const,
 };
 
 const brand = {
-  color: "#172033",
-  fontFamily: "Aptos, 'Segoe UI', Helvetica, Arial, sans-serif",
-  fontSize: "20px",
+  color: "#1f2933",
+  fontFamily: "Georgia, 'Times New Roman', serif",
+  fontSize: "19px",
   fontWeight: "700",
-  lineHeight: "26px",
-  margin: "0 0 14px",
+  lineHeight: "25px",
+  margin: "0 0 12px",
 };
 
 const text = {
-  color: "#5d697c",
+  color: "#607083",
   fontSize: "12px",
   lineHeight: "18px",
   margin: "0 0 8px",
 };
 
 const link = {
-  color: "#0b5f94",
+  color: "#12344d",
+  textDecoration: "underline",
 };

@@ -15,23 +15,28 @@ interface ArticleCardProps {
 
 export function ArticleCard({ article }: ArticleCardProps) {
   return (
-    <Section style={section}>
+    <Section className="mobile-padding" style={section}>
       {article.imageUrl ? (
-        <Img alt="" src={article.imageUrl} style={image} />
+        <Img
+          alt=""
+          className="fluid-img"
+          src={article.imageUrl}
+          style={image}
+        />
       ) : null}
       <Text style={meta}>
         {labelForCategory(article.category)}
-        {article.source ? ` / ${article.source}` : ""}
-        {article.publishedAt ? ` / ${formatDate(article.publishedAt)}` : ""}
+        {article.source ? ` · ${article.source}` : ""}
+        {article.publishedAt ? ` · ${formatDate(article.publishedAt)}` : ""}
       </Text>
-      <Heading as="h2" style={heading}>
+      <Heading as="h3" style={heading}>
         <Link href={article.url} style={link}>
           {article.title}
         </Link>
       </Heading>
       <Text style={summary}>{article.summary}</Text>
       <Button href={article.url} style={readLink}>
-        Abrir enlace
+        Leer más
       </Button>
     </Section>
   );
@@ -68,56 +73,57 @@ function formatDate(value: string): string {
 
 const section = {
   backgroundColor: "#ffffff",
-  borderBottom: "1px solid #d9e0ea",
+  borderBottom: "1px solid #d7dde5",
   margin: "0",
-  padding: "22px 0",
+  padding: "28px 40px",
 };
 
 const image = {
-  border: "1px solid #d9e0ea",
   display: "block",
   height: "auto",
-  margin: "0 0 16px",
+  margin: "0 0 18px",
   maxWidth: "100%",
   width: "100%",
 };
 
 const meta = {
-  color: "#0b5f94",
+  color: "#607083",
   fontSize: "13px",
-  fontWeight: "600",
-  lineHeight: "18px",
+  fontWeight: "700",
+  lineHeight: "19px",
   letterSpacing: "0",
-  margin: "0 0 8px",
+  margin: "0 0 9px",
+  textTransform: "uppercase" as const,
 };
 
 const heading = {
-  fontFamily: "Aptos, 'Segoe UI', Helvetica, Arial, sans-serif",
-  fontSize: "24px",
-  lineHeight: "30px",
-  margin: "0 0 10px",
+  fontFamily: "Georgia, 'Times New Roman', serif",
+  fontSize: "23px",
+  fontWeight: "700",
+  lineHeight: "29px",
+  margin: "0 0 11px",
 };
 
 const link = {
-  color: "#172033",
+  color: "#1f2933",
   textDecoration: "none",
 };
 
 const summary = {
-  color: "#344154",
+  color: "#3f4d5d",
   fontSize: "16px",
   lineHeight: "25px",
-  margin: "0 0 14px",
+  margin: "0 0 16px",
 };
 
 const readLink = {
-  backgroundColor: "#0b5f94",
-  borderRadius: "4px",
+  backgroundColor: "#12344d",
+  borderRadius: "0",
   color: "#ffffff",
   display: "inline-block",
-  fontSize: "14px",
+  fontSize: "13px",
   fontWeight: "700",
   letterSpacing: "0",
-  padding: "10px 14px",
+  padding: "11px 16px",
   textDecoration: "none",
 };

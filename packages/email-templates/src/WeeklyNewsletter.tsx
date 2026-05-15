@@ -1,16 +1,12 @@
-import {
-  Button,
-  Heading,
-  Img,
-  Link,
-  Section,
-  Text,
-} from "@react-email/components";
+import { Heading, Section, Text } from "@react-email/components";
 import React from "react";
 import { ArticleCard } from "./components/ArticleCard";
 import { Footer } from "./components/Footer";
 import { Layout } from "./components/Layout";
-import type { NewsletterIssue } from "../../newsletter/src/types";
+import type {
+  NewsletterArticle,
+  NewsletterIssue,
+} from "../../newsletter/src/types";
 
 interface WeeklyNewsletterProps {
   issue: NewsletterIssue;
@@ -21,207 +17,139 @@ export function WeeklyNewsletter({
   issue,
   unsubscribeUrl,
 }: WeeklyNewsletterProps) {
-  const [featured, ...secondaryArticles] = issue.articles;
+  const opportunityArticles = issue.articles.filter(isOpportunity);
+  const newsArticles = issue.articles.filter(
+    (article) => !isOpportunity(article),
+  );
 
   return (
     <Layout preheader={issue.preheader}>
-      <Section style={hero}>
-        <Text style={heroMeta}>Boletín mensual de robótica</Text>
+      <Section className="mobile-padding" style={introSection}>
+        <Text style={kicker}>Boletín mensual</Text>
         <Heading as="h1" style={heading}>
           {issue.subject}
         </Heading>
         <Text style={intro}>{issue.preheader}</Text>
       </Section>
 
-      {featured ? (
-        <Section style={featuredCard}>
-          {featured.imageUrl ? (
-            <Img alt="" src={featured.imageUrl} style={featuredImage} />
-          ) : null}
-          <Text style={featuredLabel}>Noticia principal</Text>
-          <Text style={featuredMeta}>{formatArticleMeta(featured)}</Text>
-          <Heading as="h2" style={featuredHeading}>
-            <Link href={featured.url} style={featuredLink}>
-              {featured.title}
-            </Link>
-          </Heading>
-          <Text style={featuredSummary}>{featured.summary}</Text>
-          <Button href={featured.url} style={cta}>
-            Leer noticia
-          </Button>
-        </Section>
-      ) : null}
-
-      <Section style={divider} />
-
-      <Section style={digestHeader}>
-        <Text style={digestLabel}>Noticias seleccionadas</Text>
+      <Section className="mobile-padding" style={summarySection}>
+        <Text style={summaryTitle}>En esta edición</Text>
+        {issue.articles.slice(0, 5).map((article) => (
+          <Text key={article.url} style={summaryItem}>
+            <span style={summaryBullet}>•</span> {article.title}
+          </Text>
+        ))}
       </Section>
 
-      {secondaryArticles.map((article) => (
-        <ArticleCard article={article} key={article.url} />
-      ))}
+      {opportunityArticles.length > 0 ? (
+        <ArticleSection
+          articles={opportunityArticles}
+          title="Oportunidades y competencias"
+        />
+      ) : null}
+
+      {newsArticles.length > 0 ? (
+        <ArticleSection articles={newsArticles} title="Noticias de robótica" />
+      ) : null}
+
       <Footer unsubscribeUrl={unsubscribeUrl} />
     </Layout>
   );
 }
 
-function formatArticleMeta(
-  article: NewsletterIssue["articles"][number],
-): string {
-  const parts = [labelForCategory(article.category)];
-  if (article.source) {
-    parts.push(article.source);
-  }
-  if (article.publishedAt) {
-    parts.push(formatDate(article.publishedAt));
-  }
-
-  return parts.join(" / ");
+interface ArticleSectionProps {
+  articles: NewsletterArticle[];
+  title: string;
 }
 
-function labelForCategory(category?: string): string {
-  if (category === "competition") {
-    return "OPORTUNIDAD";
-  }
-  if (category === "event") {
-    return "EVENTO";
-  }
-  if (category === "research") {
-    return "INVESTIGACIÓN";
-  }
-  if (category === "tooling") {
-    return "HERRAMIENTA";
-  }
-
-  return "NOTICIA";
+function ArticleSection({ articles, title }: ArticleSectionProps) {
+  return (
+    <Section style={articleGroup}>
+      <Section className="mobile-padding" style={sectionHeader}>
+        <Text style={sectionTitle}>{title}</Text>
+      </Section>
+      {articles.map((article) => (
+        <ArticleCard article={article} key={article.url} />
+      ))}
+    </Section>
+  );
 }
 
-function formatDate(value: string): string {
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) {
-    return value;
-  }
-
-  return new Intl.DateTimeFormat("es-AR", {
-    day: "2-digit",
-    month: "short",
-  }).format(date);
+function isOpportunity(article: NewsletterArticle): boolean {
+  return article.category === "competition" || article.category === "event";
 }
 
-const hero = {
-  margin: "0 0 28px",
+const introSection = {
+  padding: "36px 40px 26px",
 };
 
-const heroMeta = {
-  color: "#5d697c",
-  fontSize: "14px",
-  fontWeight: "600",
+const kicker = {
+  color: "#607083",
+  fontSize: "13px",
+  fontWeight: "700",
   letterSpacing: "0",
-  lineHeight: "20px",
-  margin: "0 0 14px",
+  lineHeight: "18px",
+  margin: "0 0 10px",
+  textTransform: "uppercase" as const,
 };
 
 const heading = {
-  color: "#172033",
-  fontFamily: "Aptos, 'Segoe UI', Helvetica, Arial, sans-serif",
-  fontSize: "38px",
+  color: "#1f2933",
+  fontFamily: "Georgia, 'Times New Roman', serif",
+  fontSize: "32px",
   fontWeight: "700",
-  lineHeight: "44px",
-  margin: "0 0 18px",
-};
-
-const intro = {
-  color: "#4b5565",
-  fontSize: "17px",
-  lineHeight: "27px",
-  margin: "0",
-};
-
-const featuredCard = {
-  backgroundColor: "#ffffff",
-  margin: "0 0 34px",
-  padding: "0",
-};
-
-const featuredLabel = {
-  color: "#0b5f94",
-  fontSize: "14px",
-  fontWeight: "700",
-  letterSpacing: "0",
-  lineHeight: "20px",
-  margin: "0 0 8px",
-};
-
-const featuredImage = {
-  border: "1px solid #d9e0ea",
-  display: "block",
-  height: "auto",
-  margin: "0 0 22px",
-  maxWidth: "100%",
-  width: "100%",
-};
-
-const featuredMeta = {
-  color: "#64748b",
-  fontSize: "13px",
-  letterSpacing: "0",
-  lineHeight: "19px",
-  margin: "0 0 18px",
-};
-
-const featuredHeading = {
-  color: "#172033",
-  fontFamily: "Aptos, 'Segoe UI', Helvetica, Arial, sans-serif",
-  fontSize: "30px",
-  lineHeight: "36px",
+  lineHeight: "39px",
   margin: "0 0 14px",
 };
 
-const featuredLink = {
-  color: "#172033",
-  textDecoration: "none",
-};
-
-const featuredSummary = {
-  color: "#344154",
+const intro = {
+  color: "#4b5a69",
   fontSize: "16px",
-  lineHeight: "26px",
-  margin: "0 0 18px",
+  lineHeight: "25px",
+  margin: "0",
 };
 
-const cta = {
-  backgroundColor: "#0b5f94",
-  borderRadius: "4px",
-  color: "#ffffff",
-  display: "inline-block",
+const summarySection = {
+  backgroundColor: "#f6f8fa",
+  borderBottom: "1px solid #d7dde5",
+  borderTop: "1px solid #d7dde5",
+  padding: "22px 40px 20px",
+};
+
+const summaryTitle = {
+  color: "#1f2933",
   fontSize: "14px",
   fontWeight: "700",
-  letterSpacing: "0",
-  padding: "11px 16px",
-  textDecoration: "none",
+  lineHeight: "20px",
+  margin: "0 0 12px",
 };
 
-const divider = {
-  borderTop: "1px solid #d9e0ea",
-  fontSize: "1px",
-  lineHeight: "1px",
-  margin: "0 0 32px",
-};
-
-const digestHeader = {
-  borderBottom: "2px solid #172033",
-  margin: "0 0 18px",
-  padding: "0",
-};
-
-const digestLabel = {
-  color: "#172033",
-  display: "inline-block",
-  fontFamily: "Aptos, 'Segoe UI', Helvetica, Arial, sans-serif",
-  fontSize: "20px",
-  fontWeight: "600",
-  lineHeight: "26px",
+const summaryItem = {
+  color: "#3f4d5d",
+  fontSize: "14px",
+  lineHeight: "21px",
   margin: "0 0 8px",
-  verticalAlign: "middle",
+};
+
+const summaryBullet = {
+  color: "#0f5f8f",
+  fontWeight: "700",
+};
+
+const articleGroup = {
+  margin: "0",
+};
+
+const sectionHeader = {
+  borderBottom: "2px solid #1f2933",
+  padding: "30px 40px 10px",
+};
+
+const sectionTitle = {
+  color: "#1f2933",
+  fontFamily: "Georgia, 'Times New Roman', serif",
+  fontSize: "22px",
+  fontWeight: "700",
+  lineHeight: "28px",
+  margin: "0",
 };
