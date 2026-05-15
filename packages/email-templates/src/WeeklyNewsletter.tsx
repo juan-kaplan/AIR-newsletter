@@ -55,13 +55,7 @@ export function WeeklyNewsletter({
       <Section style={divider} />
 
       <Section style={digestHeader}>
-        <Text style={sectionMarker}> </Text>
         <Text style={digestLabel}>Noticias seleccionadas</Text>
-        <Text style={digestCount}>
-          Una curaduría breve para detectar competencias, oportunidades e ideas
-          técnicas que el club pueda convertir en proyectos o actividades
-          locales.
-        </Text>
       </Section>
 
       {secondaryArticles.map((article) => (
@@ -120,7 +114,7 @@ const hero = {
 };
 
 const heroMeta = {
-  color: "#c1c6d7",
+  color: "#5d697c",
   fontSize: "14px",
   fontWeight: "600",
   letterSpacing: "0",
@@ -129,31 +123,29 @@ const heroMeta = {
 };
 
 const heading = {
-  color: "#e1e3e4",
+  color: "#172033",
   fontFamily: "Aptos, 'Segoe UI', Helvetica, Arial, sans-serif",
-  fontSize: "44px",
+  fontSize: "38px",
   fontWeight: "700",
-  lineHeight: "50px",
+  lineHeight: "44px",
   margin: "0 0 18px",
 };
 
 const intro = {
-  color: "#c1c6d7",
-  fontSize: "18px",
-  lineHeight: "29px",
+  color: "#4b5565",
+  fontSize: "17px",
+  lineHeight: "27px",
   margin: "0",
 };
 
 const featuredCard = {
-  backgroundColor: "#1d2021",
-  border: "1px solid #2a2a2a",
-  borderRadius: "8px",
+  backgroundColor: "#ffffff",
   margin: "0 0 34px",
-  padding: "28px",
+  padding: "0",
 };
 
 const featuredLabel = {
-  color: "#adc7ff",
+  color: "#0b5f94",
   fontSize: "14px",
   fontWeight: "700",
   letterSpacing: "0",
@@ -162,8 +154,7 @@ const featuredLabel = {
 };
 
 const featuredImage = {
-  border: "1px solid #2a2a2a",
-  borderRadius: "6px",
+  border: "1px solid #d9e0ea",
   display: "block",
   height: "auto",
   margin: "0 0 22px",
@@ -172,7 +163,7 @@ const featuredImage = {
 };
 
 const featuredMeta = {
-  color: "#c1c6d7",
+  color: "#64748b",
   fontSize: "13px",
   letterSpacing: "0",
   lineHeight: "19px",
@@ -180,7 +171,7 @@ const featuredMeta = {
 };
 
 const featuredHeading = {
-  color: "#e1e3e4",
+  color: "#172033",
   fontFamily: "Aptos, 'Segoe UI', Helvetica, Arial, sans-serif",
   fontSize: "30px",
   lineHeight: "36px",
@@ -188,21 +179,21 @@ const featuredHeading = {
 };
 
 const featuredLink = {
-  color: "#e1e3e4",
+  color: "#172033",
   textDecoration: "none",
 };
 
 const featuredSummary = {
-  color: "#c1c6d7",
+  color: "#344154",
   fontSize: "16px",
   lineHeight: "26px",
   margin: "0 0 18px",
 };
 
 const cta = {
-  backgroundColor: "#adc7ff",
+  backgroundColor: "#0b5f94",
   borderRadius: "4px",
-  color: "#102033",
+  color: "#ffffff",
   display: "inline-block",
   fontSize: "14px",
   fontWeight: "700",
@@ -212,43 +203,25 @@ const cta = {
 };
 
 const divider = {
-  borderTop: "1px solid #2a2a2a",
+  borderTop: "1px solid #d9e0ea",
   fontSize: "1px",
   lineHeight: "1px",
   margin: "0 0 32px",
 };
 
 const digestHeader = {
-  margin: "0 0 24px",
+  borderBottom: "2px solid #172033",
+  margin: "0 0 18px",
   padding: "0",
 };
 
-const sectionMarker = {
-  backgroundColor: "#adc7ff",
-  borderRadius: "4px",
-  display: "inline-block",
-  fontSize: "1px",
-  height: "24px",
-  lineHeight: "24px",
-  margin: "0 12px 0 0",
-  verticalAlign: "middle",
-  width: "4px",
-};
-
 const digestLabel = {
-  color: "#e1e3e4",
+  color: "#172033",
   display: "inline-block",
   fontFamily: "Aptos, 'Segoe UI', Helvetica, Arial, sans-serif",
-  fontSize: "24px",
+  fontSize: "20px",
   fontWeight: "600",
-  lineHeight: "30px",
-  margin: "0",
+  lineHeight: "26px",
+  margin: "0 0 8px",
   verticalAlign: "middle",
-};
-
-const digestCount = {
-  color: "#c1c6d7",
-  fontSize: "15px",
-  lineHeight: "23px",
-  margin: "10px 0 0 16px",
 };

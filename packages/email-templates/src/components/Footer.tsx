@@ -10,9 +10,8 @@ export function Footer({ unsubscribeUrl }: FooterProps) {
     <Section style={section}>
       <Text style={brand}>AIR Robótica · Universidad de San Andrés</Text>
       <Text style={text}>
-        Generado para revisión manual por el flujo del boletín de AIR. Cada
-        envío resume noticias útiles para aprender, competir y organizar mejores
-        actividades de robótica universitaria.
+        Recibís este boletín porque estás suscripto al newsletter de AIR
+        Robótica.
       </Text>
       <Text style={text}>
         <Link href={unsubscribeUrl} style={link}>
@@ -24,15 +23,15 @@ export function Footer({ unsubscribeUrl }: FooterProps) {
 }
 
 const section = {
-  backgroundColor: "#1d2021",
-  borderTop: "1px solid #2a2a2a",
-  margin: "38px -24px -40px",
-  padding: "32px 24px 24px",
+  backgroundColor: "#f8fafc",
+  borderTop: "1px solid #d9e0ea",
+  margin: "38px -32px -40px",
+  padding: "28px 32px 24px",
   textAlign: "center" as const,
 };
 
 const brand = {
-  color: "#e1e3e4",
+  color: "#172033",
   fontFamily: "Aptos, 'Segoe UI', Helvetica, Arial, sans-serif",
   fontSize: "20px",
   fontWeight: "700",
@@ -41,12 +40,12 @@ const brand = {
 };
 
 const text = {
-  color: "#c1c6d7",
+  color: "#5d697c",
   fontSize: "12px",
   lineHeight: "18px",
   margin: "0 0 8px",
 };
 
 const link = {
-  color: "#adc7ff",
+  color: "#0b5f94",
 };

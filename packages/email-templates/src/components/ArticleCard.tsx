@@ -67,16 +67,14 @@ function formatDate(value: string): string {
 }
 
 const section = {
-  backgroundColor: "#1d2021",
-  border: "1px solid #2a2a2a",
-  borderRadius: "8px",
-  margin: "0 0 18px",
-  padding: "24px",
+  backgroundColor: "#ffffff",
+  borderBottom: "1px solid #d9e0ea",
+  margin: "0",
+  padding: "22px 0",
 };
 
 const image = {
-  border: "1px solid #2a2a2a",
-  borderRadius: "6px",
+  border: "1px solid #d9e0ea",
   display: "block",
   height: "auto",
   margin: "0 0 16px",
@@ -85,7 +83,7 @@ const image = {
 };
 
 const meta = {
-  color: "#adc7ff",
+  color: "#0b5f94",
   fontSize: "13px",
   fontWeight: "600",
   lineHeight: "18px",
@@ -101,21 +99,21 @@ const heading = {
 };
 
 const link = {
-  color: "#e1e3e4",
+  color: "#172033",
   textDecoration: "none",
 };
 
 const summary = {
-  color: "#c1c6d7",
+  color: "#344154",
   fontSize: "16px",
   lineHeight: "25px",
   margin: "0 0 14px",
 };
 
 const readLink = {
-  backgroundColor: "#adc7ff",
+  backgroundColor: "#0b5f94",
   borderRadius: "4px",
-  color: "#102033",
+  color: "#ffffff",
   display: "inline-block",
   fontSize: "14px",
   fontWeight: "700",

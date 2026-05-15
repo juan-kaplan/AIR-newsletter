@@ -36,6 +36,7 @@ describe("renderEmail", () => {
     expect(rendered.html).toContain("https://example.com/useful.jpg");
     expect(rendered.html).toContain("AIR ROBÓTICA");
     expect(rendered.html).toContain("Noticias seleccionadas");
+    expect(rendered.html).not.toContain("Una curaduría breve");
     expect(rendered.html).not.toContain("Por qué importa");
     expect(rendered.html).not.toContain("internal scoring note");
   });

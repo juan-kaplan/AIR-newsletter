@@ -21,8 +21,8 @@ function sweepReaderVisibleText(article: NewsletterArticle): NewsletterArticle {
     ...article,
     summary: article.summary
       .replace(/\bpor qué importa:?\s*/gi, "")
-      .replace(/\bpuede servirle a AIR\s*/gi, "AIR puede usarlo ")
-      .replace(/\bpuede servir como modelo para\b/gi, "ofrece un ejemplo para")
+      .replace(/\bpuede servirle a AIR\s*/gi, "ofrece material para ")
+      .replace(/\bpuede servir como modelo para\b/gi, "muestra un modelo para")
       .replace(/\bpuede inspirar a\b/gi, "da pistas para")
       .replace(/señales/gi, "noticias")
       .replace(/señal/gi, "noticia")
@@ -42,14 +42,15 @@ function sweepAudienceFit(article: NewsletterArticle): NewsletterArticle {
 function rewriteForAudience(article: NewsletterArticle): string {
   const text = `${article.title} ${article.summary}`.toLowerCase();
   if (article.category === "competition") {
-    return article.summary
+    const specific = rewriteCompetitionFormula(article);
+    return specific
       .replace(
         /\bAIR puede usarlo como referencia para\b/gi,
-        "AIR puede tomar de ahí",
+        "la nota permite comparar",
       )
       .replace(
         /\bpuede servirle a AIR como referencia para\b/gi,
-        "AIR puede tomar de ahí",
+        "la nota permite comparar",
       )
       .replace(/\bpuede servir como modelo para\b/gi, "ofrece un modelo para")
       .replace(
@@ -104,6 +105,32 @@ function rewriteForAudience(article: NewsletterArticle): string {
   }
 
   return "La noticia aporta contexto de robótica aplicada para discusiones técnicas del club. Conviene leerla buscando ideas trasladables a prototipos, reglas de competencia o demostraciones para estudiantes.";
+}
+
+function rewriteCompetitionFormula(article: NewsletterArticle): string {
+  const text = `${article.title} ${article.summary}`.toLowerCase();
+  if (text.includes("wall-climbing") || text.includes("trepadores de muros")) {
+    return article.summary.replace(
+      /Wall-Climbing Robot Challenge 2026 publica una oportunidad vigente hasta el ([^.]+)\. El eje está en robots trepadores de muros, con trabajo fuerte de diseño mecánico, control y percepción\. AIR puede tomar de ahí formatos de prueba, criterios de evaluación y niveles de dificultad para entrenar equipos\./i,
+      "El Wall-Climbing Robot Challenge propone diseñar robots capaces de trepar muros, una consigna muy concreta para trabajar adhesión, tracción, control y percepción en superficies verticales. La inscripción cierra el $1.",
+    );
+  }
+
+  if (text.includes("unsw") && text.includes("robotics")) {
+    return article.summary.replace(
+      /UNSW Robotics & Coding Challenge 2026 publica una oportunidad vigente\. El eje combina robótica, programación e IA aplicada a una misión de rescate o infraestructura\. AIR puede tomar de ahí formatos de prueba, criterios de evaluación y niveles de dificultad para entrenar equipos\./i,
+      "La edición 2026 de la UNSW STEM, Robotics & Coding Challenge plantea una misión de rescate tras el colapso de una ruta. Es un buen caso para estudiar cómo convertir un problema abierto en reglas, restricciones técnicas y entregables evaluables.",
+    );
+  }
+
+  if (text.includes("robocup")) {
+    return article.summary.replace(
+      /RoboCup 2026 publica una oportunidad vigente\. El eje reúne ligas de robótica competitiva como fútbol, rescate, robótica doméstica e industrial\. AIR puede tomar de ahí formatos de prueba, criterios de evaluación y niveles de dificultad para entrenar equipos\./i,
+      "RoboCup 2026 reúne ligas de fútbol, rescate, robótica doméstica e industrial. Más que una sola competencia, funciona como un mapa de categorías posibles para pensar pruebas universitarias con distintos niveles de dificultad.",
+    );
+  }
+
+  return article.summary;
 }
 
 function looksEnglish(value: string): boolean {

@@ -43,31 +43,31 @@ export function Layout({ children, preheader }: LayoutProps) {
 }
 
 const body = {
-  backgroundColor: "#111415",
-  color: "#e1e3e4",
+  backgroundColor: "#f5f7fb",
+  color: "#172033",
   fontFamily: "Aptos, 'Segoe UI', Helvetica, Arial, sans-serif",
   margin: 0,
-  padding: "0 0 80px",
+  padding: "28px 0 64px",
 };
 
 const container = {
-  backgroundColor: "#111415",
-  border: "1px solid #2a2a2a",
+  backgroundColor: "#ffffff",
+  border: "1px solid #d9e0ea",
   margin: "0 auto",
-  maxWidth: "800px",
+  maxWidth: "680px",
   overflow: "hidden",
-  padding: "0 24px 40px",
+  padding: "0 32px 40px",
 };
 
 const masthead = {
-  backgroundColor: "#111415",
-  borderBottom: "1px solid #2a2a2a",
-  margin: "0 -24px 40px",
-  padding: "18px 24px",
+  backgroundColor: "#ffffff",
+  borderBottom: "1px solid #d9e0ea",
+  margin: "0 -32px 34px",
+  padding: "22px 32px",
 };
 
 const eyebrow = {
-  color: "#c1c6d7",
+  color: "#5d697c",
   fontSize: "12px",
   fontWeight: "500",
   letterSpacing: "0",
@@ -76,11 +76,11 @@ const eyebrow = {
 };
 
 const brand = {
-  color: "#adc7ff",
+  color: "#0b3a5b",
   fontFamily: "Aptos, 'Segoe UI', Helvetica, Arial, sans-serif",
-  fontSize: "24px",
+  fontSize: "22px",
   fontWeight: "700",
-  lineHeight: "30px",
+  lineHeight: "28px",
   margin: 0,
 };
 
@@ -90,9 +90,9 @@ const editionColumn = {
 };
 
 const edition = {
-  border: "1px solid #414754",
-  borderRadius: "4px",
-  color: "#e1e3e4",
+  border: "1px solid #c8d2df",
+  borderRadius: "999px",
+  color: "#334155",
   display: "inline-block",
   fontSize: "12px",
   letterSpacing: "0",

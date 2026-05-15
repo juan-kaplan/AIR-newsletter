@@ -147,6 +147,15 @@ function buildCompetitionSummary(
   snippet: string,
   now: Date,
 ): string {
+  const specificSummary = buildSpecificCompetitionSummary(
+    sourceName,
+    snippet,
+    now,
+  );
+  if (specificSummary) {
+    return specificSummary;
+  }
+
   const dates = extractDates(snippet, now).filter((date) =>
     isFutureOrToday(date, now),
   );
@@ -163,7 +172,39 @@ function buildCompetitionSummary(
     : "";
   const focus = describeCompetitionFocus(sourceName, snippet);
 
-  return `${sourceName} ${action}${deadlineText}. ${focus} AIR puede tomar de ahí formatos de prueba, criterios de evaluación y niveles de dificultad para entrenar equipos.`;
+  return `${sourceName} ${action}${deadlineText}. ${focus} Para AIR, lo útil está en mirar la consigna, los entregables y cómo se evalúa el desempeño de los equipos.`;
+}
+
+function buildSpecificCompetitionSummary(
+  sourceName: string,
+  snippet: string,
+  now: Date,
+): string | null {
+  const text = `${sourceName} ${snippet}`.toLowerCase();
+  const deadline = extractDates(snippet, now)
+    .filter((date) => isFutureOrToday(date, now))
+    .sort((first, second) => first.getTime() - second.getTime())[0];
+
+  if (text.includes("wall-climbing") || text.includes("climbing")) {
+    const deadlineText = deadline
+      ? ` La inscripción cierra el ${formatSpanishDate(deadline)}.`
+      : "";
+    return `El Wall-Climbing Robot Challenge propone diseñar robots capaces de trepar muros, una consigna muy concreta para trabajar adhesión, tracción, control y percepción en superficies verticales.${deadlineText}`;
+  }
+
+  if (text.includes("coding") || text.includes("stem")) {
+    return "La edición 2026 de la UNSW STEM, Robotics & Coding Challenge plantea una misión de rescate tras el colapso de una ruta. Es un buen caso para estudiar cómo convertir un problema abierto en reglas, restricciones técnicas y entregables evaluables.";
+  }
+
+  if (text.includes("robocup")) {
+    return "RoboCup 2026 reúne ligas de fútbol, rescate, robótica doméstica e industrial. Más que una sola competencia, funciona como un mapa de categorías posibles para pensar pruebas universitarias con distintos niveles de dificultad.";
+  }
+
+  if (text.includes("robotx") || text.includes("maritime")) {
+    return "RobotX trabaja sobre robótica marítima autónoma: navegación, percepción y coordinación de sistemas en un entorno físico difícil. Es una referencia interesante para imaginar desafíos de autonomía con restricciones reales.";
+  }
+
+  return null;
 }
 
 function describeCompetitionFocus(sourceName: string, snippet: string): string {

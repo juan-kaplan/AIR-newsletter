@@ -70,7 +70,7 @@ describe("competition page collection", () => {
       expect.objectContaining({
         title: "Wall-Climbing Robot Challenge 2026",
         summary:
-          "Wall-Climbing Robot Challenge 2026 tiene inscripción abierta hasta el 1 de junio de 2026. El eje está en robots trepadores de muros, con trabajo fuerte de diseño mecánico, control y percepción. AIR puede tomar de ahí formatos de prueba, criterios de evaluación y niveles de dificultad para entrenar equipos.",
+          "El Wall-Climbing Robot Challenge propone diseñar robots capaces de trepar muros, una consigna muy concreta para trabajar adhesión, tracción, control y percepción en superficies verticales. La inscripción cierra el 1 de junio de 2026.",
       }),
     );
     expect(articles[0]?.summary).not.toContain("Journey Challenge Specs");
