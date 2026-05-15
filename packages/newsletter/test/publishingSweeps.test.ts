@@ -21,4 +21,21 @@ describe("publishing sweeps", () => {
     expect(article?.summary).toContain("noticia");
     expect(article?.summary).toMatch(/[.!?]$/);
   });
+
+  it("rewrites common English source blurbs for AIR readers", () => {
+    const [article] = runPublishingSweeps([
+      {
+        title: "Closing the gap between animal movement and robotic control",
+        url: "https://example.com/control",
+        source: "Tech Xplore",
+        category: "research",
+        summary:
+          "Animals move with a level of precision and adaptability that robots struggle to match. Researchers are developing a new AI-driven approach.",
+      },
+    ]);
+
+    expect(article?.summary).toContain("control robótico");
+    expect(article?.summary).toContain("Para el club");
+    expect(article?.summary).not.toContain("Animals move");
+  });
 });

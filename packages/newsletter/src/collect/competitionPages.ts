@@ -163,7 +163,7 @@ function buildCompetitionSummary(
     : "";
   const focus = describeCompetitionFocus(sourceName, snippet);
 
-  return `${sourceName} ${action}${deadlineText}. ${focus} Puede servirle a AIR como referencia para diseñar desafíos universitarios y preparar equipos.`;
+  return `${sourceName} ${action}${deadlineText}. ${focus} AIR puede tomar de ahí formatos de prueba, criterios de evaluación y niveles de dificultad para entrenar equipos.`;
 }
 
 function describeCompetitionFocus(sourceName: string, snippet: string): string {
