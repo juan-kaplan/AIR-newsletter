@@ -1,74 +1,73 @@
 {
   "week": "2026-W20",
-  "collectedAt": "2026-05-15T00:19:44.160Z",
+  "collectedAt": "2026-05-15T00:23:29.942Z",
   "windowStart": "2026-05-11T00:00:00.000Z",
   "windowEnd": "2026-05-18T00:00:00.000Z",
   "articles": [
     {
-      "title": "RoboCup 2026: Inspiración para competencias universitarias",
+      "title": "RoboCup 2026",
       "url": "https://2026.robocup.org/",
-      "summary": "La RoboCup 2026 ya está vigente y presenta ligas de robótica competitiva en fútbol, rescate, robótica doméstica e industrial. Es una excelente referencia para que AIR diseñe sus propios desafíos universitarios y prepare equipos.",
+      "summary": "RoboCup 2026 publica una oportunidad vigente. El eje reúne ligas de robótica competitiva como fútbol, rescate, robótica doméstica e industrial. AIR puede usarlo como referencia para diseñar desafíos universitarios y preparar equipos.",
       "source": "RoboCup 2026",
       "category": "competition",
       "imageUrl": "https://2026.robocup.org/wp-content/uploads/2026/01/Team.jpeg",
-      "publishedAt": "2026-05-15T00:19:44.209Z",
+      "publishedAt": "2026-05-15T00:23:29.993Z",
       "score": 50,
-      "selectionReason": "Oportunidad global de competencia, ideal para inspirar desafíos locales y preparación de equipos."
+      "selectionReason": "noticia de competencia, fuente de competencia"
     },
     {
-      "title": "Desafío de Robots Trepamuros 2026: Inscripciones abiertas hasta el 15 de junio",
+      "title": "Wall-Climbing Robot Challenge 2026",
       "url": "https://wcrc.pro/",
-      "summary": "El Wall-Climbing Robot Challenge 2026 invita a equipos a diseñar robots trepadores de muros, poniendo a prueba el diseño mecánico, control y percepción. La inscripción está abierta hasta el 15 de junio de 2026 y puede servir como modelo para futuras competencias de AIR.",
+      "summary": "Wall-Climbing Robot Challenge 2026 publica una oportunidad vigente hasta el 15 de junio de 2026. El eje está en robots trepadores de muros, con trabajo fuerte de diseño mecánico, control y percepción. AIR puede usarlo como referencia para diseñar desafíos universitarios y preparar equipos.",
       "source": "Wall-Climbing Robot Challenge 2026",
       "category": "competition",
       "imageUrl": "https://wcrc.pro/media/hero/hero-bg.jpg",
-      "publishedAt": "2026-05-15T00:19:44.209Z",
+      "publishedAt": "2026-05-15T00:23:29.993Z",
       "score": 50,
-      "selectionReason": "Oportunidad de competencia con fecha límite clara, enfocado en diseño mecánico y control, útil para inspiración de desafíos."
+      "selectionReason": "noticia de competencia, fuente de competencia"
     },
     {
-      "title": "UNSW Robotics & Coding Challenge 2026: Robótica, programación e IA para misiones de rescate",
+      "title": "2026 UNSW STEM, Robotics & Coding Challenge",
       "url": "https://roboticscodingchallenge.org/current/",
-      "summary": "El desafío de la UNSW combina robótica, programación e inteligencia artificial para misiones de rescate o infraestructura. Es una oportunidad vigente que puede inspirar a los equipos de AIR a desarrollar proyectos similares o a preparar futuras competencias.",
+      "summary": "UNSW Robotics & Coding Challenge 2026 publica una oportunidad vigente. El eje combina robótica, programación e IA aplicada a una misión de rescate o infraestructura. AIR puede usarlo como referencia para diseñar desafíos universitarios y preparar equipos.",
       "source": "UNSW Robotics & Coding Challenge 2026",
       "category": "competition",
-      "imageUrl": "https://roboticscodingchallenge.org/wp-content/uploads/2026/03/mrt_sponsor_pmc.png",
-      "publishedAt": "2026-05-15T00:19:44.209Z",
+      "publishedAt": "2026-05-15T00:23:29.993Z",
       "score": 26,
-      "selectionReason": "Oportunidad vigente que integra robótica, programación e IA, útil para inspiración de desafíos y proyectos."
+      "selectionReason": "fuente de competencia"
     },
     {
-      "title": "¿Por qué el robot hizo eso? El desafío de la explicabilidad en ROS2",
+      "title": "Closing the gap between animal movement and robotic control",
+      "url": "https://techxplore.com/news/2026-05-gap-animal-movement-robotic.html",
+      "summary": "Animals move with a level of precision and adaptability that robots struggle to match. In Carnegie Mellon University's Department of Mechanical Engineering, researchers are developing a new AI-driven approach to uncover how brains and bodies work together.",
+      "source": "Tech Xplore Robotics",
+      "category": "research",
+      "imageUrl": "https://scx1.b-cdn.net/csz/news/tmb/2026/neural-robotics-transl.jpg",
+      "publishedAt": "2026-05-12T15:40:06.000Z",
+      "score": 26,
+      "selectionReason": "encaja con equipos estudiantiles"
+    },
+    {
+      "title": "The accountability gap in ROS2: where does \"why did the robot do that?\" get answered?",
       "url": "https://discourse.openrobotics.org/t/the-accountability-gap-in-ros2-where-does-why-did-the-robot-do-that-get-answered/54841",
-      "summary": "Un debate en Open Robotics Discourse aborda la 'brecha de responsabilidad' en ROS2: cómo entender las decisiones de sistemas autónomos. Cuando un robot móvil se desvía o un dron aborta una misión, es clave poder explicar el 'porqué', un desafío fundamental para el desarrollo de sistemas robustos y confiables.",
+      "summary": "A question I keep running into and don’t have a clean answer for: when a ROS2-based autonomous system makes a consequential decision — a mobile robot reroutes around a person, an arm stops mid-motion, a drone aborts — we can answer what it did.",
       "source": "Open Robotics Discourse",
       "category": "tooling",
       "publishedAt": "2026-05-14T19:35:05.000Z",
       "imageUrl": "https://us1.discourse-cdn.com/flex022/uploads/ros/original/3X/e/2/e2580bc2d1e3398c20399c8735572f973453b1a4.png",
       "score": 22,
-      "selectionReason": "Noticia de discusión práctica sobre un desafío clave en ROS2 (explicabilidad), muy útil para estudiantes."
+      "selectionReason": "idea técnica construible"
     },
     {
-      "title": "Abejas inspiran la navegación de drones autónomos",
-      "url": "https://techxplore.com/news/2026-05-honeybees-drones.html",
-      "summary": "Investigadores están estudiando cómo las abejas navegan para desarrollar algoritmos que permitan a los drones operar de forma más autónoma y eficiente en entornos complejos. Esta investigación abre nuevas vías para mejorar la percepción y la planificación de rutas en sistemas de drones.",
-      "source": "Tech Xplore Robotics",
-      "category": "research",
-      "imageUrl": "https://scx1.b-cdn.net/csz/news/tmb/2026/honeybees-teach-drones.jpg",
-      "publishedAt": "2026-05-13T15:00:24.000Z",
-      "score": 21,
-      "selectionReason": "Noticia de investigación práctica sobre navegación de drones y bioinspiración, relevante para el club."
-    },
-    {
-      "title": "Brazos robóticos: ¿dónde fallan las especificaciones en la práctica?",
-      "url": "https://discourse.openrobotics.org/t/where-do-robot-arm-specs-usually-break-down-in-real-deployments/54799",
-      "summary": "Un hilo de discusión en Open Robotics explora los puntos débiles de los brazos robóticos en implementaciones reales. Se busca entender por qué un brazo que parece ideal en papel puede tener dificultades en un entorno operativo, ofreciendo lecciones valiosas para el diseño y la integración de sistemas robóticos.",
-      "source": "Open Robotics Discourse",
-      "category": "tooling",
-      "publishedAt": "2026-05-13T20:15:14.000Z",
-      "imageUrl": "https://us1.discourse-cdn.com/flex022/uploads/ros/original/3X/e/2/e2580bc2d1e3398c20399c8735572f973453b1a4.png",
-      "score": 17,
-      "selectionReason": "Discusión práctica sobre desafíos de implementación de brazos robóticos, útil para diseño y proyectos del club."
+      "title": "Canadian Drone Regulations and Testing Explained: Introduction to Canadian Drone Testing",
+      "url": "https://roboticsandautomationnews.com/2026/05/14/canadian-drone-regulations-and-testing-explained-introduction-to-canadian-drone-testing/101556/",
+      "summary": "Canada has become one of the leading countries in drone technology and innovation. From snowy mountain regions to crowded urban areas, the country provides a perfect environment for testing advanced drone systems.",
+      "source": "Robotics & Automation News",
+      "category": "industry",
+      "publishedAt": "2026-05-14T15:55:39.000Z",
+      "imageUrl": "https://roboticsandautomationnews.com/wp-content/uploads/2026/05/canada-drone-licence-1.png",
+      "score": 22,
+      "selectionReason": "idea técnica construible"
     }
   ]
 }
