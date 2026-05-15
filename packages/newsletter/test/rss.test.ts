@@ -1,5 +1,9 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { collectRssArticles, verifyRssSources } from "../src/collect/rss";
+import {
+  collectRssArticles,
+  extractHtmlImageUrl,
+  verifyRssSources,
+} from "../src/collect/rss";
 
 const feed = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
@@ -82,5 +86,14 @@ describe("RSS collection", () => {
         error: "HTTP 500 while fetching https://example.com/feed.xml",
       },
     ]);
+  });
+
+  it("prefers article images over logos when scraping page metadata", () => {
+    const image = extractHtmlImageUrl(
+      `<html><head><meta property="og:image" content="/logo.webp"></head><body><img src="/robot-team-hero.jpg" width="1200" height="700"></body></html>`,
+      "https://example.com/article",
+    );
+
+    expect(image).toBe("https://example.com/robot-team-hero.jpg");
   });
 });

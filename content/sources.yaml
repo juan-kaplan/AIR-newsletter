@@ -29,11 +29,41 @@ sources:
     url: https://techxplore.com/rss-feed/robotics-news/
     category: research
     maxItems: 5
+  - key: nvidia-robotics-technical
+    name: NVIDIA Robotics Technical Blog
+    type: rss
+    url: https://developer.nvidia.com/blog/category/robotics/feed/
+    category: tooling
+    maxItems: 4
   - key: new-atlas-robotics
     name: New Atlas Robotics
     type: rss
     url: https://newatlas.com/robotics/index.rss
     category: industry
+    maxItems: 5
+  - key: robotiq-blog
+    name: Robotiq Blog
+    type: rss
+    url: https://blog.robotiq.com/rss.xml
+    category: tooling
+    maxItems: 4
+  - key: robotics-tomorrow
+    name: RoboticsTomorrow
+    type: rss
+    url: https://www.roboticstomorrow.com/rss/news/robotics
+    category: industry
+    maxItems: 4
+  - key: hackaday-robots
+    name: Hackaday Robots
+    type: rss
+    url: https://hackaday.com/tag/robots/feed/
+    category: tooling
+    maxItems: 4
+  - key: open-robotics-discourse
+    name: Open Robotics Discourse
+    type: rss
+    url: https://discourse.openrobotics.org/latest.rss
+    category: tooling
     maxItems: 5
   - key: robotics-automation-news
     name: Robotics & Automation News

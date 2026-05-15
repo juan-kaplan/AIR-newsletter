@@ -46,11 +46,6 @@ export function WeeklyNewsletter({
             </Link>
           </Heading>
           <Text style={featuredSummary}>{featured.summary}</Text>
-          {featured.selectionReason ? (
-            <Text style={featuredReason}>
-              Por qué importa: {featured.selectionReason}
-            </Text>
-          ) : null}
           <Button href={featured.url} style={cta}>
             Leer noticia
           </Button>
@@ -202,15 +197,6 @@ const featuredSummary = {
   fontSize: "16px",
   lineHeight: "26px",
   margin: "0 0 18px",
-};
-
-const featuredReason = {
-  borderLeft: "4px solid #adc7ff",
-  color: "#e1e3e4",
-  fontSize: "14px",
-  lineHeight: "22px",
-  margin: "0 0 22px",
-  padding: "4px 0 4px 14px",
 };
 
 const cta = {

@@ -13,6 +13,8 @@ interface GeminiSelection {
     url?: string;
     score?: number;
     reason?: string;
+    title?: string;
+    summary?: string;
   }>;
 }
 
@@ -62,6 +64,12 @@ export async function refineRankingWithGemini(
           ? [
               {
                 ...article,
+                ...(item.title
+                  ? { title: cleanModelText(item.title, 110) }
+                  : {}),
+                ...(item.summary
+                  ? { summary: cleanModelText(item.summary, 360) }
+                  : {}),
                 score:
                   typeof item.score === "number" ? item.score : article.score,
                 selectionReason: item.reason ?? article.selectionReason,
@@ -145,8 +153,22 @@ Elegí hasta ${limit} items. Para curaduría semanal, apuntá a 4-6 items fuerte
 
 No incluyas oportunidades cuya fecha de registro, envío o postulación ya haya pasado. Evitá noticias genéricas de negocios, contenido patrocinado, rondas de inversión y notas médicas/de depósito salvo que tengan un ángulo claro para una actividad del club.
 
-Devolvé solamente JSON con esta forma. La razón debe estar en español:
-{"selected":[{"url":"https://...","score":95,"reason":"razón breve para miembros del club"}]}
+Además de seleccionar, reescribí title y summary como texto visible de newsletter:
+- Español rioplatense claro, informativo y concreto.
+- Escribí para estudiantes de AIR: qué pasó, qué pueden aprender o qué decisión concreta habilita.
+- No uses "Por qué importa", "señal", "puede servirle a AIR", "interesante", "relevante", ni frases genéricas.
+- No menciones que estás justificando la selección.
+- Si es oportunidad, incluí deadline o estado de inscripción si aparece en el candidato.
+- Si es investigación/herramienta, explicá la técnica o idea usable en el club.
+- No inventes datos que no estén en el candidato.
+
+Antes de responder, hacé tres barridas editoriales:
+1. Eliminar texto de navegación, HTML, entidades, frases cortadas y títulos todo-en-mayúsculas.
+2. Convertir resúmenes genéricos en descripción periodística para lectores del club.
+3. Verificar que nada visible suene como nota interna de curaduría o justificación.
+
+Devolvé solamente JSON con esta forma. La reason es interna y también en español:
+{"selected":[{"url":"https://...","score":95,"title":"título publicable","summary":"resumen publicable de 1-2 oraciones","reason":"razón interna breve"}]}
 
 Candidates:
 ${articles
@@ -159,4 +181,20 @@ initialScore: ${article.score}
 summary: ${article.summary}`,
   )
   .join("\n\n")}`;
+}
+
+function cleanModelText(value: string, maxLength: number): string {
+  const cleaned = value
+    .replace(/\bpor qué importa:?\s*/gi, "")
+    .replace(/\bseñales?\b/gi, "noticias")
+    .replace(/\s+/g, " ")
+    .trim();
+  if (cleaned.length <= maxLength) {
+    return cleaned;
+  }
+
+  return cleaned
+    .slice(0, maxLength)
+    .replace(/\s+\S*$/, "")
+    .trim();
 }

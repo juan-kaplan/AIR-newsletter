@@ -249,14 +249,86 @@ export function extractHtmlImageUrl(
   html: string,
   baseUrl: string,
 ): string | null {
-  const metaImage =
-    extractMetaContent(html, "property", "og:image") ??
-    extractMetaContent(html, "name", "twitter:image") ??
-    extractMetaContent(html, "property", "twitter:image");
-  const inlineImage = /<img\b[^>]*\bsrc=["']([^"']+)["'][^>]*>/i.exec(
-    html,
-  )?.[1];
-  return normalizeImageUrl(metaImage ?? inlineImage ?? null, baseUrl);
+  const candidates = [
+    ...extractMetaImageCandidates(html, baseUrl),
+    ...extractInlineImageCandidates(html, baseUrl),
+  ];
+  const best = candidates.sort(
+    (first, second) => second.score - first.score,
+  )[0];
+  return best?.url ?? null;
+}
+
+interface ImageCandidate {
+  url: string;
+  score: number;
+}
+
+function extractMetaImageCandidates(
+  html: string,
+  baseUrl: string,
+): ImageCandidate[] {
+  return [
+    { value: extractMetaContent(html, "property", "og:image"), baseScore: 80 },
+    { value: extractMetaContent(html, "name", "twitter:image"), baseScore: 75 },
+    {
+      value: extractMetaContent(html, "property", "twitter:image"),
+      baseScore: 75,
+    },
+  ].flatMap(({ value, baseScore }) => {
+    const url = normalizeImageUrl(value, baseUrl);
+    return url ? [{ url, score: scoreImageUrl(url, baseScore) }] : [];
+  });
+}
+
+function extractInlineImageCandidates(
+  html: string,
+  baseUrl: string,
+): ImageCandidate[] {
+  return [...html.matchAll(/<img\b([^>]*)>/gi)].flatMap((match) => {
+    const attrs = match[1] ?? "";
+    const src = /\bsrc=["']([^"']+)["']/i.exec(attrs)?.[1];
+    const url = normalizeImageUrl(src ?? null, baseUrl);
+    if (!url) {
+      return [];
+    }
+
+    const width = Number.parseInt(
+      /\bwidth=["']?(\d+)/i.exec(attrs)?.[1] ?? "",
+      10,
+    );
+    const height = Number.parseInt(
+      /\bheight=["']?(\d+)/i.exec(attrs)?.[1] ?? "",
+      10,
+    );
+    const sizeScore =
+      Number.isFinite(width) && Number.isFinite(height)
+        ? Math.min(30, Math.floor((width * height) / 40_000))
+        : 0;
+    return [{ url, score: scoreImageUrl(url, 45 + sizeScore) }];
+  });
+}
+
+function scoreImageUrl(url: string, baseScore: number): number {
+  const lower = url.toLowerCase();
+  let score = baseScore;
+  if (
+    /\b(hero|banner|cover|featured|article|robot|drone|rover|challenge|team|competition)\b/.test(
+      lower,
+    )
+  ) {
+    score += 20;
+  }
+  if (
+    /\b(logo|icon|sprite|avatar|placeholder|blank|favicon|brand)\b/.test(lower)
+  ) {
+    score -= 45;
+  }
+  if (/\.(svg|ico)(?:\?|$)/.test(lower)) {
+    score -= 30;
+  }
+
+  return score;
 }
 
 function extractMetaContent(

@@ -30,9 +30,6 @@ export function ArticleCard({ article }: ArticleCardProps) {
         </Link>
       </Heading>
       <Text style={summary}>{article.summary}</Text>
-      {article.selectionReason ? (
-        <Text style={reason}>Por qué importa: {article.selectionReason}</Text>
-      ) : null}
       <Button href={article.url} style={readLink}>
         Abrir enlace
       </Button>
@@ -113,16 +110,6 @@ const summary = {
   fontSize: "16px",
   lineHeight: "25px",
   margin: "0 0 14px",
-};
-
-const reason = {
-  backgroundColor: "#282a2b",
-  borderLeft: "3px solid #adc7ff",
-  color: "#e1e3e4",
-  fontSize: "13px",
-  lineHeight: "20px",
-  margin: "0 0 14px",
-  padding: "10px 12px",
 };
 
 const readLink = {
