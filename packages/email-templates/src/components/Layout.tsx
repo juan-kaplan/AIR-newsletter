@@ -3,14 +3,12 @@ import {
   Container,
   Head,
   Html,
-  Img,
   Preview,
   Section,
   Text,
 } from "@react-email/components";
 import React from "react";
 import type { ReactNode } from "react";
-import { LOGO_DATA_URI } from "../logoDataUri";
 
 interface LayoutProps {
   children: ReactNode;
@@ -39,12 +37,8 @@ export function Layout({ children, preheader, issueMonth }: LayoutProps) {
                 <tbody>
                   <tr>
                     <td style={headerLeftCell}>
-                      <Img
-                        alt="AIR"
-                        src={LOGO_DATA_URI}
-                        style={brandLogo}
-                        width={120}
-                      />
+                      <Text style={brandMark}>AIR</Text>
+                      <Text style={brandSubline}>Robótica UdeSA</Text>
                     </td>
                     <td style={headerRightCell}>
                       <Text style={headerKicker}>Newsletter</Text>
@@ -105,13 +99,25 @@ const headerLeftCell = {
   verticalAlign: "middle" as const,
 };
 
-const brandLogo = {
-  display: "block",
-  height: "56px",
+const brandMark = {
+  color: "#041627",
+  fontFamily: headlineStack,
+  fontSize: "44px",
+  fontWeight: 700 as const,
+  letterSpacing: "-0.05em",
+  lineHeight: "44px",
   margin: "0",
-  maxHeight: "56px",
-  maxWidth: "120px",
-  width: "auto",
+};
+
+const brandSubline = {
+  color: "#475569",
+  fontFamily: monoStack,
+  fontSize: "11px",
+  fontWeight: 700 as const,
+  letterSpacing: "0.12em",
+  lineHeight: "14px",
+  margin: "6px 0 0",
+  textTransform: "uppercase" as const,
 };
 
 const headerRightCell = {

@@ -47,6 +47,8 @@ describe("renderEmail", () => {
     expect(rendered.html).toContain("Leer más");
     expect(rendered.text).toContain("Leer análisis técnico");
     expect(rendered.html).toContain("email-container");
+    expect(rendered.html).not.toContain("data:image");
+    expect(rendered.text).not.toContain("<img");
     expect(rendered.html).not.toContain("CONVOCATORIA | ROBOTICS FEED");
     expect(rendered.html).not.toContain("Una curaduría breve");
     expect(rendered.html).not.toContain("Por qué importa");
