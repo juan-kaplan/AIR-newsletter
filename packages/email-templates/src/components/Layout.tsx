@@ -26,8 +26,9 @@ export function Layout({ children, preheader }: LayoutProps) {
         <Section style={shell}>
           <Container className="email-container" style={container}>
             <Section style={masthead}>
-              <Text style={brand}>AIR Robótica</Text>
               <Text style={eyebrow}>Universidad de San Andrés</Text>
+              <Text style={brand}>AIR Robótica</Text>
+              <Text style={tagline}>Boletín de robótica universitaria</Text>
             </Section>
             {children}
           </Container>
@@ -38,20 +39,21 @@ export function Layout({ children, preheader }: LayoutProps) {
 }
 
 const body = {
-  backgroundColor: "#eef1f4",
-  color: "#1f2933",
+  backgroundColor: "#e7edf4",
+  color: "#17212b",
   fontFamily: "Helvetica, Arial, sans-serif",
   margin: 0,
   padding: "0",
 };
 
 const shell = {
-  padding: "24px 0 56px",
+  padding: "28px 0 60px",
 };
 
 const container = {
   backgroundColor: "#ffffff",
-  border: "1px solid #d7dde5",
+  border: "1px solid #ccd6e2",
+  borderRadius: "14px",
   margin: "0 auto",
   maxWidth: "600px",
   overflow: "hidden",
@@ -60,27 +62,36 @@ const container = {
 };
 
 const masthead = {
-  backgroundColor: "#ffffff",
-  borderBottom: "1px solid #d7dde5",
-  padding: "30px 40px 24px",
+  backgroundColor: "#102f49",
+  borderBottom: "6px solid #6db7dc",
+  padding: "32px 40px 30px",
 };
 
 const eyebrow = {
-  color: "#607083",
-  fontSize: "13px",
-  fontWeight: "400",
-  letterSpacing: "0",
-  lineHeight: "19px",
-  margin: "4px 0 0",
+  color: "#b9d8ea",
+  fontSize: "12px",
+  fontWeight: "700",
+  letterSpacing: "0.06em",
+  lineHeight: "16px",
+  margin: "0 0 10px",
+  textTransform: "uppercase" as const,
 };
 
 const brand = {
-  color: "#12344d",
-  fontFamily: "Georgia, 'Times New Roman', serif",
-  fontSize: "28px",
-  fontWeight: "700",
-  lineHeight: "34px",
-  margin: 0,
+  color: "#ffffff",
+  fontFamily: "Helvetica, Arial, sans-serif",
+  fontSize: "34px",
+  fontWeight: "800",
+  letterSpacing: "-0.02em",
+  lineHeight: "38px",
+  margin: "0",
+};
+
+const tagline = {
+  color: "#dceaf2",
+  fontSize: "15px",
+  lineHeight: "22px",
+  margin: "8px 0 0",
 };
 
 // Cerberus-inspired email basics: centered 600px container, inline-first

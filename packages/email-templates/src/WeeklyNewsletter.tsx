@@ -25,7 +25,7 @@ export function WeeklyNewsletter({
   return (
     <Layout preheader={issue.preheader}>
       <Section className="mobile-padding" style={introSection}>
-        <Text style={kicker}>Boletín mensual</Text>
+        <Text style={kicker}>Mayo 2026</Text>
         <Heading as="h1" style={heading}>
           {issue.subject}
         </Heading>
@@ -44,12 +44,17 @@ export function WeeklyNewsletter({
       {opportunityArticles.length > 0 ? (
         <ArticleSection
           articles={opportunityArticles}
+          imageMode="first"
           title="Oportunidades y competencias"
         />
       ) : null}
 
       {newsArticles.length > 0 ? (
-        <ArticleSection articles={newsArticles} title="Noticias de robótica" />
+        <ArticleSection
+          articles={newsArticles}
+          imageMode="none"
+          title="Noticias de robótica"
+        />
       ) : null}
 
       <Footer unsubscribeUrl={unsubscribeUrl} />
@@ -59,17 +64,23 @@ export function WeeklyNewsletter({
 
 interface ArticleSectionProps {
   articles: NewsletterArticle[];
+  imageMode: "first" | "none";
   title: string;
 }
 
-function ArticleSection({ articles, title }: ArticleSectionProps) {
+function ArticleSection({ articles, imageMode, title }: ArticleSectionProps) {
   return (
     <Section style={articleGroup}>
       <Section className="mobile-padding" style={sectionHeader}>
         <Text style={sectionTitle}>{title}</Text>
       </Section>
-      {articles.map((article) => (
-        <ArticleCard article={article} key={article.url} />
+      {articles.map((article, index) => (
+        <ArticleCard
+          article={article}
+          emphasis={index === 0 && imageMode === "first" ? "lead" : "normal"}
+          key={article.url}
+          showImage={index === 0 && imageMode === "first"}
+        />
       ))}
     </Section>
   );
@@ -80,59 +91,61 @@ function isOpportunity(article: NewsletterArticle): boolean {
 }
 
 const introSection = {
-  padding: "36px 40px 26px",
+  backgroundColor: "#f8fbfd",
+  padding: "34px 40px 28px",
 };
 
 const kicker = {
-  color: "#607083",
-  fontSize: "13px",
+  color: "#577083",
+  fontSize: "12px",
   fontWeight: "700",
-  letterSpacing: "0",
-  lineHeight: "18px",
-  margin: "0 0 10px",
+  letterSpacing: "0.05em",
+  lineHeight: "16px",
+  margin: "0 0 12px",
   textTransform: "uppercase" as const,
 };
 
 const heading = {
-  color: "#1f2933",
-  fontFamily: "Georgia, 'Times New Roman', serif",
-  fontSize: "32px",
-  fontWeight: "700",
-  lineHeight: "39px",
-  margin: "0 0 14px",
+  color: "#10202d",
+  fontFamily: "Helvetica, Arial, sans-serif",
+  fontSize: "30px",
+  fontWeight: "800",
+  letterSpacing: "-0.01em",
+  lineHeight: "36px",
+  margin: "0 0 12px",
 };
 
 const intro = {
-  color: "#4b5a69",
+  color: "#465766",
   fontSize: "16px",
-  lineHeight: "25px",
+  lineHeight: "24px",
   margin: "0",
 };
 
 const summarySection = {
-  backgroundColor: "#f6f8fa",
-  borderBottom: "1px solid #d7dde5",
-  borderTop: "1px solid #d7dde5",
-  padding: "22px 40px 20px",
+  backgroundColor: "#edf5fa",
+  borderBottom: "1px solid #c8dce8",
+  borderTop: "1px solid #c8dce8",
+  padding: "24px 40px 20px",
 };
 
 const summaryTitle = {
-  color: "#1f2933",
-  fontSize: "14px",
-  fontWeight: "700",
+  color: "#102f49",
+  fontSize: "15px",
+  fontWeight: "800",
   lineHeight: "20px",
-  margin: "0 0 12px",
+  margin: "0 0 14px",
 };
 
 const summaryItem = {
-  color: "#3f4d5d",
+  color: "#334759",
   fontSize: "14px",
-  lineHeight: "21px",
-  margin: "0 0 8px",
+  lineHeight: "22px",
+  margin: "0 0 9px",
 };
 
 const summaryBullet = {
-  color: "#0f5f8f",
+  color: "#287aa5",
   fontWeight: "700",
 };
 
@@ -141,15 +154,17 @@ const articleGroup = {
 };
 
 const sectionHeader = {
-  borderBottom: "2px solid #1f2933",
-  padding: "30px 40px 10px",
+  backgroundColor: "#ffffff",
+  borderBottom: "1px solid #d9e3eb",
+  padding: "32px 40px 12px",
 };
 
 const sectionTitle = {
-  color: "#1f2933",
-  fontFamily: "Georgia, 'Times New Roman', serif",
-  fontSize: "22px",
-  fontWeight: "700",
-  lineHeight: "28px",
+  color: "#102f49",
+  fontFamily: "Helvetica, Arial, sans-serif",
+  fontSize: "20px",
+  fontWeight: "800",
+  letterSpacing: "-0.01em",
+  lineHeight: "26px",
   margin: "0",
 };

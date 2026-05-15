@@ -11,17 +11,25 @@ import type { NewsletterArticle } from "../../../newsletter/src/types";
 
 interface ArticleCardProps {
   article: NewsletterArticle;
+  emphasis?: "lead" | "normal";
+  showImage?: boolean;
 }
 
-export function ArticleCard({ article }: ArticleCardProps) {
+export function ArticleCard({
+  article,
+  emphasis = "normal",
+  showImage = false,
+}: ArticleCardProps) {
+  const isLead = emphasis === "lead";
+
   return (
-    <Section className="mobile-padding" style={section}>
-      {article.imageUrl ? (
+    <Section className="mobile-padding" style={isLead ? leadSection : section}>
+      {showImage && article.imageUrl ? (
         <Img
           alt=""
           className="fluid-img"
           src={article.imageUrl}
-          style={image}
+          style={leadImage}
         />
       ) : null}
       <Text style={meta}>
@@ -29,7 +37,7 @@ export function ArticleCard({ article }: ArticleCardProps) {
         {article.source ? ` · ${article.source}` : ""}
         {article.publishedAt ? ` · ${formatDate(article.publishedAt)}` : ""}
       </Text>
-      <Heading as="h3" style={heading}>
+      <Heading as="h3" style={isLead ? leadHeading : heading}>
         <Link href={article.url} style={link}>
           {article.title}
         </Link>
@@ -73,57 +81,73 @@ function formatDate(value: string): string {
 
 const section = {
   backgroundColor: "#ffffff",
-  borderBottom: "1px solid #d7dde5",
+  borderBottom: "1px solid #d9e3eb",
   margin: "0",
-  padding: "28px 40px",
+  padding: "26px 40px",
 };
 
-const image = {
+const leadSection = {
+  backgroundColor: "#ffffff",
+  borderBottom: "1px solid #d9e3eb",
+  margin: "0",
+  padding: "28px 40px 30px",
+};
+
+const leadImage = {
+  borderRadius: "10px",
   display: "block",
   height: "auto",
-  margin: "0 0 18px",
+  margin: "0 0 22px",
   maxWidth: "100%",
   width: "100%",
 };
 
 const meta = {
-  color: "#607083",
-  fontSize: "13px",
-  fontWeight: "700",
-  lineHeight: "19px",
-  letterSpacing: "0",
-  margin: "0 0 9px",
+  color: "#5f7384",
+  fontSize: "11px",
+  fontWeight: "800",
+  lineHeight: "16px",
+  letterSpacing: "0.05em",
+  margin: "0 0 10px",
   textTransform: "uppercase" as const,
 };
 
 const heading = {
-  fontFamily: "Georgia, 'Times New Roman', serif",
-  fontSize: "23px",
-  fontWeight: "700",
-  lineHeight: "29px",
-  margin: "0 0 11px",
+  fontFamily: "Helvetica, Arial, sans-serif",
+  fontSize: "20px",
+  fontWeight: "800",
+  letterSpacing: "-0.01em",
+  lineHeight: "26px",
+  margin: "0 0 10px",
+};
+
+const leadHeading = {
+  ...heading,
+  fontSize: "25px",
+  lineHeight: "31px",
+  margin: "0 0 12px",
 };
 
 const link = {
-  color: "#1f2933",
+  color: "#112637",
   textDecoration: "none",
 };
 
 const summary = {
-  color: "#3f4d5d",
+  color: "#34495a",
   fontSize: "16px",
   lineHeight: "25px",
-  margin: "0 0 16px",
+  margin: "0 0 18px",
 };
 
 const readLink = {
-  backgroundColor: "#12344d",
-  borderRadius: "0",
+  backgroundColor: "#123f5f",
+  borderRadius: "7px",
   color: "#ffffff",
   display: "inline-block",
   fontSize: "13px",
-  fontWeight: "700",
+  fontWeight: "800",
   letterSpacing: "0",
-  padding: "11px 16px",
+  padding: "12px 18px",
   textDecoration: "none",
 };
