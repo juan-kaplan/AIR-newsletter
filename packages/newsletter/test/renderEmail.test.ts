@@ -44,6 +44,7 @@ describe("renderEmail", () => {
     );
     expect(rendered.html).toContain("https://example.com/useful.jpg");
     expect(rendered.html).toContain("AIR Robótica");
+    expect(rendered.html).toContain("cid:air-logo");
     expect(rendered.html).toContain("Leer más");
     expect(rendered.text).toContain("Leer análisis técnico");
     expect(rendered.html).toContain("email-container");

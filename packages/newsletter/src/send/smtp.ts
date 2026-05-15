@@ -1,4 +1,5 @@
 import nodemailer from "nodemailer";
+import { fileURLToPath } from "node:url";
 
 export interface EmailMessage {
   from: string;
@@ -40,6 +41,13 @@ export function createSmtpSender(config: SmtpConfig): EmailSender {
         subject: message.subject,
         html: message.html,
         text: message.text,
+        attachments: [
+          {
+            cid: AIR_LOGO_CID,
+            filename: "air-logo.png",
+            path: AIR_LOGO_PATH
+          }
+        ],
         headers: {
           "List-Unsubscribe": `<${message.unsubscribeUrl}>`,
           "List-Unsubscribe-Post": "List-Unsubscribe=One-Click"
@@ -50,3 +58,8 @@ export function createSmtpSender(config: SmtpConfig): EmailSender {
     }
   };
 }
+
+const AIR_LOGO_CID = "air-logo";
+const AIR_LOGO_PATH = fileURLToPath(
+  new URL("../../../email-templates/assets/air-logo.png", import.meta.url)
+);

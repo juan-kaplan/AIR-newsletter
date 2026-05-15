@@ -3,6 +3,7 @@ import {
   Container,
   Head,
   Html,
+  Img,
   Preview,
   Section,
   Text,
@@ -37,8 +38,12 @@ export function Layout({ children, preheader, issueMonth }: LayoutProps) {
                 <tbody>
                   <tr>
                     <td style={headerLeftCell}>
-                      <Text style={brandMark}>AIR</Text>
-                      <Text style={brandSubline}>Robótica UdeSA</Text>
+                      <Img
+                        alt="AIR Robótica"
+                        src="cid:air-logo"
+                        style={brandLogo}
+                        width={132}
+                      />
                     </td>
                     <td style={headerRightCell}>
                       <Text style={headerKicker}>Newsletter</Text>
@@ -99,25 +104,12 @@ const headerLeftCell = {
   verticalAlign: "middle" as const,
 };
 
-const brandMark = {
-  color: "#041627",
-  fontFamily: headlineStack,
-  fontSize: "44px",
-  fontWeight: 700 as const,
-  letterSpacing: "-0.05em",
-  lineHeight: "44px",
+const brandLogo = {
+  display: "block",
+  height: "auto",
   margin: "0",
-};
-
-const brandSubline = {
-  color: "#475569",
-  fontFamily: monoStack,
-  fontSize: "11px",
-  fontWeight: 700 as const,
-  letterSpacing: "0.12em",
-  lineHeight: "14px",
-  margin: "6px 0 0",
-  textTransform: "uppercase" as const,
+  maxWidth: "132px",
+  width: "132px",
 };
 
 const headerRightCell = {
