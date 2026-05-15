@@ -42,11 +42,12 @@ describe("renderEmail", () => {
     expect(rendered.text).toContain(
       "https://worker.test/unsubscribe?token=abc",
     );
-    expect(rendered.html).toContain("Robotics Feed");
     expect(rendered.html).toContain("https://example.com/useful.jpg");
     expect(rendered.html).toContain("AIR Robótica");
-    expect(rendered.html).toContain("Selección editorial");
+    expect(rendered.html).toContain("Leer más");
+    expect(rendered.text).toContain("Leer análisis técnico");
     expect(rendered.html).toContain("email-container");
+    expect(rendered.html).not.toContain("CONVOCATORIA | ROBOTICS FEED");
     expect(rendered.html).not.toContain("Una curaduría breve");
     expect(rendered.html).not.toContain("Por qué importa");
     expect(rendered.html).not.toContain("internal scoring note");

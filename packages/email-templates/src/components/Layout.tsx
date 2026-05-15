@@ -3,20 +3,22 @@ import {
   Container,
   Head,
   Html,
+  Img,
   Preview,
   Section,
   Text,
 } from "@react-email/components";
 import React from "react";
 import type { ReactNode } from "react";
+import { LOGO_DATA_URI } from "../logoDataUri";
 
 interface LayoutProps {
   children: ReactNode;
   preheader: string;
-  issueDate?: string;
+  issueMonth?: string;
 }
 
-export function Layout({ children, preheader, issueDate }: LayoutProps) {
+export function Layout({ children, preheader, issueMonth }: LayoutProps) {
   return (
     <Html>
       <Head>
@@ -26,32 +28,33 @@ export function Layout({ children, preheader, issueDate }: LayoutProps) {
       <Body style={body}>
         <Section style={shell}>
           <Container className="email-container" style={container}>
-            <Section style={topAccent} />
-            <Section style={topBar}>
+            <Section style={header}>
               <table
                 cellPadding={0}
                 cellSpacing={0}
                 role="presentation"
-                style={topBarTable}
+                style={headerTable}
                 width="100%"
               >
                 <tbody>
                   <tr>
-                    <td style={topBarBrand}>
-                      <span style={topBarBrandLogo}>AIR</span>
-                      <span style={topBarBrandSeparator}>—</span>
-                      <span style={topBarBrandLabel}>Robótica Universitaria</span>
+                    <td style={headerLeftCell}>
+                      <Img
+                        alt="AIR"
+                        src={LOGO_DATA_URI}
+                        style={brandLogo}
+                        width={120}
+                      />
                     </td>
-                    <td style={topBarDate}>{issueDate ?? "Mayo 2026"}</td>
+                    <td style={headerRightCell}>
+                      <Text style={headerKicker}>Newsletter</Text>
+                      <Text style={headerMonth}>
+                        {issueMonth ?? "Mayo 2026"}
+                      </Text>
+                    </td>
                   </tr>
                 </tbody>
               </table>
-            </Section>
-            <Section style={masthead}>
-              <Text style={mastheadTitle}>AIR Robótica</Text>
-              <Text style={mastheadTagline}>
-                Boletín semanal · Universidad de San Andrés
-              </Text>
             </Section>
             {children}
           </Container>
@@ -61,120 +64,89 @@ export function Layout({ children, preheader, issueDate }: LayoutProps) {
   );
 }
 
-const serifStack =
-  "Georgia, 'Times New Roman', Times, ui-serif, serif";
-const sansStack =
-  "'Helvetica Neue', Helvetica, system-ui, 'Segoe UI', Arial, sans-serif";
+const headlineStack =
+  "'Space Grotesk', 'Helvetica Neue', Helvetica, Arial, sans-serif";
+const bodyStack =
+  "Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif";
+const monoStack = "'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace";
 
 const body = {
-  backgroundColor: "#f2f2f2",
-  color: "#0d0d0d",
-  fontFamily: serifStack,
+  backgroundColor: "#f1f3f5",
+  color: "#041627",
+  fontFamily: bodyStack,
   margin: 0,
   padding: "0",
 };
 
 const shell = {
-  padding: "20px 0 40px",
+  padding: "0",
 };
 
 const container = {
-  backgroundColor: "#ffffff",
+  backgroundColor: "#f1f3f5",
   margin: "0 auto",
-  maxWidth: "600px",
+  maxWidth: "640px",
   padding: "0",
-  width: "600px",
+  width: "640px",
 };
 
-const topAccent = {
-  backgroundColor: "#e3120b",
-  height: "6px",
-  lineHeight: "6px",
-  fontSize: "0",
-  margin: "0",
-  padding: "0",
-};
-
-const topBar = {
+const header = {
   backgroundColor: "#ffffff",
-  borderBottom: "1px solid #d7d7d7",
-  padding: "14px 24px 12px",
+  borderBottom: "2px solid #041627",
+  padding: "32px 24px 30px",
 };
 
-const topBarTable = {
+const headerTable = {
   width: "100%",
 };
 
-const topBarBrand = {
-  color: "#0d0d0d",
-  fontFamily: sansStack,
-  fontSize: "13px",
-  letterSpacing: "0.02em",
-  textAlign: "left" as const,
+const headerLeftCell = {
+  paddingRight: "16px",
   verticalAlign: "middle" as const,
 };
 
-const topBarBrandLogo = {
-  color: "#0d0d0d",
-  fontFamily: sansStack,
-  fontSize: "18px",
-  fontWeight: 800 as const,
-  letterSpacing: "0.04em",
-  textTransform: "uppercase" as const,
+const brandLogo = {
+  display: "block",
+  height: "56px",
+  margin: "0",
+  maxHeight: "56px",
+  maxWidth: "120px",
+  width: "auto",
 };
 
-const topBarBrandSeparator = {
-  color: "#a3a3a3",
-  margin: "0 8px",
-};
-
-const topBarBrandLabel = {
-  color: "#525252",
-  fontFamily: sansStack,
-  fontSize: "12px",
-  fontWeight: 500 as const,
-  letterSpacing: "0.04em",
-  textTransform: "uppercase" as const,
-};
-
-const topBarDate = {
-  color: "#0d0d0d",
-  fontFamily: sansStack,
-  fontSize: "14px",
-  fontWeight: 500 as const,
+const headerRightCell = {
+  borderLeft: "1px solid #cbd5e1",
+  paddingLeft: "20px",
   textAlign: "right" as const,
   verticalAlign: "middle" as const,
+  width: "240px",
 };
 
-const masthead = {
-  backgroundColor: "#F5F4EF",
-  padding: "36px 24px 32px",
-  textAlign: "center" as const,
+const headerKicker = {
+  color: "#2563eb",
+  fontFamily: monoStack,
+  fontSize: "12px",
+  fontWeight: 700 as const,
+  letterSpacing: "0.18em",
+  lineHeight: "14px",
+  margin: "0 0 6px",
+  textAlign: "right" as const,
+  textTransform: "uppercase" as const,
 };
 
-const mastheadTitle = {
-  color: "#0d0d0d",
-  fontFamily: serifStack,
-  fontSize: "38px",
-  fontStyle: "normal" as const,
-  fontWeight: 400 as const,
-  letterSpacing: "-0.01em",
-  lineHeight: "44px",
+const headerMonth = {
+  color: "#041627",
+  fontFamily: headlineStack,
+  fontSize: "26px",
+  fontWeight: 700 as const,
+  letterSpacing: "-0.02em",
+  lineHeight: "28px",
   margin: "0",
-  textAlign: "center" as const,
-};
-
-const mastheadTagline = {
-  color: "#0d0d0d",
-  fontFamily: serifStack,
-  fontSize: "17px",
-  fontWeight: 400 as const,
-  lineHeight: "22px",
-  margin: "8px 0 0",
-  textAlign: "center" as const,
+  textAlign: "right" as const,
 };
 
 const baseStyles = `
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=JetBrains+Mono:wght@500;700&family=Space+Grotesk:wght@500;600;700&display=swap');
 html,
 body {
   margin: 0 auto !important;
@@ -204,7 +176,7 @@ img {
 a {
   text-decoration: none;
 }
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 640px) {
   .email-container {
     width: 100% !important;
     margin: auto !important;

@@ -1,4 +1,4 @@
-import { Heading, Section, Text } from "@react-email/components";
+import { Img, Link, Section, Text } from "@react-email/components";
 import React from "react";
 import { ArticleCard } from "./components/ArticleCard";
 import { Footer } from "./components/Footer";
@@ -17,230 +17,187 @@ export function WeeklyNewsletter({
   issue,
   unsubscribeUrl,
 }: WeeklyNewsletterProps) {
-  const opportunityArticles = issue.articles.filter(isOpportunity);
-  const newsArticles = issue.articles.filter(
-    (article) => !isOpportunity(article),
-  );
+  const hero = issue.articles.find((article) => Boolean(article.imageUrl));
+  const rest = issue.articles.filter((article) => article.url !== hero?.url);
+  const restPairs = chunk(rest, 2);
 
   return (
-    <Layout issueDate="14 de mayo de 2026" preheader={issue.preheader}>
-      <Section style={editorBlock}>
-        <table
-          cellPadding={0}
-          cellSpacing={0}
-          role="presentation"
-          style={editorTable}
-          width="100%"
-        >
-          <tbody>
-            <tr>
-              <td style={editorMarkCell} width={56}>
-                <div style={editorMark}>AR</div>
-              </td>
-              <td style={editorTextCell}>
-                <Text style={editorName}>Equipo AIR Robótica</Text>
-                <Text style={editorRole}>
-                  <em>Curaduría semanal</em>
-                </Text>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+    <Layout issueMonth="Mayo 2026" preheader={issue.preheader}>
+      <Section style={pageBlock}>
+        {hero ? <HeroCard article={hero} /> : null}
+
+        {restPairs.map((pair, rowIndex) => (
+          <Section key={rowIndex} style={gridRow}>
+            <table
+              cellPadding={0}
+              cellSpacing={0}
+              role="presentation"
+              style={gridTable}
+              width="100%"
+            >
+              <tbody>
+                <tr>
+                  {pair.map((article, colIndex) => (
+                    <td
+                      className="stack"
+                      key={article.url}
+                      style={colIndex === 0 ? gridCellLeft : gridCellRight}
+                      width="50%"
+                    >
+                      <ArticleCard article={article} />
+                    </td>
+                  ))}
+                  {pair.length === 1 ? (
+                    <td className="stack" style={gridCellRight} width="50%" />
+                  ) : null}
+                </tr>
+              </tbody>
+            </table>
+          </Section>
+        ))}
+
+        <Footer unsubscribeUrl={unsubscribeUrl} />
       </Section>
-
-      <Section style={standfirstBlock}>
-        <Heading as="h1" style={standfirstHeading}>
-          {issue.subject}
-        </Heading>
-        <Text style={standfirstText}>{issue.preheader}</Text>
-      </Section>
-
-      {opportunityArticles.length > 0 ? (
-        <ArticleSection
-          articles={opportunityArticles}
-          eyebrow="Esta semana"
-          leadImage
-          subtitle="Concursos, eventos y convocatorias abiertas"
-          title="Oportunidades"
-        />
-      ) : null}
-
-      {newsArticles.length > 0 ? (
-        <ArticleSection
-          articles={newsArticles}
-          eyebrow="Para leer"
-          leadImage={false}
-          subtitle="Lo que pasó en robótica y vale la pena seguir"
-          title="Selección editorial"
-        />
-      ) : null}
-
-      <Footer unsubscribeUrl={unsubscribeUrl} />
     </Layout>
   );
 }
 
-interface ArticleSectionProps {
-  articles: NewsletterArticle[];
-  eyebrow: string;
-  leadImage: boolean;
-  subtitle: string;
-  title: string;
+interface HeroCardProps {
+  article: NewsletterArticle;
 }
 
-function ArticleSection({
-  articles,
-  eyebrow,
-  leadImage,
-  subtitle,
-  title,
-}: ArticleSectionProps) {
+function HeroCard({ article }: HeroCardProps) {
   return (
-    <Section style={articleGroup}>
-      <Section style={sectionHeader}>
-        <Text style={sectionEyebrow}>{eyebrow}</Text>
-        <Text style={sectionTitle}>{title}</Text>
-        <Text style={sectionSubtitle}>{subtitle}</Text>
-      </Section>
-      {articles.map((article, index) => {
-        const isFirst = index === 0;
-        return (
-          <ArticleCard
-            article={article}
-            emphasis={isFirst && leadImage ? "lead" : "normal"}
-            key={article.url}
-            showImage={Boolean(article.imageUrl)}
+    <Section style={heroSection}>
+      {article.imageUrl ? (
+        <Link href={article.url} style={imageLink}>
+          <Img
+            alt=""
+            className="fluid-img"
+            src={article.imageUrl}
+            style={heroImage}
           />
-        );
-      })}
+        </Link>
+      ) : null}
+      <Section style={heroBody}>
+        <Text style={heroHeadline}>
+          <Link href={article.url} style={heroHeadlineLink}>
+            {article.title}
+          </Link>
+        </Text>
+        <Text style={heroSummary}>{article.summary}</Text>
+        <Section style={ctaWrap}>
+          <Link href={article.url} style={ctaButton}>
+            Leer más
+          </Link>
+        </Section>
+      </Section>
     </Section>
   );
 }
 
-function isOpportunity(article: NewsletterArticle): boolean {
-  return article.category === "competition" || article.category === "event";
+function chunk<T>(arr: T[], size: number): T[][] {
+  const out: T[][] = [];
+  for (let i = 0; i < arr.length; i += size) {
+    out.push(arr.slice(i, i + size));
+  }
+  return out;
 }
 
-const serifStack =
-  "Georgia, 'Times New Roman', Times, ui-serif, serif";
-const sansStack =
-  "'Helvetica Neue', Helvetica, system-ui, 'Segoe UI', Arial, sans-serif";
+const headlineStack =
+  "'Space Grotesk', 'Helvetica Neue', Helvetica, Arial, sans-serif";
+const bodyStack =
+  "Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif";
 
-const editorBlock = {
-  backgroundColor: "#ffffff",
-  padding: "20px 24px 8px",
+const pageBlock = {
+  backgroundColor: "#f1f3f5",
+  padding: "32px 16px 0",
 };
 
-const editorTable = {
+const heroSection = {
+  backgroundColor: "#ffffff",
+  border: "1px solid #041627",
+  margin: "0 0 32px",
+  padding: "0",
+};
+
+const imageLink = {
+  display: "block",
+};
+
+const heroImage = {
+  display: "block",
+  height: "280px",
+  margin: "0",
+  maxWidth: "100%",
+  objectFit: "cover" as const,
+  objectPosition: "center" as const,
   width: "100%",
 };
 
-const editorMarkCell = {
-  padding: "0 12px 0 0",
-  verticalAlign: "middle" as const,
-  width: "56px",
+const heroBody = {
+  padding: "24px 24px 28px",
 };
 
-const editorMark = {
-  alignItems: "center",
-  backgroundColor: "#0d0d0d",
-  borderRadius: "28px",
-  color: "#ffffff",
-  display: "block",
-  fontFamily: sansStack,
-  fontSize: "16px",
+const heroHeadline = {
+  color: "#041627",
+  fontFamily: headlineStack,
+  fontSize: "36px",
   fontWeight: 700 as const,
-  height: "56px",
-  letterSpacing: "0.02em",
-  lineHeight: "56px",
-  textAlign: "center" as const,
-  width: "56px",
+  letterSpacing: "-0.035em",
+  lineHeight: "40px",
+  margin: "0 0 16px",
 };
 
-const editorTextCell = {
-  verticalAlign: "middle" as const,
+const heroHeadlineLink = {
+  color: "#041627",
+  textDecoration: "none",
 };
 
-const editorName = {
-  color: "#0d0d0d",
-  fontFamily: serifStack,
+const heroSummary = {
+  color: "#475569",
+  fontFamily: bodyStack,
   fontSize: "17px",
-  fontWeight: 700 as const,
-  lineHeight: "22px",
-  margin: "0",
-};
-
-const editorRole = {
-  color: "#0d0d0d",
-  fontFamily: serifStack,
-  fontSize: "16px",
   fontWeight: 400 as const,
-  lineHeight: "22px",
+  lineHeight: "27px",
+  margin: "0 0 24px",
+};
+
+const ctaWrap = {
   margin: "0",
+  padding: "0",
 };
 
-const standfirstBlock = {
-  backgroundColor: "#ffffff",
-  padding: "12px 24px 36px",
-};
-
-const standfirstHeading = {
-  color: "#0d0d0d",
-  fontFamily: serifStack,
-  fontSize: "26px",
-  fontWeight: 500 as const,
-  letterSpacing: "-0.005em",
-  lineHeight: "32px",
-  margin: "0 0 14px",
-};
-
-const standfirstText = {
-  color: "#0d0d0d",
-  fontFamily: serifStack,
-  fontSize: "19px",
-  fontWeight: 400 as const,
-  lineHeight: "28px",
-  margin: "0",
-};
-
-const articleGroup = {
-  margin: "0",
-};
-
-const sectionHeader = {
-  backgroundColor: "#ffffff",
-  borderTop: "3px solid #0d0d0d",
-  margin: "0 24px",
-  padding: "16px 0 18px",
-};
-
-const sectionEyebrow = {
-  color: "#e3120b",
-  fontFamily: sansStack,
-  fontSize: "11px",
+const ctaButton = {
+  backgroundColor: "#041627",
+  color: "#ffffff",
+  display: "inline-block",
+  fontFamily: headlineStack,
+  fontSize: "13px",
   fontWeight: 700 as const,
-  letterSpacing: "0.12em",
-  lineHeight: "16px",
-  margin: "0 0 6px",
+  letterSpacing: "0.04em",
+  padding: "14px 22px",
+  textDecoration: "none",
   textTransform: "uppercase" as const,
 };
 
-const sectionTitle = {
-  color: "#0d0d0d",
-  fontFamily: serifStack,
-  fontSize: "26px",
-  fontWeight: 500 as const,
-  letterSpacing: "-0.005em",
-  lineHeight: "30px",
-  margin: "0 0 4px",
+const gridRow = {
+  margin: "0 0 32px",
+  padding: "0",
 };
 
-const sectionSubtitle = {
-  color: "#525252",
-  fontFamily: serifStack,
-  fontSize: "16px",
-  fontStyle: "italic" as const,
-  fontWeight: 400 as const,
-  lineHeight: "22px",
-  margin: "0",
+const gridTable = {
+  width: "100%",
+};
+
+const gridCellLeft = {
+  paddingRight: "16px",
+  verticalAlign: "top" as const,
+  width: "50%",
+};
+
+const gridCellRight = {
+  paddingLeft: "0",
+  verticalAlign: "top" as const,
+  width: "50%",
 };

@@ -7,98 +7,140 @@ interface FooterProps {
 
 export function Footer({ unsubscribeUrl }: FooterProps) {
   return (
-    <>
-      <Section style={section}>
-        <Section style={rule} />
-        <Text style={brand}>AIR Robótica</Text>
-        <Text style={text}>
-          Universidad de San Andrés · Vito Dumas 284, Victoria, Buenos Aires
-        </Text>
-        <Text style={fineprint}>
-          Recibís este boletín porque estás suscripto al newsletter semanal de
-          AIR Robótica. Si querés dejar de recibirlo,{" "}
-          <Link href={unsubscribeUrl} style={link}>
-            cancelar suscripción
-          </Link>
-          .
-        </Text>
-        <Text style={copyright}>
-          © 2026 AIR Robótica · Todos los derechos reservados
+    <Section style={section}>
+      <Section style={brandRow}>
+        <Text style={brandText}>
+          <span style={brandMark}>AIR</span>
+          <span style={brandSeparator}>/</span>
+          <span style={brandLabel}>LABORATORY</span>
         </Text>
       </Section>
-      <Section style={bottomAccent} />
-    </>
+      <Section style={rule} />
+      <Text style={copyright}>
+        © 2026 AIR Robótica · Universidad de San Andrés
+      </Text>
+      <Text style={department}>
+        Departamento de Ingeniería &amp; Inteligencia Artificial
+      </Text>
+      <Text style={linksRow}>
+        <Link href={unsubscribeUrl} style={footLink}>
+          Unsubscribe
+        </Link>
+        <span style={linkSeparator}>·</span>
+        <Link href={unsubscribeUrl} style={footLink}>
+          Preferences
+        </Link>
+        <span style={linkSeparator}>·</span>
+        <Link href={unsubscribeUrl} style={footLink}>
+          Privacy
+        </Link>
+      </Text>
+    </Section>
   );
 }
 
-const serifStack =
-  "Georgia, 'Times New Roman', Times, ui-serif, serif";
-const sansStack =
-  "'Helvetica Neue', Helvetica, system-ui, 'Segoe UI', Arial, sans-serif";
+const headlineStack =
+  "'Space Grotesk', 'Helvetica Neue', Helvetica, Arial, sans-serif";
+const bodyStack =
+  "Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif";
+const monoStack =
+  "'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace";
 
 const section = {
-  backgroundColor: "#ffffff",
+  backgroundColor: "#f1f3f5",
+  borderTop: "1px solid #cbd5e1",
+  margin: "32px 0 0",
+  padding: "48px 24px 56px",
+  textAlign: "center" as const,
+};
+
+const brandRow = {
+  margin: "0 0 16px",
+  padding: "0",
+  textAlign: "center" as const,
+};
+
+const brandText = {
   margin: "0",
-  padding: "28px 24px 36px",
+  textAlign: "center" as const,
+};
+
+const brandMark = {
+  color: "#041627",
+  fontFamily: headlineStack,
+  fontSize: "24px",
+  fontWeight: 700 as const,
+  letterSpacing: "-0.02em",
+};
+
+const brandSeparator = {
+  color: "#64748b",
+  fontFamily: monoStack,
+  fontSize: "16px",
+  margin: "0 6px",
+};
+
+const brandLabel = {
+  color: "#475569",
+  fontFamily: monoStack,
+  fontSize: "11px",
+  fontWeight: 500 as const,
+  letterSpacing: "0.12em",
+  textTransform: "uppercase" as const,
 };
 
 const rule = {
-  borderTop: "1px solid #d7d7d7",
-  margin: "0 0 20px",
-  padding: "0",
-};
-
-const brand = {
-  color: "#0d0d0d",
-  fontFamily: serifStack,
-  fontSize: "20px",
-  fontWeight: 700 as const,
-  letterSpacing: "-0.005em",
-  lineHeight: "26px",
-  margin: "0 0 6px",
-};
-
-const text = {
-  color: "#0d0d0d",
-  fontFamily: sansStack,
-  fontSize: "13px",
-  fontWeight: 400 as const,
-  lineHeight: "20px",
-  margin: "0 0 16px",
-};
-
-const fineprint = {
-  color: "#525252",
-  fontFamily: sansStack,
-  fontSize: "12px",
-  fontWeight: 400 as const,
-  lineHeight: "18px",
-  margin: "0 0 14px",
-};
-
-const link = {
-  color: "#0d0d0d",
-  fontFamily: sansStack,
-  fontWeight: 500 as const,
-  textDecoration: "underline",
-};
-
-const bottomAccent = {
-  backgroundColor: "#e3120b",
-  height: "6px",
-  lineHeight: "6px",
+  borderTop: "1px solid #cbd5e1",
   fontSize: "0",
-  margin: "0",
+  lineHeight: "0",
+  margin: "0 auto 20px",
   padding: "0",
+  width: "96px",
 };
 
 const copyright = {
-  color: "#737373",
-  fontFamily: sansStack,
-  fontSize: "11px",
+  color: "#475569",
+  fontFamily: bodyStack,
+  fontSize: "13px",
   fontWeight: 400 as const,
-  letterSpacing: "0.02em",
-  lineHeight: "16px",
-  margin: "0",
+  lineHeight: "20px",
+  margin: "0 0 6px",
+  textAlign: "center" as const,
+};
+
+const department = {
+  color: "#475569",
+  fontFamily: monoStack,
+  fontSize: "10px",
+  fontWeight: 500 as const,
+  letterSpacing: "0.08em",
+  lineHeight: "14px",
+  margin: "0 0 32px",
+  textAlign: "center" as const,
   textTransform: "uppercase" as const,
+};
+
+const linksRow = {
+  color: "#475569",
+  fontFamily: monoStack,
+  fontSize: "10px",
+  fontWeight: 500 as const,
+  letterSpacing: "0.14em",
+  lineHeight: "14px",
+  margin: "0",
+  textAlign: "center" as const,
+  textTransform: "uppercase" as const,
+};
+
+const footLink = {
+  borderBottom: "1px solid #475569",
+  color: "#475569",
+  fontFamily: monoStack,
+  paddingBottom: "1px",
+  textDecoration: "none",
+};
+
+const linkSeparator = {
+  color: "#cbd5e1",
+  margin: "0 10px",
 };
