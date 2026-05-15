@@ -10,13 +10,13 @@ describe("publishing sweeps", () => {
         source: "Example",
         category: "competition",
         summary:
-          "Por qué importa: Skip to main content Register Now menu Esta señal puede servirle a AIR para pensar una competencia",
+          "Por qué importa: Skip to main content Register Now menu Esta señal puede servir como modelo para pensar una competencia",
       },
     ]);
 
     expect(article?.title).toBe("Pal Robotics Unveils New Arm");
     expect(article?.summary).not.toMatch(
-      /Por qué importa|Skip to main content|Register Now menu|señal/,
+      /Por qué importa|Skip to main content|Register Now menu|señal|puede servir/,
     );
     expect(article?.summary).toContain("noticia");
     expect(article?.summary).toMatch(/[.!?]$/);

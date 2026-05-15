@@ -256,7 +256,7 @@ export function extractHtmlImageUrl(
   const best = candidates.sort(
     (first, second) => second.score - first.score,
   )[0];
-  return best?.url ?? null;
+  return best && best.score >= 45 ? best.url : null;
 }
 
 interface ImageCandidate {
@@ -320,7 +320,18 @@ function scoreImageUrl(url: string, baseScore: number): number {
     score += 20;
   }
   if (
-    /\b(logo|icon|sprite|avatar|placeholder|blank|favicon|brand)\b/.test(lower)
+    [
+      "logo",
+      "icon",
+      "sprite",
+      "avatar",
+      "placeholder",
+      "blank",
+      "favicon",
+      "brand",
+      "sponsor",
+      "partner",
+    ].some((token) => lower.includes(token))
   ) {
     score -= 45;
   }

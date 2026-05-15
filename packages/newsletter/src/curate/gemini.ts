@@ -156,7 +156,7 @@ No incluyas oportunidades cuya fecha de registro, envío o postulación ya haya 
 Además de seleccionar, reescribí title y summary como texto visible de newsletter:
 - Español rioplatense claro, informativo y concreto.
 - Escribí para estudiantes de AIR: qué pasó, qué pueden aprender o qué decisión concreta habilita.
-- No uses "Por qué importa", "señal", "puede servirle a AIR", "interesante", "relevante", ni frases genéricas.
+- No uses "Por qué importa", "señal", "puede servir", "puede inspirar", "interesante", "relevante", ni frases genéricas.
 - No menciones que estás justificando la selección.
 - Si es oportunidad, incluí deadline o estado de inscripción si aparece en el candidato.
 - Si es investigación/herramienta, explicá la técnica o idea usable en el club.

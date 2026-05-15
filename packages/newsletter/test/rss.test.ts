@@ -96,4 +96,13 @@ describe("RSS collection", () => {
 
     expect(image).toBe("https://example.com/robot-team-hero.jpg");
   });
+
+  it("skips likely logos or sponsor images when no good article image exists", () => {
+    const image = extractHtmlImageUrl(
+      `<html><head><meta property="og:image" content="/mrt_sponsor_pmc.png"></head><body><img src="/logo.webp"></body></html>`,
+      "https://example.com/article",
+    );
+
+    expect(image).toBeNull();
+  });
 });

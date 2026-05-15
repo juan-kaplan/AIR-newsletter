@@ -22,6 +22,8 @@ function sweepReaderVisibleText(article: NewsletterArticle): NewsletterArticle {
     summary: article.summary
       .replace(/\bpor qué importa:?\s*/gi, "")
       .replace(/\bpuede servirle a AIR\s*/gi, "AIR puede usarlo ")
+      .replace(/\bpuede servir como modelo para\b/gi, "ofrece un ejemplo para")
+      .replace(/\bpuede inspirar a\b/gi, "da pistas para")
       .replace(/señales/gi, "noticias")
       .replace(/señal/gi, "noticia")
       .replace(/\brazón interna\b/gi, "")
