@@ -1,0 +1,62 @@
+{
+  "week": "2026-W21",
+  "collectedAt": "2026-05-18T16:00:20.988Z",
+  "windowStart": "2026-05-18T00:00:00.000Z",
+  "windowEnd": "2026-05-25T00:00:00.000Z",
+  "articles": [
+    {
+      "title": "Wall-Climbing Robot Challenge 2026",
+      "url": "https://wcrc.pro/",
+      "summary": "El Wall-Climbing Robot Challenge propone diseñar robots capaces de trepar muros, una consigna muy concreta para trabajar adhesión, tracción, control y percepción en superficies verticales. La inscripción cierra el 15 de junio de 2026.",
+      "source": "Wall-Climbing Robot Challenge 2026",
+      "category": "competition",
+      "imageUrl": "https://wcrc.pro/media/hero/hero-bg.jpg",
+      "publishedAt": "2026-05-18T16:00:21.041Z",
+      "score": 82,
+      "selectionReason": "noticia de competencia, fecha o inscripción accionable, idea técnica construible"
+    },
+    {
+      "title": "RoboCup 2026",
+      "url": "https://2026.robocup.org/",
+      "summary": "RoboCup 2026 reúne ligas de fútbol, rescate, robótica doméstica e industrial. Más que una sola competencia, funciona como un mapa de categorías posibles para pensar pruebas universitarias con distintos niveles de dificultad.",
+      "source": "RoboCup 2026",
+      "category": "competition",
+      "imageUrl": "https://2026.robocup.org/wp-content/uploads/2026/01/Team.jpeg",
+      "publishedAt": "2026-05-18T16:00:21.041Z",
+      "score": 50,
+      "selectionReason": "noticia de competencia, fuente de competencia"
+    },
+    {
+      "title": "2026 UNSW STEM, Robotics & Coding Challenge",
+      "url": "https://roboticscodingchallenge.org/current/",
+      "summary": "La edición 2026 de la UNSW STEM, Robotics & Coding Challenge plantea una misión de rescate tras el colapso de una ruta. Es un buen caso para estudiar cómo convertir un problema abierto en reglas, restricciones técnicas y entregables evaluables.",
+      "source": "UNSW Robotics & Coding Challenge 2026",
+      "category": "competition",
+      "publishedAt": "2026-05-18T16:00:21.041Z",
+      "score": 50,
+      "selectionReason": "noticia de competencia, fuente de competencia"
+    },
+    {
+      "title": "Fanuc strengthens Nvidia partnership for AI robot simulation and digital twins",
+      "url": "https://roboticsandautomationnews.com/2026/05/18/fanuc-strengthens-nvidia-partnership-for-ai-robot-simulation-and-digital-twins/101628/",
+      "summary": "La noticia aporta contexto de robótica aplicada para discusiones técnicas del club. Conviene leerla buscando ideas trasladables a prototipos, reglas de competencia o demostraciones para estudiantes.",
+      "source": "Robotics & Automation News",
+      "category": "industry",
+      "publishedAt": "2026-05-18T10:30:15.000Z",
+      "imageUrl": "https://roboticsandautomationnews.com/wp-content/uploads/2026/05/nvidia-fanuc-1.png",
+      "score": 22,
+      "selectionReason": "idea técnica construible"
+    },
+    {
+      "title": "How to Build a Robot Arm RL Grasping System in Isaac Lab | NERO Arm",
+      "url": "https://discourse.openrobotics.org/t/how-to-build-a-robot-arm-rl-grasping-system-in-isaac-lab-nero-arm/54923",
+      "summary": "(topic deleted by author) 1 post - 1 participant Read full topic.",
+      "source": "Open Robotics Discourse",
+      "category": "tooling",
+      "publishedAt": "2026-05-18T05:50:44.000Z",
+      "imageUrl": "https://us1.discourse-cdn.com/flex022/uploads/ros/original/3X/e/2/e2580bc2d1e3398c20399c8735572f973453b1a4.png",
+      "score": 18,
+      "selectionReason": "valor técnico para aprender"
+    }
+  ]
+}
