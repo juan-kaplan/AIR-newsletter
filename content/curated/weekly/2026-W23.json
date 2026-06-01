@@ -1,0 +1,62 @@
+{
+  "week": "2026-W23",
+  "collectedAt": "2026-06-01T18:21:03.165Z",
+  "windowStart": "2026-06-01T00:00:00.000Z",
+  "windowEnd": "2026-06-08T00:00:00.000Z",
+  "articles": [
+    {
+      "title": "Desafío de Robots Trepamuros 2026: ¡Inscripciones Abiertas!",
+      "url": "https://wcrc.pro/",
+      "summary": "El Wall-Climbing Robot Challenge 2026 invita a diseñar robots capaces de trepar muros. Es una excelente oportunidad para que los equipos trabajen en adhesión, tracción, control y percepción en superficies verticales. La inscripción cierra el 15 de junio de 2026.",
+      "source": "Wall-Climbing Robot Challenge 2026",
+      "category": "competition",
+      "imageUrl": "https://wcrc.pro/media/hero/hero-bg.jpg",
+      "publishedAt": "2026-06-01T18:21:03.217Z",
+      "score": 82,
+      "selectionReason": "Oportunidad de competencia con fecha límite clara, ideal para un club universitario."
+    },
+    {
+      "title": "RoboCup 2026: Inspiración para Competencias Universitarias",
+      "url": "https://2026.robocup.org/",
+      "summary": "RoboCup 2026, con sus ligas de fútbol, rescate, robótica doméstica e industrial, es un excelente punto de partida para que los equipos de AIR exploren distintas categorías y niveles de dificultad al diseñar futuras competencias universitarias.",
+      "source": "RoboCup 2026",
+      "category": "competition",
+      "imageUrl": "https://2026.robocup.org/wp-content/uploads/2026/01/Team.jpeg",
+      "publishedAt": "2026-06-01T18:21:03.217Z",
+      "score": 50,
+      "selectionReason": "Ofrece ideas concretas para organizar competencias locales, un objetivo del club."
+    },
+    {
+      "title": "Desafío de Robótica UNSW 2026: Cómo Diseñar una Competencia",
+      "url": "https://roboticscodingchallenge.org/current/",
+      "summary": "La UNSW STEM, Robotics & Coding Challenge 2026 propone una misión de rescate tras un colapso vial. Los equipos de AIR pueden estudiar este caso para aprender a transformar un problema complejo en reglas claras, restricciones técnicas y objetivos evaluables para futuras competencias.",
+      "source": "UNSW Robotics & Coding Challenge 2026",
+      "category": "competition",
+      "publishedAt": "2026-06-01T18:21:03.217Z",
+      "score": 50,
+      "selectionReason": "Proporciona un ejemplo práctico para diseñar competencias, relevante para el club."
+    },
+    {
+      "title": "Mini PCs Compactas: La Elección para Controladores Robóticos Modernos",
+      "url": "https://roboticsandautomationnews.com/2026/06/01/enhancing-industrial-automation-why-compact-mini-pcs-are-quietly-becoming-the-default-choice-for-robotic-controllers/102137/",
+      "summary": "Los controladores robóticos en la industria están migrando hacia mini PCs compactas. Esta tendencia permite integrar sistemas de visión, sensores y redes en espacios reducidos, una solución que los equipos pueden considerar para sus propios proyectos de robótica.",
+      "source": "Robotics & Automation News",
+      "category": "industry",
+      "publishedAt": "2026-06-01T16:33:06.000Z",
+      "imageUrl": "https://roboticsandautomationnews.com/wp-content/uploads/2026/06/industrial-pc-1.jpeg",
+      "score": 22,
+      "selectionReason": "Noticia de hardware práctico y tendencia en controladores, útil para proyectos del club."
+    },
+    {
+      "title": "Hardware Abierto en Robótica: Construyendo Robots de Forma Accesible",
+      "url": "https://roboticsandautomationnews.com/2026/06/01/open-source-hardware-for-robotics-democratizing-robot-building/102089/",
+      "summary": "La noticia aporta contexto de robótica aplicada para discusiones técnicas del club. Conviene leerla buscando ideas trasladables a prototipos, reglas de competencia o demostraciones para estudiantes.",
+      "source": "Robotics & Automation News",
+      "category": "industry",
+      "publishedAt": "2026-06-01T06:12:43.000Z",
+      "imageUrl": "https://roboticsandautomationnews.com/wp-content/uploads/2026/06/workshop-humanoid-1.png",
+      "score": 22,
+      "selectionReason": "Tema relevante para un club universitario: acceso a hardware y reducción de costos mediante código abierto."
+    }
+  ]
+}
