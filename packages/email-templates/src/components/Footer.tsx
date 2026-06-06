@@ -10,7 +10,7 @@ export function Footer({ unsubscribeUrl }: FooterProps) {
     <Section style={section}>
       <Section style={rule} />
       <Text style={copyright}>
-        © 2026 AIR Robótica · Universidad de San Andrés
+        © 2026 AIR Club UdeSA · Universidad de San Andrés
       </Text>
       <Text style={department}>
         Departamento de Ingeniería &amp; Inteligencia Artificial

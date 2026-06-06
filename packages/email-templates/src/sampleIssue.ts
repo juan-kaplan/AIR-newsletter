@@ -1,11 +1,11 @@
 import type { NewsletterIssue } from "../../newsletter/src/types";
 
 export const sampleIssue: NewsletterIssue = {
-  slug: "robotics-newsletter-sample",
+  slug: "air-club-newsletter-sample",
   subject:
-    "Robots humanoides en producción y la carrera por estandarizar el aprendizaje físico",
+    "Modelos abiertos, visión y robótica autónoma para AIR Club",
   preheader:
-    "Esta semana: una competencia universitaria con becas para San Andrés, papers que vale la pena leer y los anuncios que mueven al sector.",
+    "Esta semana: competencias accesibles, papers de IA aplicada y herramientas para proyectos de AIR Club UdeSA.",
   articles: [
     {
       title: "Abren las inscripciones para la RoboCup Argentina 2026",
@@ -32,7 +32,7 @@ export const sampleIssue: NewsletterIssue = {
     },
     {
       title:
-        "Figure AI muestra a su humanoide armando una caja de cereales sin teleoperación",
+        "Figure AI muestra aprendizaje físico sin teleoperación",
       url: "https://example.com/figure-cereal",
       summary:
         "Es la primera demo pública de Helix 02 en una tarea de empaquetado completa. El video muestra recuperación autónoma ante errores de agarre.",
@@ -44,7 +44,7 @@ export const sampleIssue: NewsletterIssue = {
     },
     {
       title:
-        "Un paper de DeepMind propone un benchmark unificado para manipulación móvil",
+        "DeepMind propone un benchmark unificado para manipulación móvil",
       url: "https://example.com/deepmind-benchmark",
       summary:
         "Cubre 200 tareas en simulador y 40 en hardware real. La promesa: comparar arquitecturas VLA sin truquear el setup experimental.",
@@ -81,7 +81,7 @@ export const sampleIssue: NewsletterIssue = {
       title: "NVIDIA libera GR00T-N1 para entrenamiento de humanoides en sim",
       url: "https://example.com/groot-n1",
       summary:
-        "Modelo VLA open-weights de 2.3B parámetros, entrenado en 5000 horas de teleoperación. Funciona out-of-the-box con Isaac Lab.",
+        "Modelo VLA open-weights de 2.3B parámetros, entrenado en 5000 horas de teleoperación. Funciona out-of-the-box con Isaac Lab y sirve para discutir entrenamiento sim-to-real.",
       imageUrl:
         "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=1200&q=80",
       source: "NVIDIA Research",

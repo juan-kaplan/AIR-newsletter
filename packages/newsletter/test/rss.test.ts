@@ -17,10 +17,15 @@ const feed = `<?xml version="1.0" encoding="UTF-8"?>
       <pubDate>Mon, 04 May 2026 12:00:00 GMT</pubDate>
     </item>
     <item>
-      <title>General AI benchmark improves</title>
-      <link>https://example.com/general-ai</link>
-      <description>This is about benchmark math without machines in the physical world.</description>
+      <title>Open weights LLM benchmark improves</title>
+      <link>https://example.com/open-weights-llm</link>
+      <description>A lab released a large language model benchmark with fine-tuning notes for student teams.</description>
       <pubDate>Mon, 04 May 2026 13:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Fine-tune AI agents locally</title>
+      <link>https://example.com/fine-tune-agents</link>
+      <pubDate>Mon, 04 May 2026 14:00:00 GMT</pubDate>
     </item>
   </channel>
 </rss>`;
@@ -59,6 +64,20 @@ describe("RSS collection", () => {
         imageUrl: "https://example.com/robots-navigation.jpg",
         summary:
           "A lab showed a robot navigation system that handles crowded hallways and doesn't cut words in weird places.",
+      }),
+      expect.objectContaining({
+        title: "Open weights LLM benchmark improves",
+        url: "https://example.com/open-weights-llm",
+        source: "Robotics Feed",
+        summary:
+          "A lab released a large language model benchmark with fine-tuning notes for student teams.",
+      }),
+      expect.objectContaining({
+        title: "Fine-tune AI agents locally",
+        url: "https://example.com/fine-tune-agents",
+        source: "Robotics Feed",
+        summary:
+          "Robotics Feed publicó una actualización: Fine-tune AI agents locally.",
       }),
     ]);
   });

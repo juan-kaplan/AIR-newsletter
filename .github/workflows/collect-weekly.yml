@@ -1,4 +1,4 @@
-name: Collect Weekly Robotics Digest
+name: Collect Weekly AIR Digest
 
 on:
   schedule:
@@ -13,7 +13,6 @@ jobs:
   collect:
     runs-on: ubuntu-latest
     env:
-      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
       TZ: America/Argentina/Buenos_Aires
     steps:
       - uses: actions/checkout@v4
@@ -34,6 +33,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "No weekly digest changes to commit."
           else
-            git commit -m "chore: collect weekly robotics digest"
+            git commit -m "chore: collect weekly air digest"
             git push
           fi

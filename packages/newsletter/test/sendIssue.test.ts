@@ -117,11 +117,11 @@ describe("sendIssue", () => {
 
 function config(overrides: Partial<NewsletterConfig> = {}): NewsletterConfig {
   return {
-    newsletterFrom: "jfigueiredopaschmann@udesa.edu.ar",
+    newsletterFrom: "jkaplan@udesa.edu.ar",
     smtpHost: "smtp.gmail.com",
     smtpPort: 587,
     smtpSecure: false,
-    smtpUser: "jfigueiredopaschmann@udesa.edu.ar",
+    smtpUser: "jkaplan@udesa.edu.ar",
     smtpPassword: "app-password-placeholder",
     allowedRecipientDomain: "udesa.edu.ar",
     workerBaseUrl: "https://worker.test",

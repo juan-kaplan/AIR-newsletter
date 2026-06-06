@@ -39,7 +39,7 @@ export function Layout({ children, preheader, issueMonth }: LayoutProps) {
                   <tr>
                     <td style={headerLeftCell}>
                       <Img
-                        alt="AIR Robótica"
+                        alt="AIR Club UdeSA"
                         src="cid:air-logo"
                         style={brandLogo}
                         width={132}

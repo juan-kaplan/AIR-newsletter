@@ -41,12 +41,12 @@ async function main(): Promise<void> {
       throw new Error("Use --to someone@example.com for test sends.");
     }
 
-    await sendIssue(await buildIssue(), { confirm: args.includes("--confirm"), to });
+    await sendIssue(await buildIssue(), { confirm: isConfirmed(args), to });
     return;
   }
 
   if (command === "send") {
-    await sendIssue(await buildIssue(), { confirm: args.includes("--confirm") });
+    await sendIssue(await buildIssue(), { confirm: isConfirmed(args) });
     return;
   }
 
@@ -56,6 +56,10 @@ async function main(): Promise<void> {
 function getArgValue(argsToSearch: string[], flag: string): string | null {
   const index = argsToSearch.indexOf(flag);
   return index >= 0 ? argsToSearch[index + 1] ?? null : null;
+}
+
+function isConfirmed(argsToSearch: string[]): boolean {
+  return argsToSearch.includes("--confirm") && !argsToSearch.includes("--dry-run");
 }
 
 main().catch((error: unknown) => {

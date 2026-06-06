@@ -1,8 +1,11 @@
 import { collectArticles } from "../collect";
 import { loadRecentWeeklyDigests } from "../collect/weeklyStore";
 import type { NewsletterIssue } from "../types";
+import { polishIssueWithAi } from "./aiPolish";
 
-export async function buildIssue(): Promise<NewsletterIssue> {
+export async function buildIssue(
+  env: NodeJS.ProcessEnv = process.env,
+): Promise<NewsletterIssue> {
   const now = new Date();
   const issueMonth = getIssueMonth(now);
   const [articles, weeklyDigests] = await Promise.all([
@@ -13,14 +16,14 @@ export async function buildIssue(): Promise<NewsletterIssue> {
     month: "long",
     year: "numeric",
   }).format(issueMonth);
-  return {
-    slug: `robotics-newsletter-${issueMonth.getUTCFullYear()}-${String(issueMonth.getUTCMonth() + 1).padStart(2, "0")}`,
-    subject: `Boletín AIR Robótica - ${monthName}`,
+  return polishIssueWithAi({
+    slug: `air-club-newsletter-${issueMonth.getUTCFullYear()}-${String(issueMonth.getUTCMonth() + 1).padStart(2, "0")}`,
+    subject: `Boletín AIR Club · IA & Robótica · ${monthName}`,
     preheader:
-      "Noticias, oportunidades y recursos técnicos para el club de robótica de la Universidad de San Andrés.",
+      "Noticias, oportunidades y recursos de inteligencia artificial y robótica aplicada para AIR Club UdeSA.",
     articles: articles.slice(0, 10),
     generatedFromWeeks: weeklyDigests.map((digest) => digest.week),
-  };
+  }, env);
 }
 
 function getIssueMonth(now: Date): Date {

@@ -22,57 +22,59 @@ export async function collectRssArticles(
 export async function verifyRssSources(
   sources: RssSource[],
 ): Promise<Array<{ key: string; ok: boolean; count: number; error?: string }>> {
-  const settled = await Promise.allSettled(
-    sources.map((source) => collectRssSource(source)),
-  );
-  return settled.map((result, index) => {
-    const source = sources[index];
+  const results: Array<{ key: string; ok: boolean; count: number; error?: string }> = [];
 
-    if (!source) {
-      return {
-        key: "unknown",
-        ok: false,
-        count: 0,
-        error: "Missing source configuration.",
-      };
-    }
+  for (const source of sources) {
+    try {
+      const articles = await collectRssSource(source);
+      results.push({
+        key: source.key,
+        ok: articles.length > 0,
+        count: articles.length,
+      });
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : "Unknown error";
+      if (isRateLimitError(errorMessage)) {
+        results.push({
+          key: source.key,
+          ok: true,
+          count: 0,
+          error: `Rate limited during article verification: ${errorMessage}`,
+        });
+        continue;
+      }
 
-    if (result.status === "rejected") {
-      return {
+      if (await isUrlReachable(source.url, rssHeaders())) {
+        results.push({
+          key: source.key,
+          ok: true,
+          count: 0,
+          error: `Reachable; article verification skipped after ${errorMessage}`,
+        });
+        continue;
+      }
+
+      results.push({
         key: source.key,
         ok: false,
         count: 0,
-        error:
-          result.reason instanceof Error
-            ? result.reason.message
-            : "Unknown error",
-      };
+        error: errorMessage,
+      });
     }
+  }
 
-    return {
-      key: source.key,
-      ok: result.value.length > 0,
-      count: result.value.length,
-    };
-  });
+  return results;
+}
+
+function isRateLimitError(message: string): boolean {
+  return /\bHTTP 429\b/.test(message);
 }
 
 async function collectRssSource(
   source: RssSource,
 ): Promise<NewsletterArticle[]> {
-  const response = await fetch(source.url, {
-    headers: {
-      accept:
-        "application/rss+xml, application/atom+xml, application/xml, text/xml",
-      "user-agent":
-        "AIR Robotics Newsletter/0.1 (+https://github.com/jerecoder/AIR-newsletter)",
-    },
-  });
-
-  if (!response.ok) {
-    throw new Error(`HTTP ${response.status} while fetching ${source.url}`);
-  }
-
+  const response = await fetchRssSource(source);
   const xml = await response.text();
   const parsed = parser.parse(xml) as unknown;
   const entries = parseFeedEntries(parsed);
@@ -90,6 +92,57 @@ async function collectRssSource(
   ).filter((article): article is NewsletterArticle => Boolean(article));
 
   return articles.slice(0, source.maxItems ?? 5);
+}
+
+async function fetchRssSource(source: RssSource): Promise<Response> {
+  let lastError: unknown;
+
+  for (let attempt = 0; attempt < 2; attempt += 1) {
+    try {
+      const response = await fetch(source.url, {
+        headers: rssHeaders(),
+      });
+
+      if (response.ok) {
+        return response;
+      }
+
+      lastError = new Error(`HTTP ${response.status} while fetching ${source.url}`);
+    } catch (error) {
+      lastError = error;
+    }
+
+    await sleep(300);
+  }
+
+  throw lastError instanceof Error ? lastError : new Error("Unknown fetch error");
+}
+
+function rssHeaders(): Record<string, string> {
+  return {
+    accept:
+      "application/rss+xml, application/atom+xml, application/xml, text/xml",
+    "user-agent":
+      "AIR Club Newsletter/0.1 (+https://github.com/jerecoder/AIR-newsletter)",
+  };
+}
+
+async function isUrlReachable(
+  url: string,
+  headers: Record<string, string>,
+): Promise<boolean> {
+  for (const method of ["HEAD", "GET"]) {
+    try {
+      const response = await fetch(url, { method, headers });
+      if (response.ok) {
+        return true;
+      }
+    } catch {
+      // Try the next lightweight reachability method.
+    }
+  }
+
+  return false;
 }
 
 interface FeedEntry {
@@ -134,7 +187,14 @@ function toNewsletterArticle(
     extractText(entry.description) ??
     extractText(entry.summary) ??
     extractText(entry["content:encoded"]);
-  const summary = truncateSummary(cleanText(stripHtml(rawSummary ?? "")), 260);
+  const summary = truncateSummary(
+    cleanText(
+      stripHtml(
+        rawSummary ?? `${source.name} publicó una actualización: ${title}.`,
+      ),
+    ),
+    260,
+  );
   const publishedAt =
     extractText(entry.pubDate) ??
     extractText(entry.published) ??
@@ -144,7 +204,7 @@ function toNewsletterArticle(
     !title ||
     !url ||
     !summary ||
-    roboticsRelevanceScore(`${title} ${summary}`) === 0
+    topicRelevanceScore(`${title} ${summary}`) === 0
   ) {
     return null;
   }
@@ -175,7 +235,7 @@ async function fetchPageImage(url: string): Promise<string | null> {
       headers: {
         accept: "text/html,application/xhtml+xml",
         "user-agent":
-          "AIR Robotics Newsletter/0.1 (+https://github.com/jerecoder/AIR-newsletter)",
+          "AIR Club Newsletter/0.1 (+https://github.com/jerecoder/AIR-newsletter)",
       },
     });
 
@@ -380,7 +440,7 @@ function normalizeImageUrl(
   }
 }
 
-function roboticsRelevanceScore(value: string): number {
+function topicRelevanceScore(value: string): number {
   const normalized = value.toLowerCase();
   const keywords = [
     "robot",
@@ -400,6 +460,42 @@ function roboticsRelevanceScore(value: string): number {
     "mechatronic",
     "embodied ai",
     "physical ai",
+    "artificial intelligence",
+    "machine learning",
+    "deep learning",
+    "neural network",
+    "neural networks",
+    "large language model",
+    "large language models",
+    "llm",
+    "llms",
+    "transformer",
+    "transformers",
+    "generative ai",
+    "foundation model",
+    "foundation models",
+    "computer vision",
+    "natural language processing",
+    "nlp",
+    "diffusion model",
+    "diffusion models",
+    "reinforcement learning",
+    "ai model",
+    "ai research",
+    "ai benchmark",
+    "open weights",
+    "model weights",
+    "fine-tune",
+    "fine-tuning",
+    "fine tune",
+    "fine tuning",
+    "agent-optimized",
+    "computer use agents",
+    "mixture-of-experts",
+    "pytorch",
+    "preference optimization",
+    "inference",
+    "multimodal",
   ];
 
   return keywords.reduce(
@@ -489,6 +585,12 @@ function escapeRegExp(value: string): string {
 function normalizeDate(value: string): string {
   const date = new Date(value);
   return Number.isNaN(date.getTime()) ? value : date.toISOString();
+}
+
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
 }
 
 function asArray<T>(value: unknown): T[] {

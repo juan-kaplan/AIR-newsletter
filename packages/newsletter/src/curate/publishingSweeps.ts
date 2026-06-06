@@ -97,14 +97,14 @@ function rewriteForAudience(article: NewsletterArticle): string {
   }
 
   if (article.category === "tooling") {
-    return `El material de ${article.source ?? "la fuente"} cubre una herramienta o discusión técnica que puede orientar decisiones de implementación en proyectos de AIR. Conviene revisarlo buscando ideas aplicables a ROS, simulación, integración o depuración.`;
+    return `El material de ${article.source ?? "la fuente"} cubre una herramienta o discusión técnica que puede orientar decisiones de implementación en proyectos de AIR. Conviene revisarlo buscando ideas aplicables a IA, ROS2, simulación, percepción, integración o depuración.`;
   }
 
   if (article.category === "research") {
-    return "La nota presenta una línea de investigación robótica con posible aplicación en proyectos estudiantiles. Vale leerla buscando qué técnica se podría simplificar, simular o convertir en una prueba concreta para el club.";
+    return "La nota presenta una línea de investigación de inteligencia artificial o robótica aplicada con posible uso en proyectos estudiantiles. Vale leerla buscando qué técnica se podría simplificar, simular o convertir en una prueba concreta para el club.";
   }
 
-  return "La noticia aporta contexto de robótica aplicada para discusiones técnicas del club. Conviene leerla buscando ideas trasladables a prototipos, reglas de competencia o demostraciones para estudiantes.";
+  return "La noticia aporta contexto de inteligencia artificial y robótica aplicada para discusiones técnicas del club. Conviene leerla buscando ideas trasladables a prototipos, reglas de competencia o demostraciones para estudiantes.";
 }
 
 function rewriteCompetitionFormula(article: NewsletterArticle): string {

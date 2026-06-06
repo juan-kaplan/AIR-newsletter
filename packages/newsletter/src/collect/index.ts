@@ -1,6 +1,6 @@
 import { sampleIssue } from "@newsletter/email-templates/sampleIssue";
 import { curateMonthlyArticles, curateWeeklyArticles } from "../curate";
-import { collectCompetitionPages } from "./competitionPages";
+import { collectCompetitionPages, verifyCompetitionPageSources } from "./competitionPages";
 import { collectManualArticles } from "./manual";
 import { collectRssArticles, verifyRssSources } from "./rss";
 import { loadSources, resolveProjectPath, type CompetitionPageSource, type RssSource } from "./sources";
@@ -52,7 +52,13 @@ export async function collectAndStoreWeeklyDigest(now = new Date()) {
 
 export async function verifyCollectionSources() {
   const sources = await loadSources();
-  return verifyRssSources(sources.filter((source): source is RssSource => source.type === "rss"));
+  const rssSources = sources.filter((source): source is RssSource => source.type === "rss");
+  const competitionPageSources = sources.filter((source): source is CompetitionPageSource => source.type === "competition_page");
+  const [rssResults, competitionPageResults] = await Promise.all([
+    verifyRssSources(rssSources),
+    verifyCompetitionPageSources(competitionPageSources)
+  ]);
+  return [...rssResults, ...competitionPageResults];
 }
 
 function dedupeArticles(articles: NewsletterArticle[]): NewsletterArticle[] {

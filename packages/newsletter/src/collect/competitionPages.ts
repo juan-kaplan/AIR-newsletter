@@ -14,22 +14,49 @@ export async function collectCompetitionPages(
   );
 }
 
+export async function verifyCompetitionPageSources(
+  sources: CompetitionPageSource[],
+): Promise<Array<{ key: string; ok: boolean; count: number; error?: string }>> {
+  const results: Array<{ key: string; ok: boolean; count: number; error?: string }> = [];
+
+  for (const source of sources) {
+    try {
+      await fetchCompetitionPage(source);
+      results.push({
+        key: source.key,
+        ok: true,
+        count: 1,
+      });
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : "Unknown error";
+      if (await isUrlReachable(source.url, competitionPageHeaders())) {
+        results.push({
+          key: source.key,
+          ok: true,
+          count: 1,
+          error: `Reachable after retry fallback: ${errorMessage}`,
+        });
+        continue;
+      }
+
+      results.push({
+        key: source.key,
+        ok: false,
+        count: 0,
+        error: errorMessage,
+      });
+    }
+  }
+
+  return results;
+}
+
 async function collectCompetitionPage(
   source: CompetitionPageSource,
   now: Date,
 ): Promise<NewsletterArticle[]> {
-  const response = await fetch(source.url, {
-    headers: {
-      accept: "text/html,application/xhtml+xml",
-      "user-agent":
-        "AIR Robotics Newsletter/0.1 (+https://github.com/jerecoder/AIR-newsletter)",
-    },
-  });
-
-  if (!response.ok) {
-    throw new Error(`HTTP ${response.status} while fetching ${source.url}`);
-  }
-
+  const response = await fetchCompetitionPage(source);
   const html = await response.text();
   const text = extractReadableText(html);
   const title = chooseTitle(extractTitle(html), source.name);
@@ -51,6 +78,64 @@ async function collectCompetitionPage(
       publishedAt: now.toISOString(),
     },
   ];
+}
+
+async function fetchCompetitionPage(
+  source: CompetitionPageSource,
+): Promise<Response> {
+  let lastError: unknown;
+
+  for (let attempt = 0; attempt < 2; attempt += 1) {
+    try {
+      const response = await fetch(source.url, {
+        headers: competitionPageHeaders(),
+      });
+
+      if (response.ok) {
+        return response;
+      }
+
+      lastError = new Error(`HTTP ${response.status} while fetching ${source.url}`);
+    } catch (error) {
+      lastError = error;
+    }
+
+    await sleep(300);
+  }
+
+  throw lastError instanceof Error ? lastError : new Error("Unknown fetch error");
+}
+
+function competitionPageHeaders(): Record<string, string> {
+  return {
+    accept: "text/html,application/xhtml+xml",
+    "user-agent":
+      "AIR Club Newsletter/0.1 (+https://github.com/jerecoder/AIR-newsletter)",
+  };
+}
+
+async function isUrlReachable(
+  url: string,
+  headers: Record<string, string>,
+): Promise<boolean> {
+  for (const method of ["HEAD", "GET"]) {
+    try {
+      const response = await fetch(url, { method, headers });
+      if (response.ok) {
+        return true;
+      }
+    } catch {
+      // Try the next lightweight reachability method.
+    }
+  }
+
+  return false;
+}
+
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
 }
 
 function chooseTitle(
@@ -222,7 +307,7 @@ function describeCompetitionFocus(sourceName: string, snippet: string): string {
     return "El eje está en robótica marítima autónoma, navegación, percepción y coordinación de sistemas.";
   }
 
-  return "El eje es una competencia de robótica que puede inspirar reglas, pruebas y criterios de evaluación para el club.";
+  return "El eje es una competencia de inteligencia artificial o robótica aplicada que puede inspirar reglas, pruebas y criterios de evaluación para el club.";
 }
 
 function findAnchorPositions(text: string, anchor: string): number[] {

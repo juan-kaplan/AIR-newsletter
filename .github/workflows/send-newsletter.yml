@@ -1,9 +1,6 @@
 name: Send Newsletter
 
 on:
-  schedule:
-    # GitHub Actions cron is UTC. This is the first day of each month at 10:17 in Argentina.
-    - cron: "17 13 1 * *"
   workflow_dispatch:
     inputs:
       dry_run:
@@ -15,18 +12,21 @@ jobs:
   send:
     runs-on: ubuntu-latest
     env:
-      NEWSLETTER_FROM: jfigueiredopaschmann@udesa.edu.ar
+      NEWSLETTER_FROM: jkaplan@udesa.edu.ar
       SMTP_HOST: smtp.gmail.com
       SMTP_PORT: "465"
       SMTP_SECURE: "true"
-      SMTP_USER: jfigueiredopaschmann@udesa.edu.ar
+      SMTP_USER: jkaplan@udesa.edu.ar
       SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
       ALLOWED_RECIPIENT_DOMAIN: udesa.edu.ar
       WORKER_BASE_URL: ${{ secrets.WORKER_BASE_URL }}
       WORKER_ADMIN_TOKEN: ${{ secrets.WORKER_ADMIN_TOKEN }}
       MAX_RECIPIENTS: ${{ vars.MAX_RECIPIENTS || '30' }}
       MAX_EMAILS_PER_RUN: ${{ vars.MAX_EMAILS_PER_RUN || '35' }}
+      NEWSLETTER_AI_PROVIDER: ${{ vars.NEWSLETTER_AI_PROVIDER || 'none' }}
       GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
+      NVIDIA_MODEL: ${{ vars.NVIDIA_MODEL || 'meta/llama-3.1-70b-instruct' }}
       TZ: America/Argentina/Buenos_Aires
     steps:
       - uses: actions/checkout@v4
@@ -44,7 +44,7 @@ jobs:
       - name: Send newsletter
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.dry_run }}" = "false" ]; then
-            pnpm newsletter:send-test --to jfigueiredopaschmann@udesa.edu.ar --confirm
+            pnpm newsletter:send-test --to jkaplan@udesa.edu.ar --confirm
           else
-            pnpm newsletter:send-test --to jfigueiredopaschmann@udesa.edu.ar --dry-run
+            pnpm newsletter:send-test --to jkaplan@udesa.edu.ar --dry-run
           fi

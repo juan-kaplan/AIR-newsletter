@@ -77,6 +77,42 @@ sources:
     url: https://robotx.org/feed
     category: competition
     maxItems: 5
+  - key: openai-blog
+    name: OpenAI Blog
+    type: rss
+    url: https://openai.com/news/rss.xml
+    category: industry
+    maxItems: 3
+  - key: huggingface-blog
+    name: Hugging Face Blog
+    type: rss
+    url: https://huggingface.co/blog/feed.xml
+    category: research
+    maxItems: 4
+  - key: mit-tech-review-ai
+    name: MIT Technology Review - AI
+    type: rss
+    url: https://www.technologyreview.com/topic/artificial-intelligence/feed
+    category: research
+    maxItems: 4
+  - key: venturebeat-ai
+    name: VentureBeat AI
+    type: rss
+    url: https://venturebeat.com/category/ai/feed/
+    category: industry
+    maxItems: 3
+  - key: the-gradient
+    name: The Gradient
+    type: rss
+    url: https://thegradient.pub/rss/
+    category: research
+    maxItems: 3
+  - key: deepmind-blog
+    name: Google DeepMind Blog
+    type: rss
+    url: https://deepmind.google/blog/rss.xml
+    category: research
+    maxItems: 3
   - key: robotx-2026-page
     name: RobotX Challenge 2026
     type: competition_page
@@ -93,3 +129,11 @@ sources:
     name: UNSW Robotics & Coding Challenge 2026
     type: competition_page
     url: https://roboticscodingchallenge.org/current/
+  - key: mlh-events
+    name: Major League Hacking Events
+    type: competition_page
+    url: https://mlh.io/seasons/2026/events
+  - key: devpost-hackathons
+    name: Devpost - Online Hackathons
+    type: competition_page
+    url: https://devpost.com/hackathons?open_to[]=online

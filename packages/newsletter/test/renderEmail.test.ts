@@ -4,8 +4,9 @@ import type { NewsletterIssue } from "../src/types";
 
 const issue: NewsletterIssue = {
   slug: "weekly",
-  subject: "Boletín AIR Robótica - mayo de 2026",
-  preheader: "Noticias, oportunidades y recursos técnicos para AIR.",
+  subject: "Boletín AIR Club · IA & Robótica · mayo de 2026",
+  preheader:
+    "Noticias, oportunidades y recursos de inteligencia artificial y robótica aplicada para AIR Club UdeSA.",
   articles: [
     {
       title: "Useful link",
@@ -43,7 +44,7 @@ describe("renderEmail", () => {
       "https://worker.test/unsubscribe?token=abc",
     );
     expect(rendered.html).toContain("https://example.com/useful.jpg");
-    expect(rendered.html).toContain("AIR Robótica");
+    expect(rendered.html).toContain("AIR Club UdeSA");
     expect(rendered.html).toContain("cid:air-logo");
     expect(rendered.html).toContain("Leer más");
     expect(rendered.text).toContain("Leer análisis técnico");
