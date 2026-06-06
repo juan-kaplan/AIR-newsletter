@@ -2,17 +2,36 @@
 
 Generated: 2026-06-06T20:57:14Z / 2026-06-06 17:57 America/Argentina/Buenos_Aires
 
-## Current Goal
+## Current State
 
-Create Juan's own GitHub repo for this AIR newsletter project, push the adapted code there, and continue setup from another session/computer.
+Juan's own GitHub repo has been created and the adapted code has been pushed.
 
-The current local repo still has:
+New repo:
 
 ```txt
-origin https://github.com/jerecoder/AIR-newsletter.git
+https://github.com/juan-kaplan/AIR-newsletter
+visibility: public
+default branch: main
 ```
 
-Do not push to that remote. Create a new GitHub repo owned by Juan, then repoint `origin` or add a new remote before pushing.
+Local remotes:
+
+```txt
+origin   https://github.com/juan-kaplan/AIR-newsletter.git
+upstream https://github.com/jerecoder/AIR-newsletter.git
+```
+
+Pushed commit:
+
+```txt
+e66ddfa feat: adapt newsletter for air club ai robotics
+```
+
+First GitHub Actions CI run on the new repo passed:
+
+```txt
+CI success, run id 27073774937
+```
 
 ## Implemented Adaptation
 
@@ -135,31 +154,26 @@ NVIDIA_API_KEY
 NVIDIA_MODEL=meta/llama-3.1-70b-instruct
 ```
 
-## Current Git State
+## GitHub Actions Setup
 
-Changes are uncommitted.
+Workflows are active on `juan-kaplan/AIR-newsletter`:
 
-Before pushing to Juan's repo:
+- `CI`
+- `Collect Weekly AIR Digest`
+- `Send Newsletter`
 
-1. Create a new GitHub repo under Juan's account.
-2. Repoint `origin` away from `jerecoder/AIR-newsletter`.
-3. Commit the current implementation.
-4. Push `main` to the new remote.
-5. Configure GitHub Actions secrets and vars in the new repo.
-
-Suggested commit message:
+Configured GitHub Actions variables:
 
 ```txt
-feat: adapt newsletter for air club ai robotics
+MAX_RECIPIENTS=30
+MAX_EMAILS_PER_RUN=35
+NEWSLETTER_AI_PROVIDER=none
+NVIDIA_MODEL=meta/llama-3.1-70b-instruct
 ```
 
-Suggested new repo name:
+GitHub Actions secrets are not configured yet because the private values were not available in this session.
 
-```txt
-AIR-newsletter
-```
-
-Suggested GitHub Actions secrets:
+Required secrets for full operation:
 
 ```txt
 SMTP_PASSWORD
@@ -169,26 +183,16 @@ GEMINI_API_KEY
 NVIDIA_API_KEY
 ```
 
-Suggested GitHub Actions vars:
-
-```txt
-MAX_RECIPIENTS=30
-MAX_EMAILS_PER_RUN=35
-NEWSLETTER_AI_PROVIDER=none
-NVIDIA_MODEL=meta/llama-3.1-70b-instruct
-```
-
 ## Next Session Checklist
 
 1. Run `git status --short`.
 2. Confirm `HANDOFF.md` exists and read it.
-3. Confirm desired GitHub repo owner/name/visibility.
-4. Create the repo.
-5. Set the remote to Juan's new repo.
-6. Commit all current changes.
-7. Push `main`.
-8. Configure repo secrets/vars.
-9. Run GitHub Actions manually:
+3. Pull latest `main` from `origin`.
+4. Configure missing GitHub Actions secrets.
+5. If Cloudflare Worker is not deployed yet, deploy it and set `WORKER_BASE_URL` / `WORKER_ADMIN_TOKEN`.
+6. Create a Gmail app password for `jkaplan@udesa.edu.ar` and set `SMTP_PASSWORD`.
+7. Optional: set `NEWSLETTER_AI_PROVIDER=nvidia` and `NVIDIA_API_KEY` only when final text polish should be enabled.
+8. Run GitHub Actions manually:
    - `collect-weekly`
    - `send-newsletter` with dry-run first
-10. Only then run a confirmed send.
+9. Only then run a confirmed send.
