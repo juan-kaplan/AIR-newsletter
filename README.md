@@ -1,238 +1,144 @@
-# Automatic Newsletter
+# AIR Club UdeSA — Boletín
 
-Automatic Newsletter is a repo-first internal UdeSA newsletter system for AIR Club UdeSA. The current workflow collects AI and robotics links weekly, curates a monthly issue, and sends it manually to `jkaplan@udesa.edu.ar`.
+Automated newsletter system for [AIR Club UdeSA](https://clubroboticaudesa.netlify.app), the AI and robotics club at Universidad de San Andrés. It scrapes AI and robotics news weekly, curates a monthly issue, and exports a ready-to-send HTML file that goes out via Gmail.
 
-## Architecture
+## How it works
 
-- GitHub repo stores source, content, tests, and workflows.
-- GitHub Actions runs CI, weekly collection, and the manual self-send workflow.
-- RSS and competition-page collection pull AI and robotics links from `content/sources.yaml`.
-- Weekly curated digests are stored in `content/curated/weekly/`; the monthly issue selects up to 10 items from those weekly files.
-- Cloudflare Worker exposes subscribe, unsubscribe, health, and admin endpoints.
-- Cloudflare D1 stores subscribers, issues, delivery records, and audit events.
-- Gmail SMTP sends the issue from `jkaplan@udesa.edu.ar` to `jkaplan@udesa.edu.ar`.
-- React Email renders the HTML email and a plain text companion.
+```
+Weekly cron (Monday)          Manual trigger
+       │                            │
+collect RSS + competition   build-newsletter.yml
+pages → store weekly            │
+digest in content/            export HTML
+curated/weekly/               artifact
+                                    │
+                            download & review
+                            in browser
+                                    │
+                            copy-paste into Gmail
+                            → send to club members
+```
 
-No custom domain, Resend, Supabase, Postgres, Prisma, Vercel, Next.js, Stripe, SES, Listmonk, paid hosting, or full admin dashboard is included.
+1. **Weekly collection** — GitHub Actions runs every Monday, scrapes all RSS feeds and competition pages defined in `content/sources.yaml`, scores and deduplicates articles, and commits up to 6 curated items to `content/curated/weekly/`.
+2. **Monthly build** — Triggered manually from the Actions tab. Pulls the last 4–5 weekly digests, picks the top 10 articles, optionally runs an AI polish pass (Gemini) to generate the editorial intro, renders the HTML email, and uploads it as a downloadable artifact.
+3. **Review & send** — Download the artifact, open `newsletter.html` in a browser, review, then copy-paste into Gmail and send to the club contact list.
 
-## Free-Tier Assumptions
+## Repository layout
 
-This project currently sends one email per run, to yourself. The old list limits remain as safeguards if the subscriber workflow is used later:
+```
+content/
+  sources.yaml              RSS and competition page sources
+  curated/weekly/           Stored weekly digests (auto-committed)
+  manual/                   Student news submissions (Markdown)
+  media/                    Brand assets (logos, color palette)
 
-- `MAX_RECIPIENTS=30`
-- `MAX_EMAILS_PER_RUN=35`
-- `ALLOWED_RECIPIENT_DOMAIN=udesa.edu.ar`
+packages/
+  newsletter/               Core pipeline: collect → curate → compose → export
+    src/
+      collect/              RSS, competition pages, manual markdown
+      curate/               Scoring and publishing sweeps
+      compose/              Build issue + AI polish (Gemini)
+      render/               React Email → HTML + plain text
+      export/               Write dist/newsletter.html and newsletter.txt
+  email-templates/          React Email components and layout
 
-The Worker rejects non-`@udesa.edu.ar` subscribers. The sender refuses to run if any recipient is outside `@udesa.edu.ar`.
+.github/workflows/
+  ci.yml                    Lint + typecheck + test on push/PR
+  collect-weekly.yml        Monday 09:30 ART — collect and store digest
+  build-newsletter.yml      Manual — export HTML artifact
+```
 
-## Setup Requirements
+## Newsletter sections
 
-Required accounts:
+Articles are grouped into sections by category:
 
-- GitHub
-- Cloudflare
-- Google account with Gmail app password support for `jkaplan@udesa.edu.ar`
+| Section | Categories |
+|---|---|
+| INVESTIGACIÓN | `research` |
+| HERRAMIENTAS & INDUSTRIA | `tooling`, `industry` |
+| COMPETENCIAS | `competition` |
+| DEL CLUB | `event` (manual submissions) |
 
-Required local tools:
+## Local setup
 
-- Node 22
-- pnpm through Corepack
-- Wrangler through the project package scripts
-
-Enable pnpm if needed:
+Requires Node 22 and pnpm via Corepack.
 
 ```bash
 corepack enable
-corepack prepare pnpm@9.15.4 --activate
-```
-
-Install dependencies:
-
-```bash
 pnpm install
 ```
 
-## Secrets
-
-Never commit real secrets. Copy `.env.example` to a private local `.env` only if you need it for local commands.
-
-GitHub Actions secrets:
-
-```txt
-SMTP_PASSWORD
-WORKER_BASE_URL
-WORKER_ADMIN_TOKEN
-GEMINI_API_KEY
-NVIDIA_API_KEY
-```
-
-`GEMINI_API_KEY` and `NVIDIA_API_KEY` are optional. If they are missing, the newsletter still uses deterministic club-specific ranking and publishing rules. Set `NEWSLETTER_AI_PROVIDER` to `gemini` or `nvidia` only when you want a final text-polish pass over an already curated issue.
-
-The workflow sets these non-secret values directly:
-
-```txt
-NEWSLETTER_FROM=jkaplan@udesa.edu.ar
-SMTP_HOST=smtp.gmail.com
-SMTP_PORT=465
-SMTP_SECURE=true
-SMTP_USER=jkaplan@udesa.edu.ar
-ALLOWED_RECIPIENT_DOMAIN=udesa.edu.ar
-NEWSLETTER_AI_PROVIDER=none
-```
-
-Optional GitHub repository variables:
-
-```txt
-MAX_RECIPIENTS
-MAX_EMAILS_PER_RUN
-NVIDIA_MODEL
-NEWSLETTER_AI_PROVIDER
-```
-
-Worker secret:
-
-```txt
-WORKER_ADMIN_TOKEN
-```
-
-## Cloudflare D1
-
-Create the D1 database:
+Copy the environment file and fill in your keys:
 
 ```bash
-npx wrangler login
-npx wrangler d1 create automatic-newsletter-db
+cp .env.example .env
 ```
 
-Copy the returned database UUID into `apps/worker/wrangler.toml`:
-
-```toml
-name = "automatic-newsletter"
-
-[[d1_databases]]
-binding = "DB"
-database_name = "automatic-newsletter-db"
-database_id = "<D1_DATABASE_ID>"
-migrations_dir = "migrations"
-```
-
-Apply migrations:
+## Environment variables
 
 ```bash
-pnpm --filter @newsletter/worker cf:migrate:remote
+# AI polish — optional. Set to "gemini" to enable the editorial intro.
+NEWSLETTER_AI_PROVIDER=none   # none | gemini | nvidia
+
+# Required if NEWSLETTER_AI_PROVIDER=gemini
+GEMINI_API_KEY=
+
+# Required if NEWSLETTER_AI_PROVIDER=nvidia
+NVIDIA_API_KEY=
+NVIDIA_MODEL=meta/llama-3.1-70b-instruct
 ```
 
-For local development:
+## Commands
 
 ```bash
-pnpm --filter @newsletter/worker cf:migrate:local
-```
-
-## Deploy Worker
-
-Deploy:
-
-```bash
-pnpm --filter @newsletter/worker cf:deploy
-```
-
-Add the admin token as a Worker secret:
-
-```bash
-npx wrangler secret put WORKER_ADMIN_TOKEN --config apps/worker/wrangler.toml
-```
-
-Test the Worker:
-
-```bash
-curl https://<your-worker-url>/health
-```
-
-Then add the deployed URL to GitHub Actions as `WORKER_BASE_URL`.
-
-## Gmail SMTP
-
-Create an app password for `jkaplan@udesa.edu.ar` and store it in GitHub Actions as `SMTP_PASSWORD`.
-
-The sender uses:
-
-```txt
-SMTP_HOST=smtp.gmail.com
-SMTP_PORT=465
-SMTP_SECURE=true
-SMTP_USER=jkaplan@udesa.edu.ar
-NEWSLETTER_FROM=jkaplan@udesa.edu.ar
-```
-
-Do not commit the app password.
-
-## Newsletter Commands
-
-Verify live RSS sources:
-
-```bash
+# Verify all RSS and competition page sources are reachable
 pnpm newsletter:verify-sources
-```
 
-Collect and store this week's curated digest:
-
-```bash
+# Collect this week's articles and store the digest
 pnpm newsletter:collect
-```
 
-Preview the current generated issue:
-
-```bash
+# Print a plain-text preview of the current issue
 pnpm newsletter:preview
+
+# Export newsletter.html and newsletter.txt to packages/newsletter/dist/
+pnpm newsletter:export
 ```
 
-Send the newsletter to yourself:
+## Adding student news
 
-```bash
-pnpm newsletter:send-test --to jkaplan@udesa.edu.ar
+Drop a Markdown file in `content/manual/` following the template in `content/manual/TEMPLATE.md`. It will be included in the next build under the **DEL CLUB** section.
+
+## GitHub Actions setup
+
+### Secrets
+
+```
+GEMINI_API_KEY     Optional — enables the AI editorial intro
 ```
 
-Dry run to yourself:
+### Variables
 
-```bash
-pnpm newsletter:send-test --to jkaplan@udesa.edu.ar --dry-run
+```
+NEWSLETTER_AI_PROVIDER    Set to "gemini" to enable AI polish in CI builds
 ```
 
-Production send to yourself:
+Both are optional. Without them the newsletter still builds, just without the AI-generated intro paragraph.
 
-```bash
-pnpm newsletter:send-test --to jkaplan@udesa.edu.ar --confirm
-```
+### Running a build
 
-Sending defaults to dry-run unless `--confirm` is passed.
+Go to **Actions → Build Newsletter → Run workflow**. The artifact `newsletter-YYYY-MM-DD` will appear when the run completes. Download it, open `newsletter.html` in Chrome, then copy-paste into Gmail.
 
-## GitHub Actions
+## Brand assets
 
-CI runs on pushes to `main` and pull requests:
+Official media kit is in `content/media/`:
 
-```bash
-pnpm install --frozen-lockfile
-pnpm lint
-pnpm typecheck
-pnpm test
-```
+| File | Use |
+|---|---|
+| `LogoRosa.png` | Email header (crimson on white) |
+| `LogoBlanco.png` | White logo for dark backgrounds |
+| `LogoNegro.png` | Black logo for print |
+| `BrazoRosa.png` | Robot arm standalone (crimson) |
+| `MiniaturaWeb.png` | Circular avatar / web thumbnail |
+| `ColorScheme.png` | Official palette reference |
 
-The weekly collection workflow runs on Monday at `09:30 America/Argentina/Buenos_Aires`, writes up to 6 selected items to `content/curated/weekly/`, and commits that weekly digest.
-
-The send workflow is manual-only through `workflow_dispatch`. It targets only `jkaplan@udesa.edu.ar` and defaults to dry-run unless the manual `dry_run` input is set to `false`.
-
-## Unsubscribe
-
-The Worker generates a random unsubscribe token, stores only its SHA-256 hash in D1, and returns unsubscribe URLs only through the admin subscriber endpoint. Each sent email includes both `List-Unsubscribe` and `List-Unsubscribe-Post` headers. A raw token is never stored in D1.
-
-## Verification
-
-```bash
-pnpm lint
-pnpm typecheck
-pnpm test
-pnpm newsletter:verify-sources
-pnpm newsletter:collect
-pnpm newsletter:preview
-pnpm newsletter:send-test --to jkaplan@udesa.edu.ar --dry-run
-```
+Color palette: `#a40c4c` · `#ddaabc` · `#ac104c` · `#8f5261` · `#c08c94`

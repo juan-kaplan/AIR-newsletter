@@ -32,14 +32,7 @@ export function WeeklyNewsletter({ issue }: WeeklyNewsletterProps) {
 
   return (
     <Layout issueMonth={issueMonth} preheader={issue.preheader}>
-      <Section style={bannerBlock}>
-        <Img
-          alt="AIR Club UdeSA — Inteligencia Artificial &amp; Robótica"
-          src="https://raw.githubusercontent.com/juan-kaplan/AIR-newsletter/main/packages/email-templates/src/assets/banner.png"
-          style={bannerImage}
-          width={600}
-        />
-      </Section>
+
       <Section style={pageBlock}>
         {issue.intro ? (
           <Section style={introBlock}>
@@ -124,17 +117,6 @@ const syneStack = "'Syne', 'Helvetica Neue', Helvetica, Arial, sans-serif";
 const outfitStack = "'Outfit', 'Helvetica Neue', Helvetica, Arial, sans-serif";
 const monoStack = "'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace";
 
-const bannerBlock = {
-  fontSize: "0",
-  lineHeight: "0",
-};
-
-const bannerImage = {
-  display: "block",
-  height: "auto",
-  maxWidth: "100%",
-  width: "600px",
-};
 
 const pageBlock = {
   padding: "40px 32px 0",
