@@ -22,7 +22,7 @@ describe("publishing sweeps", () => {
     expect(article?.summary).toMatch(/[.!?]$/);
   });
 
-  it("rewrites common English source blurbs for AIR readers", () => {
+  it("preserves English article summaries in their original language", () => {
     const [article] = runPublishingSweeps([
       {
         title: "Closing the gap between animal movement and robotic control",
@@ -34,8 +34,7 @@ describe("publishing sweeps", () => {
       },
     ]);
 
-    expect(article?.summary).toContain("control robótico");
-    expect(article?.summary).toContain("Para el club");
-    expect(article?.summary).not.toContain("Animals move");
+    expect(article?.summary).toContain("Animals move");
+    expect(article?.summary).toContain("Researchers");
   });
 });

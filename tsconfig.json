@@ -1,7 +1,6 @@
 {
   "files": [],
   "references": [
-    { "path": "apps/worker" },
     { "path": "packages/newsletter" },
     { "path": "packages/email-templates" }
   ]

@@ -37,6 +37,8 @@ describe("AI issue polish", () => {
                     subject: "Boletín AIR Club · modelos abiertos · junio de 2026",
                     preheader:
                       "Modelos abiertos, evaluación y robótica aplicada para AIR Club UdeSA.",
+                    intro:
+                      "Este número trae un benchmark de modelos abiertos útil para proyectos del club.",
                     articles: [
                       {
                         url: "https://example.com/llm",
@@ -66,11 +68,14 @@ describe("AI issue polish", () => {
     expect(polished.preheader).toBe(
       "Modelos abiertos, evaluación y robótica aplicada para AIR Club UdeSA.",
     );
+    expect(polished.intro).toBe(
+      "Este número trae un benchmark de modelos abiertos útil para proyectos del club.",
+    );
     expect(polished.articles[0]).toMatchObject({
       url: "https://example.com/llm",
       source: "Research Feed",
       category: "research",
-      title: "Un benchmark de LLMs abiertos para experimentar en el club",
+      title: "Open weights LLM benchmark released",
     });
 
     const request = fetchMock.mock.calls[0]?.[1];

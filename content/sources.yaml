@@ -1,4 +1,9 @@
 sources:
+  - key: air-club-manual
+    name: AIR Club — Noticias del club
+    type: markdown
+    path: content/manual
+    category: event
   - key: ieee-spectrum-robotics
     name: IEEE Spectrum Robotics
     type: rss

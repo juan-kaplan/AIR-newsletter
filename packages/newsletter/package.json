@@ -11,8 +11,7 @@
     "draft": "tsx src/cli.ts draft",
     "verify-sources": "tsx src/cli.ts verify-sources",
     "preview": "tsx src/cli.ts preview",
-    "send-test": "tsx src/cli.ts send-test",
-    "send": "tsx src/cli.ts send",
+    "export": "tsx src/cli.ts export",
     "typecheck": "tsc --noEmit",
     "test": "vitest run"
   },
@@ -20,11 +19,9 @@
     "@newsletter/email-templates": "workspace:*",
     "fast-xml-parser": "^5.8.0",
     "@react-email/render": "^2.0.8",
-    "nodemailer": "^7.0.11",
+    "dotenv": "^16.5.0",
     "tsx": "^4.21.0",
     "yaml": "^2.8.2"
   },
-  "devDependencies": {
-    "@types/nodemailer": "^7.0.4"
-  }
+  "devDependencies": {}
 }

@@ -40,21 +40,22 @@ export function Layout({ children, preheader, issueMonth }: LayoutProps) {
                     <td style={headerLeftCell}>
                       <Img
                         alt="AIR Club UdeSA"
-                        src="cid:air-logo"
+                        src="https://raw.githubusercontent.com/juan-kaplan/AIR-newsletter/main/content/media/LogoRosa.png"
                         style={brandLogo}
-                        width={132}
+                        width={140}
                       />
                     </td>
                     <td style={headerRightCell}>
-                      <Text style={headerKicker}>Newsletter</Text>
+                      <Text style={headerKicker}>Boletín</Text>
                       <Text style={headerMonth}>
-                        {issueMonth ?? "Mayo 2026"}
+                        {issueMonth ?? ""}
                       </Text>
                     </td>
                   </tr>
                 </tbody>
               </table>
             </Section>
+            <Section style={crimsonBar} />
             {children}
           </Container>
         </Section>
@@ -63,16 +64,14 @@ export function Layout({ children, preheader, issueMonth }: LayoutProps) {
   );
 }
 
-const headlineStack =
-  "'Space Grotesk', 'Helvetica Neue', Helvetica, Arial, sans-serif";
-const bodyStack =
-  "Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif";
+const syneStack = "'Syne', 'Helvetica Neue', Helvetica, Arial, sans-serif";
+const outfitStack = "'Outfit', 'Helvetica Neue', Helvetica, Arial, sans-serif";
 const monoStack = "'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace";
 
 const body = {
-  backgroundColor: "#f1f3f5",
-  color: "#041627",
-  fontFamily: bodyStack,
+  backgroundColor: "#faf8f8",
+  color: "#1a0810",
+  fontFamily: outfitStack,
   margin: 0,
   padding: "0",
 };
@@ -82,17 +81,16 @@ const shell = {
 };
 
 const container = {
-  backgroundColor: "#f1f3f5",
+  backgroundColor: "#faf8f8",
   margin: "0 auto",
-  maxWidth: "640px",
+  maxWidth: "600px",
   padding: "0",
-  width: "640px",
+  width: "600px",
 };
 
 const header = {
   backgroundColor: "#ffffff",
-  borderBottom: "2px solid #041627",
-  padding: "32px 24px 30px",
+  padding: "28px 32px 24px",
 };
 
 const headerTable = {
@@ -100,7 +98,6 @@ const headerTable = {
 };
 
 const headerLeftCell = {
-  paddingRight: "16px",
   verticalAlign: "middle" as const,
 };
 
@@ -108,43 +105,47 @@ const brandLogo = {
   display: "block",
   height: "auto",
   margin: "0",
-  maxWidth: "132px",
-  width: "132px",
+  maxWidth: "140px",
+  width: "140px",
 };
 
 const headerRightCell = {
-  borderLeft: "1px solid #cbd5e1",
-  paddingLeft: "20px",
   textAlign: "right" as const,
   verticalAlign: "middle" as const,
-  width: "240px",
 };
 
 const headerKicker = {
-  color: "#2563eb",
+  color: "#a40c4c",
   fontFamily: monoStack,
-  fontSize: "12px",
+  fontSize: "10px",
   fontWeight: 700 as const,
-  letterSpacing: "0.18em",
-  lineHeight: "14px",
-  margin: "0 0 6px",
+  letterSpacing: "0.2em",
+  lineHeight: "12px",
+  margin: "0 0 4px",
   textAlign: "right" as const,
   textTransform: "uppercase" as const,
 };
 
 const headerMonth = {
-  color: "#041627",
-  fontFamily: headlineStack,
-  fontSize: "26px",
-  fontWeight: 700 as const,
+  color: "#1a0810",
+  fontFamily: syneStack,
+  fontSize: "22px",
+  fontWeight: 800 as const,
   letterSpacing: "-0.02em",
-  lineHeight: "28px",
+  lineHeight: "24px",
   margin: "0",
   textAlign: "right" as const,
 };
 
+const crimsonBar = {
+  backgroundColor: "#a40c4c",
+  height: "3px",
+  lineHeight: "3px",
+  fontSize: "0",
+};
+
 const baseStyles = `
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=JetBrains+Mono:wght@500;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Outfit:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap');
 html,
 body {
   margin: 0 auto !important;
@@ -174,15 +175,10 @@ img {
 a {
   text-decoration: none;
 }
-@media screen and (max-width: 640px) {
+@media screen and (max-width: 600px) {
   .email-container {
     width: 100% !important;
     margin: auto !important;
-  }
-  .stack {
-    display: block !important;
-    width: 100% !important;
-    max-width: 100% !important;
   }
   .fluid-img {
     height: auto !important;

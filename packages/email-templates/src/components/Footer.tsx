@@ -1,11 +1,7 @@
-import { Link, Section, Text } from "@react-email/components";
+import { Section, Text } from "@react-email/components";
 import React from "react";
 
-interface FooterProps {
-  unsubscribeUrl: string;
-}
-
-export function Footer({ unsubscribeUrl }: FooterProps) {
+export function Footer() {
   return (
     <Section style={section}>
       <Section style={rule} />
@@ -15,48 +11,32 @@ export function Footer({ unsubscribeUrl }: FooterProps) {
       <Text style={department}>
         Departamento de Ingeniería &amp; Inteligencia Artificial
       </Text>
-      <Text style={linksRow}>
-        <Link href={unsubscribeUrl} style={footLink}>
-          Unsubscribe
-        </Link>
-        <span style={linkSeparator}>·</span>
-        <Link href={unsubscribeUrl} style={footLink}>
-          Preferences
-        </Link>
-        <span style={linkSeparator}>·</span>
-        <Link href={unsubscribeUrl} style={footLink}>
-          Privacy
-        </Link>
-      </Text>
     </Section>
   );
 }
 
-const bodyStack =
-  "Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif";
-const monoStack =
-  "'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace";
+const outfitStack = "'Outfit', 'Helvetica Neue', Helvetica, Arial, sans-serif";
+const monoStack = "'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace";
 
 const section = {
-  backgroundColor: "#f1f3f5",
-  borderTop: "1px solid #cbd5e1",
-  margin: "32px 0 0",
-  padding: "40px 24px 56px",
+  backgroundColor: "rgba(221,170,188,0.12)",
+  borderTop: "3px solid #a40c4c",
+  margin: "24px 0 0",
+  padding: "36px 32px 48px",
   textAlign: "center" as const,
 };
 
 const rule = {
-  borderTop: "1px solid #cbd5e1",
   fontSize: "0",
   lineHeight: "0",
-  margin: "0 auto 20px",
+  margin: "0 auto 16px",
   padding: "0",
-  width: "96px",
+  width: "0",
 };
 
 const copyright = {
-  color: "#475569",
-  fontFamily: bodyStack,
+  color: "#8f5261",
+  fontFamily: outfitStack,
   fontSize: "13px",
   fontWeight: 400 as const,
   lineHeight: "20px",
@@ -65,38 +45,13 @@ const copyright = {
 };
 
 const department = {
-  color: "#475569",
+  color: "#c08c94",
   fontFamily: monoStack,
   fontSize: "10px",
   fontWeight: 500 as const,
-  letterSpacing: "0.08em",
-  lineHeight: "14px",
-  margin: "0 0 32px",
-  textAlign: "center" as const,
-  textTransform: "uppercase" as const,
-};
-
-const linksRow = {
-  color: "#475569",
-  fontFamily: monoStack,
-  fontSize: "10px",
-  fontWeight: 500 as const,
-  letterSpacing: "0.14em",
+  letterSpacing: "0.1em",
   lineHeight: "14px",
   margin: "0",
   textAlign: "center" as const,
   textTransform: "uppercase" as const,
-};
-
-const footLink = {
-  borderBottom: "1px solid #475569",
-  color: "#475569",
-  fontFamily: monoStack,
-  paddingBottom: "1px",
-  textDecoration: "none",
-};
-
-const linkSeparator = {
-  color: "#cbd5e1",
-  margin: "0 10px",
 };

@@ -1,8 +1,0 @@
-{
-  "extends": "../../tsconfig.base.json",
-  "compilerOptions": {
-    "types": ["@cloudflare/workers-types", "vitest"],
-    "noEmit": true
-  },
-  "include": ["src", "test"]
-}

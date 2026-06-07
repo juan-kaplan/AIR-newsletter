@@ -13,8 +13,7 @@
     "newsletter:verify-sources": "corepack pnpm --filter @newsletter/newsletter verify-sources",
     "newsletter:draft": "corepack pnpm --filter @newsletter/newsletter draft",
     "newsletter:preview": "corepack pnpm --filter @newsletter/newsletter preview",
-    "newsletter:send-test": "corepack pnpm --filter @newsletter/newsletter send-test",
-    "newsletter:send": "corepack pnpm --filter @newsletter/newsletter send"
+    "newsletter:export": "corepack pnpm --filter @newsletter/newsletter export"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",

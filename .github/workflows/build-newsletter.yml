@@ -1,0 +1,35 @@
+name: Build Newsletter
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      NEWSLETTER_AI_PROVIDER: ${{ vars.NEWSLETTER_AI_PROVIDER || 'none' }}
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
+      NVIDIA_MODEL: ${{ vars.NVIDIA_MODEL || 'meta/llama-3.1-70b-instruct' }}
+      TZ: America/Argentina/Buenos_Aires
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm lint
+      - run: pnpm typecheck
+      - run: pnpm test
+      - name: Export newsletter HTML
+        run: pnpm newsletter:export
+      - name: Upload newsletter artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: newsletter-${{ github.run_id }}
+          path: packages/newsletter/dist/
+          retention-days: 30

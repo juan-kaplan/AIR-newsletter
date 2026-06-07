@@ -31,23 +31,14 @@ const issue: NewsletterIssue = {
 };
 
 describe("renderEmail", () => {
-  it("renders html and text with the unsubscribe URL", async () => {
-    const rendered = await renderEmail(
-      issue,
-      "https://worker.test/unsubscribe?token=abc",
-    );
+  it("renders html and text", async () => {
+    const rendered = await renderEmail(issue);
 
-    expect(rendered.html).toContain(
-      "https://worker.test/unsubscribe?token=abc",
-    );
-    expect(rendered.text).toContain(
-      "https://worker.test/unsubscribe?token=abc",
-    );
     expect(rendered.html).toContain("https://example.com/useful.jpg");
     expect(rendered.html).toContain("AIR Club UdeSA");
-    expect(rendered.html).toContain("cid:air-logo");
+    expect(rendered.html).toContain("LogoRosa.png");
     expect(rendered.html).toContain("Leer más");
-    expect(rendered.text).toContain("Leer análisis técnico");
+    expect(rendered.text).toContain("Leer más");
     expect(rendered.html).toContain("email-container");
     expect(rendered.html).not.toContain("data:image");
     expect(rendered.text).not.toContain("<img");

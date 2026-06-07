@@ -1,9 +1,0 @@
-name = "automatic-newsletter"
-main = "src/index.ts"
-compatibility_date = "2026-05-14"
-
-[[d1_databases]]
-binding = "DB"
-database_name = "air_newsletter"
-database_id = "dac7dd7c-3dd3-440d-8bbc-46c2b4fde4d7"
-migrations_dir = "migrations"

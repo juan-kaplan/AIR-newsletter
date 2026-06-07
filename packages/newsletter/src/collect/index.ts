@@ -31,7 +31,7 @@ async function collectSourceArticles(): Promise<NewsletterArticle[]> {
     collectRssArticles(rssSources),
     collectCompetitionPages(competitionPageSources)
   ]);
-  const articles = sortByPublishedDate(dedupeArticles([...manualArticles.flat(), ...rssArticles, ...competitionArticles]));
+  const articles = sortByPublishedDate(clearSharedImages(dedupeArticles([...manualArticles.flat(), ...rssArticles, ...competitionArticles])));
   return articles;
 }
 
@@ -59,6 +59,17 @@ export async function verifyCollectionSources() {
     verifyCompetitionPageSources(competitionPageSources)
   ]);
   return [...rssResults, ...competitionPageResults];
+}
+
+// If the same imageUrl appears on more than one article it's a platform default (forum og:image, etc.) — clear it.
+function clearSharedImages(articles: NewsletterArticle[]): NewsletterArticle[] {
+  const counts = new Map<string, number>();
+  for (const a of articles) {
+    if (a.imageUrl) counts.set(a.imageUrl, (counts.get(a.imageUrl) ?? 0) + 1);
+  }
+  return articles.map((a) =>
+    a.imageUrl && (counts.get(a.imageUrl) ?? 0) > 1 ? { ...a, imageUrl: undefined } : a
+  );
 }
 
 function dedupeArticles(articles: NewsletterArticle[]): NewsletterArticle[] {

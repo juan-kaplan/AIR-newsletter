@@ -1,4 +1,4 @@
-import type { NewsletterArticle, NewsletterIssue } from "../types";
+import type { NewsletterIssue } from "../types";
 
 type AiProvider = "none" | "gemini" | "nvidia";
 
@@ -21,11 +21,7 @@ interface GeminiResponse {
 interface PolishedIssuePayload {
   subject?: unknown;
   preheader?: unknown;
-  articles?: Array<{
-    url?: unknown;
-    title?: unknown;
-    summary?: unknown;
-  }>;
+  intro?: unknown;
 }
 
 const NVIDIA_ENDPOINT = "https://integrate.api.nvidia.com/v1/chat/completions";
@@ -102,7 +98,7 @@ async function callNvidia(
         {
           role: "system",
           content:
-            "Sos editor final de un newsletter universitario. Devolvés solo JSON válido y no inventás datos.",
+            "Eres el editor final de un newsletter universitario. Devuelves solo JSON válido y no inventas datos.",
         },
         { role: "user", content: prompt },
       ],
@@ -152,7 +148,7 @@ async function callGemini(
       return payload.candidates?.[0]?.content?.parts?.[0]?.text ?? null;
     }
 
-    if (response.status !== 429 && response.status !== 404) {
+    if (response.status !== 400 && response.status !== 429 && response.status !== 404 && response.status !== 503) {
       throw new Error(`Gemini HTTP ${response.status}`);
     }
   }
@@ -161,20 +157,20 @@ async function callGemini(
 }
 
 function buildIssuePolishPrompt(issue: NewsletterIssue): string {
-  return `Reescribí el cierre editorial de este newsletter de AIR Club UdeSA, el club de inteligencia artificial y robótica de la Universidad de San Andrés.
+  return `Eres el editor del Boletín AIR Club UdeSA, el newsletter del club de inteligencia artificial y robótica de la Universidad de San Andrés.
 
-Objetivo: que el texto visible sea claro, concreto, rioplatense y útil para estudiantes que construyen proyectos de IA aplicada, robótica, ROS2, visión, SLAM, navegación, autonomía y competencias.
+Objetivo: que el texto visible sea claro, concreto y útil para estudiantes que construyen proyectos de IA aplicada, robótica, ROS2, visión, SLAM, navegación, autonomía y competencias.
 
 Reglas:
-- Preservá exactamente cada url.
-- No agregues artículos, fuentes, fechas, deadlines ni datos que no estén en los candidatos.
+- Solo escribe "subject", "preheader" e "intro" en español neutro. No traduzcas ni reescribas los artículos.
+- No inventes datos, fuentes, fechas ni deadlines que no estén en el input.
 - No incluyas emails, tokens ni texto interno.
-- No uses "Por qué importa", "señal", "interesante", "relevante", "puede servir" ni justificaciones internas.
-- Si un artículo es una oportunidad, conservá deadline o estado de inscripción si aparece.
-- Si un artículo es investigación o herramienta, explicá la técnica o decisión que habilita.
+- No uses frases como "Por qué importa", "señal", "interesante" ni justificaciones internas.
 
-Devolvé solamente JSON con esta forma:
-{"subject":"...","preheader":"...","articles":[{"url":"https://...","title":"...","summary":"..."}]}
+Campo "intro": párrafo editorial de apertura, 2-3 oraciones en español neutro, que resuma los temas destacados de este número (competencias, investigación, herramientas). Debe sonar como escrito por un estudiante para otros estudiantes del club, sin tono de marketing.
+
+Devuelve solamente JSON con esta forma exacta:
+{"subject":"...","preheader":"...","intro":"..."}
 
 Newsletter:
 ${JSON.stringify(
@@ -207,12 +203,6 @@ function applyPolishedIssue(
   issue: NewsletterIssue,
   payload: PolishedIssuePayload,
 ): NewsletterIssue {
-  const byUrl = new Map(
-    (Array.isArray(payload.articles) ? payload.articles : [])
-      .filter((article) => typeof article.url === "string")
-      .map((article) => [article.url as string, article]),
-  );
-
   return {
     ...issue,
     ...(typeof payload.subject === "string"
@@ -221,27 +211,8 @@ function applyPolishedIssue(
     ...(typeof payload.preheader === "string"
       ? { preheader: cleanModelText(payload.preheader, 220) }
       : {}),
-    articles: issue.articles.map((article) =>
-      applyPolishedArticle(article, byUrl.get(article.url)),
-    ),
-  };
-}
-
-function applyPolishedArticle(
-  article: NewsletterArticle,
-  polished: { title?: unknown; summary?: unknown } | undefined,
-): NewsletterArticle {
-  if (!polished) {
-    return article;
-  }
-
-  return {
-    ...article,
-    ...(typeof polished.title === "string"
-      ? { title: cleanModelText(polished.title, 120) }
-      : {}),
-    ...(typeof polished.summary === "string"
-      ? { summary: cleanModelText(polished.summary, 430) }
+    ...(typeof payload.intro === "string"
+      ? { intro: cleanModelText(payload.intro, 480) }
       : {}),
   };
 }

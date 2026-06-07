@@ -1,10 +1,29 @@
 #!/usr/bin/env node
+import { config as loadEnv } from "dotenv";
+import { existsSync } from "node:fs";
+import { join, resolve } from "node:path";
+
+// Walk up from cwd to find the nearest .env (handles pnpm workspace CWD shifts)
+function findEnvFile(): string | undefined {
+  let dir = process.cwd();
+  for (let i = 0; i < 6; i++) {
+    const candidate = join(dir, ".env");
+    if (existsSync(candidate)) return candidate;
+    const parent = resolve(dir, "..");
+    if (parent === dir) break;
+    dir = parent;
+  }
+  return undefined;
+}
+const envFile = findEnvFile();
+if (envFile) loadEnv({ path: envFile });
+
 import { buildIssue } from "./compose/buildIssue";
 import { collectAndStoreWeeklyDigest, verifyCollectionSources } from "./collect";
+import { exportIssue } from "./export/exportIssue";
 import { renderEmail } from "./render/renderEmail";
-import { sendIssue } from "./send/sendIssue";
 
-const [, , command, ...args] = process.argv;
+const [, , command] = process.argv;
 
 async function main(): Promise<void> {
   if (command === "collect") {
@@ -30,36 +49,17 @@ async function main(): Promise<void> {
 
   if (command === "preview") {
     const issue = await buildIssue();
-    const rendered = await renderEmail(issue, "https://example.com/unsubscribe?token=preview");
+    const rendered = await renderEmail(issue);
     console.log(rendered.text);
     return;
   }
 
-  if (command === "send-test") {
-    const to = getArgValue(args, "--to");
-    if (!to) {
-      throw new Error("Use --to someone@example.com for test sends.");
-    }
-
-    await sendIssue(await buildIssue(), { confirm: isConfirmed(args), to });
-    return;
-  }
-
-  if (command === "send") {
-    await sendIssue(await buildIssue(), { confirm: isConfirmed(args) });
+  if (command === "export") {
+    await exportIssue();
     return;
   }
 
   throw new Error(`Unknown command: ${command ?? "(missing)"}`);
-}
-
-function getArgValue(argsToSearch: string[], flag: string): string | null {
-  const index = argsToSearch.indexOf(flag);
-  return index >= 0 ? argsToSearch[index + 1] ?? null : null;
-}
-
-function isConfirmed(argsToSearch: string[]): boolean {
-  return argsToSearch.includes("--confirm") && !argsToSearch.includes("--dry-run");
 }
 
 main().catch((error: unknown) => {

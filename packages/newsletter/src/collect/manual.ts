@@ -15,6 +15,8 @@ export async function collectManualArticles(directory = "content/manual"): Promi
   }
 }
 
+const VALID_CATEGORIES = new Set(["competition", "research", "industry", "tooling", "event"]);
+
 async function parseMarkdownArticle(path: string): Promise<NewsletterArticle | null> {
   const content = await readFile(path, "utf8");
   const title = matchField(content, "title");
@@ -22,6 +24,10 @@ async function parseMarkdownArticle(path: string): Promise<NewsletterArticle | n
   const summary = matchField(content, "summary");
   const source = matchField(content, "source");
   const publishedAt = matchField(content, "publishedAt");
+  const categoryRaw = matchField(content, "category");
+  const category = categoryRaw && VALID_CATEGORIES.has(categoryRaw)
+    ? (categoryRaw as NewsletterArticle["category"])
+    : "event";
 
   if (!title || !url || !summary) {
     return null;
@@ -31,6 +37,7 @@ async function parseMarkdownArticle(path: string): Promise<NewsletterArticle | n
     title,
     url,
     summary,
+    category,
     ...(source ? { source } : {}),
     ...(publishedAt ? { publishedAt } : {})
   };
