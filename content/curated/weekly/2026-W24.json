@@ -1,0 +1,62 @@
+{
+  "week": "2026-W24",
+  "collectedAt": "2026-06-08T16:34:02.107Z",
+  "windowStart": "2026-06-08T00:00:00.000Z",
+  "windowEnd": "2026-06-15T00:00:00.000Z",
+  "articles": [
+    {
+      "title": "Congratulations to the #AAMAS2026 best paper award winners",
+      "url": "https://robohub.org/congratulations-to-the-aamas2026-best-paper-award-winners/",
+      "summary": "The AAMAS 2026 best paper awards were presented at the 25th International Conference on Autonomous Agents and Multiagent Systems, which took place from 25-29 May 2025 in Paphos, Cyprus.",
+      "source": "Robohub",
+      "category": "research",
+      "publishedAt": "2026-06-08T10:02:11.000Z",
+      "imageUrl": "https://robohub.org/wp-content/uploads/2025/05/winner-1548239_1280-1024x682.jpg",
+      "score": 30,
+      "selectionReason": "idea técnica construible, valor técnico para aprender"
+    },
+    {
+      "title": "Context & Hardware Setup",
+      "url": "https://discourse.openrobotics.org/t/context-hardware-setup/55356",
+      "summary": "I am developing an Autonomous Mobile Robot (AMR) designed to operate inside a dairy cattle barn. The locomotion system suffers from high wheel slippage due to the environment’s muddy, uneven, and unpaved terrain.",
+      "source": "Open Robotics Discourse",
+      "category": "tooling",
+      "publishedAt": "2026-06-08T16:26:45.000Z",
+      "score": 22,
+      "selectionReason": "idea técnica construible"
+    },
+    {
+      "title": "Robotic arm inspired by octopus uses tactile sensors in suction cups for autonomous underwater grasping",
+      "url": "https://techxplore.com/news/2026-06-robotic-arm-octopus-tactile-sensors.html",
+      "summary": "The oceans hide some of the most sophisticated solutions nature has ever developed and are an inexhaustible source of inspiration for the robotics of the future.",
+      "source": "Tech Xplore Robotics",
+      "category": "research",
+      "imageUrl": "https://scx1.b-cdn.net/csz/news/tmb/2026/from-the-ocean-the-rob.jpg",
+      "publishedAt": "2026-06-08T16:20:08.000Z",
+      "score": 22,
+      "selectionReason": "idea técnica construible"
+    },
+    {
+      "title": "Dynamic World Generator Wizard (V2): From Wrold DEsign to Nav2 Map in One Step",
+      "url": "https://discourse.openrobotics.org/t/dynamic-world-generator-wizard-v2-from-wrold-design-to-nav2-map-in-one-step/55353",
+      "summary": "If you’re building Gazebo worlds for SLAM, Nav2, or mobile robotics and you’re still manually creating your navigation map as a separate step → this tool was made for you.",
+      "source": "Open Robotics Discourse",
+      "category": "tooling",
+      "imageUrl": "https://us1.discourse-cdn.com/flex022/uploads/ros/original/3X/8/9/8973d7955709d9f1d250f514b8a771be667eee8b.gif",
+      "publishedAt": "2026-06-08T12:06:06.000Z",
+      "score": 22,
+      "selectionReason": "idea técnica construible"
+    },
+    {
+      "title": "Isaac Lab Teleoperation & Data Collection: Controlling the AgileX NERO 7-DoF Robotic Arm",
+      "url": "https://discourse.openrobotics.org/t/isaac-lab-teleoperation-data-collection-controlling-the-agilex-nero-7-dof-robotic-arm/55348",
+      "summary": "0. Preface In this tutorial, we walk through the step-by-step implementation of keyboard teleoperation and demonstration data collection for the AgileX NERO (7-DoF) and PiPER robotic arms within NVIDIA Isaac Lab.",
+      "source": "Open Robotics Discourse",
+      "category": "tooling",
+      "imageUrl": "https://us1.discourse-cdn.com/flex022/uploads/ros/optimized/3X/0/a/0ac0a56328c3a5a1f5973f063149c6c83a5c4ccb_2_690x449.jpeg",
+      "publishedAt": "2026-06-08T06:41:03.000Z",
+      "score": 18,
+      "selectionReason": "valor técnico para aprender"
+    }
+  ]
+}
